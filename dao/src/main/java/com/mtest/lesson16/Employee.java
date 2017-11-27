@@ -1,4 +1,4 @@
-package com.wtest.lesson16;
+package com.mtest.lesson16;
 
 /**
  * Created by yuri on 26.11.17.

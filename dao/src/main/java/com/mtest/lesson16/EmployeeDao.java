@@ -1,4 +1,4 @@
-package com.wtest.lesson16;
+package com.mtest.lesson16;
 
 
 import java.io.IOException;
@@ -13,8 +13,12 @@ import java.util.Properties;
 public class EmployeeDao {
 
     private static final String SELECT_ALL = "SELECT * FROM employee";
+    //    private static final String SELECT_ALL = "SELECT * FROM EMPLOYEE_TBL";
+//
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE id=?";
+    //    private static final String SELECT_BY_ID = SELECT_ALL + " WHERE EMP_ID=?";
     private static final String DELETE_BY_ID = "DELETE FROM employee WHERE id=?";
+//    private static final String DELETE_BY_ID = "DELETE FROM EMPLOYEE_TBL WHERE id=?";
 
     private Connection connection;
 
@@ -37,7 +41,8 @@ public class EmployeeDao {
 
     public Employee get(int id) {
         try (PreparedStatement prepareStatement = this.connection
-                .prepareStatement(SELECT_BY_ID)) {
+                .prepareStatement(SELECT_BY_ID))
+        {
             prepareStatement.setInt(1, id);
             try (ResultSet resultSet = prepareStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -84,8 +89,9 @@ public class EmployeeDao {
         employee.setId(resultSet.getInt("id"));
         employee.setName(resultSet.getString("name"));
         employee.setSurname(resultSet.getString("surname"));
-        employee.setPhone(resultSet.getString("phone"));
+        employee.setPhone(resultSet.getString("phone_private"));
         return employee;
     }
 
 }
+
