@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>dao</artifactId>
-        <groupId>mtest</groupId>
+        <groupId>com.mtest</groupId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../dao/pom.xml</relativePath>
     </parent>
@@ -13,14 +13,20 @@
     <artifactId>webapp</artifactId>
     <packaging>war</packaging>
     <name>Web Application</name>
-
+    <url>http://maven.apache.org</url>
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
+            <version>3.0.1</version>
             <scope>provided</scope>
 
+        </dependency>
+        <dependency>
+            <groupId>com.mtest</groupId>
+            <artifactId>dao</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
