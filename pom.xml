@@ -8,6 +8,7 @@
         <module>jpaapp</module>
         <module>jpadao</module>
         <module>hmodel</module>
+        <module>hservice</module>
     </modules>
 
     <properties>

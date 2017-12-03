@@ -76,8 +76,8 @@ public class JpaEmployeeDao implements JpaEmployeeDaoInterface<Employee, Integer
     }
 
     public Employee findById(Integer id) {
-        Employee Employee = (Employee) getCurrentSession().get(Employee.class, id);
-        return Employee;
+        Employee employee = (Employee) getCurrentSession().get(Employee.class, id);
+        return employee;
     }
 
     public void delete(Employee entity) {
@@ -86,8 +86,8 @@ public class JpaEmployeeDao implements JpaEmployeeDaoInterface<Employee, Integer
 
     @SuppressWarnings("unchecked")
     public List<Employee> findAll() {
-        List<Employee> Employees = (List<Employee>) getCurrentSession().createQuery("from Employee").list();
-        return Employees;
+        List<Employee> employees = (List<Employee>) getCurrentSession().createQuery("from Employee").list();
+        return employees;
     }
 
     public void deleteAll() {

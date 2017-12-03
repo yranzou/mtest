@@ -24,6 +24,7 @@
         <processorPath useClasspath="true" />
         <module name="dao" />
         <module name="hmodel" />
+        <module name="hservice" />
         <module name="jpaapp" />
         <module name="jpadao" />
         <module name="lesson16" />
@@ -42,6 +43,7 @@
     <bytecodeTargetLevel>
       <module name="dao" target="1.7" />
       <module name="hmodel" target="1.7" />
+      <module name="hservice" target="1.7" />
       <module name="jpaapp" target="1.7" />
       <module name="jpadao" target="1.7" />
       <module name="model" target="1.5" />
