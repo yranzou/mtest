@@ -23,15 +23,23 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="dao" />
+        <module name="lesson16" />
         <module name="model" />
+        <module name="untitled" />
         <module name="webapp" />
+      </profile>
+      <profile default="false" name="Annotation profile for mtest" enabled="true">
+        <sourceOutputDir name="../untitled/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../untitled/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="webapptest" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="dao" target="1.7" />
-      <module name="model" target="1.7" />
-      <module name="test" target="1.7" />
-      <module name="testdelwebapp" target="1.7" />
+      <module name="model" target="1.5" />
+      <module name="mtest" target="1.7" />
       <module name="webapp" target="1.7" />
       <module name="webui" target="1.7" />
     </bytecodeTargetLevel>

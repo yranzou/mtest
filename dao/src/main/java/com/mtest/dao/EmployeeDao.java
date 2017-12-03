@@ -1,7 +1,10 @@
-package com.mtest.lesson16;
+package com.mtest.dao;
 
+import com.mtest.model.Employee;
 
 import java.io.IOException;
+
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +28,24 @@ public class EmployeeDao {
     public EmployeeDao() {
         try {
             Properties props = new Properties();
-            props.load(this.getClass().getClassLoader().getResourceAsStream("lesson16.properties"));
+            props.load(this.getClass().getClassLoader().getResourceAsStream("db.properties"));
             String driver = props.getProperty("database.driver");
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+            } catch (ClassNotFoundException e)
+            {
+                System.out.println("!!!!!!!!!!!!!   HUI BLYAT!!!!");
+                e.printStackTrace();
+            }
             String url = props.getProperty("database.url");
             String user = props.getProperty("database.user");
             String password = props.getProperty("database.password");
-            // Class.forName(driver);
-            this.connection = DriverManager.getConnection(url, user, password);
+
+//            this.connection = DriverManager.getConnection(url, user, password);
+
+//            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+//            this.connection = DriverManager.getConnection(url, user, password);
+            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/lesson16", "yuri", "");
             this.connection.setAutoCommit(false);
         } catch (IOException | SQLException e) {
             // TODO Auto-generated catch block

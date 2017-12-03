@@ -1,14 +1,24 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="webui:war exploded">
-    <output-path>$PROJECT_DIR$/webui/target/webui</output-path>
+    <output-path>$PROJECT_DIR$/webui/target/webapptest</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="webui" />
         </element>
+        <element id="directory" name="lib">
+          <element id="archive" name="dao-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="dao" />
+          </element>
+          <element id="archive" name="model-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="model" />
+          </element>
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:4.0.0" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.6" />
+        </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/webui/target/webui/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/webui/target/webapptest/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="webui/web/Web" />
     </root>

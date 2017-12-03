@@ -1,4 +1,4 @@
-package com.mtest.lesson16;
+package com.mtest.model;
 
 /**
  * Created by yuri on 26.11.17.

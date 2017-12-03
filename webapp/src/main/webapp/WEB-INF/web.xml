@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+    <!-- To save as <CATALINA_HOME>\webapps\helloservlet\WEB-INF\web.xml -->
+
+    <servlet>
+        <servlet-name>com.mtest.webapp.DisplayEmployeeServlet</servlet-name>
+        <servlet-class>com.mtest.webapp.DisplayEmployeeServlet</servlet-class>
+    </servlet>
+
+    <!-- Note: All <servlet> elements MUST be grouped together and
+          placed IN FRONT of the <servlet-mapping> elements -->
+
+    <servlet-mapping>
+        <servlet-name>com.mtest.webapp.DisplayEmployeeServlet</servlet-name>
+        <url-pattern>/webapp</url-pattern>
+    </servlet-mapping>
+
+</web-app>
