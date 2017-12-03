@@ -23,6 +23,7 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="dao" />
+        <module name="jpaapp" />
         <module name="lesson16" />
         <module name="model" />
         <module name="untitled" />
@@ -38,6 +39,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="dao" target="1.7" />
+      <module name="jpaapp" target="1.7" />
       <module name="model" target="1.5" />
       <module name="mtest" target="1.7" />
       <module name="webapp" target="1.7" />

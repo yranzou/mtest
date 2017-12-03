@@ -14,6 +14,7 @@
         <option value="$PROJECT_DIR$/dao/pom.xml" />
         <option value="$PROJECT_DIR$/model/pom.xml" />
         <option value="$PROJECT_DIR$/webapp/pom.xml" />
+        <option value="$PROJECT_DIR$/jpaapp/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
