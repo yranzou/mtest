@@ -6,6 +6,8 @@
     <modules>
         <module>jpaapp</module>
         <module>jpaapp</module>
+        <module>jpadao</module>
+        <module>hmodel</module>
     </modules>
 
     <properties>
