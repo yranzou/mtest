@@ -9,6 +9,14 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.CriteriaQuery;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Root;
+
 
 /**
  * Created by yuri on 03.12.17.
@@ -45,8 +53,8 @@ public class JpaEmployeeDao implements JpaEmployeeDaoInterface<Employee, Integer
 
     private static SessionFactory getSessionFactory() {
         Configuration configuration = new Configuration().configure();
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
-                .applySettings(configuration.getProperties());
+        StandardServiceRegistryBuilder builder =
+                new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
         SessionFactory sessionFactory = configuration.buildSessionFactory(builder.build());
         return sessionFactory;
     }
@@ -76,7 +84,7 @@ public class JpaEmployeeDao implements JpaEmployeeDaoInterface<Employee, Integer
     }
 
     public Employee findById(Integer id) {
-        Employee employee = (Employee) getCurrentSession().get(Employee.class, id);
+        Employee employee = getCurrentSession().get(Employee.class, id);
         return employee;
     }
 
@@ -84,16 +92,24 @@ public class JpaEmployeeDao implements JpaEmployeeDaoInterface<Employee, Integer
         getCurrentSession().delete(entity);
     }
 
-    @SuppressWarnings("unchecked")
-    public List<Employee> findAll() {
-        List<Employee> employees = (List<Employee>) getCurrentSession().createQuery("from Employee").list();
-        return employees;
-    }
+//    @SuppressWarnings("unchecked")
+//    public List<Employee> findAll() {
+//        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Idea_Hibernate");
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
+//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//        javax.persistence.criteria.CriteriaQuery<Object> criteriaQuery = criteriaBuilder.createQuery();
+//        Root<Employee> from = criteriaQuery.from(Employee.class);
+//        javax.persistence.criteria.CriteriaQuery<Object> select = criteriaQuery.select(from);
+//
+//
+//        List<Employee> employees = (List<Employee>) getCurrentSession().createQuery(select).list();
+//        return employees;
+//    }
 
-    public void deleteAll() {
-        List<Employee> entityList = findAll();
-        for (Employee entity : entityList) {
-            delete(entity);
-        }
-    }
+//    public void deleteAll() {
+//        List<Employee> entityList = findAll();
+//        for (Employee entity : entityList) {
+//            delete(entity);
+//        }
+//    }
 }
