@@ -6,7 +6,7 @@
 
     <groupId>com.mtest</groupId>
     <artifactId>model</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>Basic classes</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
