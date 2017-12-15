@@ -7,7 +7,7 @@
     <!-- To save as <CATALINA_HOME>\webapps\helloservlet\WEB-INF\web.xml -->
 
     <servlet>
-        <servlet-name>com.mtest.webapp.DisplayEmployeeServlet</servlet-name>
+        <servlet-name>DisplayEmployeeServlet</servlet-name>
         <servlet-class>com.mtest.webapp.DisplayEmployeeServlet</servlet-class>
     </servlet>
 
@@ -15,7 +15,7 @@
           placed IN FRONT of the <servlet-mapping> elements -->
 
     <servlet-mapping>
-        <servlet-name>com.mtest.webapp.DisplayEmployeeServlet</servlet-name>
+        <servlet-name>DisplayEmployeeServlet</servlet-name>
         <url-pattern>/webapp</url-pattern>
     </servlet-mapping>
 

@@ -14,7 +14,7 @@ import java.util.List;
  *  Created by yuri on 30.11.17.
  */
 public class DisplayEmployeeServlet extends HttpServlet {
-    private static long serialVersionID = 1L;
+    private final long serialVersionID = 1L;
     private EmployeeDao employeeDao = new EmployeeDao();
 
 
@@ -26,7 +26,7 @@ public class DisplayEmployeeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List employees = this.employeeDao.getAll();
+        //List employees = this.employeeDao.getAll();
         StringBuilder sb = new StringBuilder("<html><head><title>Employees</title></head><body><table>");
 //        for (Employee emmployee:employees
 //             ) {
@@ -38,7 +38,11 @@ public class DisplayEmployeeServlet extends HttpServlet {
 //            sb.append(emmployee.getSurname());
 //            sb.append("</td></tr>");
 //        }
-        sb.append("</table></body></html>");
+//        sb.append("</table></body></html>");
+        EmployeeDao employeeDao = new EmployeeDao();
+
+        sb.append(employeeDao.str1.toString());
+
         resp.getOutputStream().write(sb.toString().getBytes());
 //        resp.getOutputStream().write(.getBytes());
     }

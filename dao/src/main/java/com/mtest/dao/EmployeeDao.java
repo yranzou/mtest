@@ -3,8 +3,6 @@ package com.mtest.dao;
 import com.mtest.model.Employee;
 
 import java.io.IOException;
-
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +23,16 @@ public class EmployeeDao {
 
     private Connection connection;
 
+    public String str1 = "test";
+
     public EmployeeDao() {
         try {
             Properties props = new Properties();
             props.load(this.getClass().getClassLoader().getResourceAsStream("db.properties"));
             String driver = props.getProperty("database.driver");
+
             try {
-                Class.forName("com.mysql.jdbc.Driver");
+                Class.forName(driver);
             } catch (ClassNotFoundException e)
             {
                 System.out.println("!!!!!!!!!!!!!   HUI BLYAT!!!!");
@@ -41,11 +42,12 @@ public class EmployeeDao {
             String user = props.getProperty("database.user");
             String password = props.getProperty("database.password");
 
-//            this.connection = DriverManager.getConnection(url, user, password);
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            this.connection = DriverManager.getConnection(url, user, password);
 
 //            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 //            this.connection = DriverManager.getConnection(url, user, password);
-            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/lesson16", "yuri", "");
+//            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/lesson19", "yuri", "");
             this.connection.setAutoCommit(false);
         } catch (IOException | SQLException e) {
             // TODO Auto-generated catch block
@@ -54,8 +56,7 @@ public class EmployeeDao {
     }
 
     public Employee get(int id) {
-        try (PreparedStatement prepareStatement = this.connection
-                .prepareStatement(SELECT_BY_ID))
+        try (PreparedStatement prepareStatement = this.connection.prepareStatement(SELECT_BY_ID))
         {
             prepareStatement.setInt(1, id);
             try (ResultSet resultSet = prepareStatement.executeQuery()) {

@@ -29,7 +29,7 @@
       <module name="hservice" target="1.7" />
       <module name="jpaapp" target="1.7" />
       <module name="jpadao" target="1.7" />
-      <module name="model" target="1.5" />
+      <module name="model" target="1.7" />
       <module name="mtest" target="1.7" />
       <module name="webapp" target="1.7" />
       <module name="webui" target="1.7" />
