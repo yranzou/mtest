@@ -35,19 +35,13 @@ public class EmployeeDao {
                 Class.forName(driver);
             } catch (ClassNotFoundException e)
             {
-                System.out.println("!!!!!!!!!!!!!   HUI BLYAT!!!!");
                 e.printStackTrace();
             }
             String url = props.getProperty("database.url");
             String user = props.getProperty("database.user");
             String password = props.getProperty("database.password");
 
-            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             this.connection = DriverManager.getConnection(url, user, password);
-
-//            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-//            this.connection = DriverManager.getConnection(url, user, password);
-//            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/lesson19", "yuri", "");
             this.connection.setAutoCommit(false);
         } catch (IOException | SQLException e) {
             // TODO Auto-generated catch block
