@@ -39,9 +39,9 @@ public class DisplayEmployeeServlet extends HttpServlet {
 //            sb.append("</td></tr>");
 //        }
 //        sb.append("</table></body></html>");
-        EmployeeDao employeeDao = new EmployeeDao();
+     //   EmployeeDao employeeDao = new EmployeeDao();
 
-        sb.append(employeeDao.str1.toString());
+     //   sb.append(employeeDao.str1.toString());
 
         resp.getOutputStream().write(sb.toString().getBytes());
 //        resp.getOutputStream().write(.getBytes());
