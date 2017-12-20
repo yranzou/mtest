@@ -20,6 +20,7 @@ public class EmployeeDao {
     //    private static final String SELECT_BY_ID = SELECT_ALL + " WHERE EMP_ID=?";
     private static final String DELETE_BY_ID = "DELETE FROM employee WHERE id=?";
 //    private static final String DELETE_BY_ID = "DELETE FROM EMPLOYEE_TBL WHERE id=?";
+    private static final String UPDATE = "UPDATE employee SET name=? "
 
     private Connection connection;
 
@@ -73,6 +74,17 @@ public class EmployeeDao {
     }
 
     public void delete(int id) {
+        try (PreparedStatement prepareStatement = this.connection
+                .prepareStatement(DELETE_BY_ID)) {
+            prepareStatement.setInt(1, id);
+            prepareStatement.executeUpdate();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void update(Employee employee) {
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(DELETE_BY_ID)) {
             prepareStatement.setInt(1, id);
