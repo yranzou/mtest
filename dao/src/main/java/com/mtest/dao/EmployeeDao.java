@@ -20,7 +20,11 @@ public class EmployeeDao {
     //    private static final String SELECT_BY_ID = SELECT_ALL + " WHERE EMP_ID=?";
     private static final String DELETE_BY_ID = "DELETE FROM employee WHERE id=?";
 //    private static final String DELETE_BY_ID = "DELETE FROM EMPLOYEE_TBL WHERE id=?";
-    private static final String UPDATE = "UPDATE employee SET name=? "
+    private static final String UPDATE = "UPDATE employee " +
+        "SET name=?, middle_name=?, birthdate=?, address_home=?, " +
+        "address_work=?, email=?, icq=?, skype=?, info=?, phone_private=?, " +
+        "phone_work=?, chief_id=?, address=?, department_id=? " +
+        "WHERE id=?";
 
     private Connection connection;
 
@@ -84,7 +88,7 @@ public class EmployeeDao {
             prepareStatement.setInt(1, id);
             prepareStatement.executeUpdate();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+
             e.printStackTrace();
         }
     }
