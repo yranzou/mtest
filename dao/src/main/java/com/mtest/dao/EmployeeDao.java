@@ -1,5 +1,7 @@
 package com.mtest.dao;
 
+
+
 import com.mtest.model.Employee;
 
 import java.io.IOException;
@@ -20,15 +22,19 @@ public class EmployeeDao {
     //    private static final String SELECT_BY_ID = SELECT_ALL + " WHERE EMP_ID=?";
     private static final String DELETE_BY_ID = "DELETE FROM employee WHERE id=?";
 //    private static final String DELETE_BY_ID = "DELETE FROM EMPLOYEE_TBL WHERE id=?";
+//    private static final String UPDATE = "UPDATE employee " +
+//        "SET 'name'=?, middle_name=?, birthdate=?, address_home=?, " +
+//        "address_work=?, email=?, icq=?, skype=?, info=?, phone_private=?, " +
+//        "phone_work=?, chief_id=?, address=?, department_id=? " +
+//        "WHERE id=?";
     private static final String UPDATE = "UPDATE employee " +
-        "SET name=?, middle_name=?, birthdate=?, address_home=?, " +
-        "address_work=?, email=?, icq=?, skype=?, info=?, phone_private=?, " +
-        "phone_work=?, chief_id=?, address=?, department_id=? " +
-        "WHERE id=?";
+        "SET `name`=?, surname=?, phone_private=? WHERE id=?";
+    private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`) " +
+            "VALUES (?, ?, ?)";
+    private static final String UPDATE_BY_CHIEF_ID = "UPDATE employee " +
+            "SET chief_id=NULL WHERE chief_id=?";
 
     private Connection connection;
-
-    public String str1 = "test";
 
     public EmployeeDao() {
         try {
@@ -54,7 +60,7 @@ public class EmployeeDao {
         }
     }
 
-    public Employee get(int id) {
+    public synchronized Employee get(int id) {
         try (PreparedStatement prepareStatement = this.connection.prepareStatement(SELECT_BY_ID))
         {
             prepareStatement.setInt(1, id);
@@ -71,7 +77,34 @@ public class EmployeeDao {
         }
     }
 
-    public void delete(int id) {
+    public synchronized void persist(Employee employee) {
+        try (PreparedStatement prepareStatement = this.connection
+                .prepareStatement(INSERT)) {
+//            prepareStatement.setInt(15, id);
+            prepareStatement.setString(1, employee.getName());
+            prepareStatement.setString(2, employee.getSurname());
+            prepareStatement.setString(3, employee.getPhone());
+            prepareStatement.executeUpdate();
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    private synchronized void setChiefIdToNull(int id)
+    {
+        try (PreparedStatement prepareStatement = this.connection
+                .prepareStatement(UPDATE_BY_CHIEF_ID)) {
+            prepareStatement.setInt(1, id);
+            prepareStatement.executeUpdate();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch  block
+            e.printStackTrace();
+        }
+    }
+
+    public synchronized void delete(int id) {
+        setChiefIdToNull(id);
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(DELETE_BY_ID)) {
             prepareStatement.setInt(1, id);
@@ -82,10 +115,42 @@ public class EmployeeDao {
         }
     }
 
-    public void update(Employee employee) {
+    public synchronized void delete(Employee employee) {
+//        try (PreparedStatement prepareStatement = this.connection
+//                .prepareStatement(DELETE_BY_ID)) {
+//            prepareStatement.setInt(1, employee.getId());
+//            prepareStatement.executeUpdate();
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch  block
+//            e.printStackTrace();
+//        }
+        delete(employee.getId());
+    }
+
+    public synchronized void update(Employee employee) {
         try (PreparedStatement prepareStatement = this.connection
-                .prepareStatement(DELETE_BY_ID)) {
-            prepareStatement.setInt(1, id);
+                .prepareStatement(UPDATE)) {
+//            prepareStatement.setInt(15, id);
+            prepareStatement.setString(1, employee.getName());
+            prepareStatement.setString(2, employee.getSurname());
+            prepareStatement.setString(3, employee.getPhone());
+            prepareStatement.setInt(4, employee.getId());
+//            prepareStatement.set(5, employee.);
+//            prepareStatement.set(6, employee.);
+//            prepareStatement.set(7, employee.);
+//            prepareStatement.set(8, employee.);
+//            prepareStatement.set(9, employee.);
+//            prepareStatement.set(10, employee.);
+//            prepareStatement.set(11, employee.);
+//            prepareStatement.set(12, employee.);
+//            prepareStatement.set(13, employee.);
+//            prepareStatement.set(14, employee.);
+//            prepareStatement.set(15, employee.);
+
+//                    middle_name=?, birthdate=?, address_home=?, " +
+//            "address_work=?, email=?, icq=?, skype=?, info=?, phone_private=?, " +
+//                    "phone_work=?, chief_id=?, address=?, department_id=? " +
+//                    "WHERE id=?";
             prepareStatement.executeUpdate();
         } catch (SQLException e) {
 
@@ -93,7 +158,7 @@ public class EmployeeDao {
         }
     }
 
-    public List<Employee> getAll() {
+    public synchronized List<Employee> getAll() {
         try (ResultSet resultSet = this.connection.createStatement()
                 .executeQuery(SELECT_ALL)) {
             List<Employee> employees = new ArrayList<>();
@@ -108,7 +173,7 @@ public class EmployeeDao {
         }
     }
 
-    private Employee createEmployeeFromResult(ResultSet resultSet)
+    private synchronized Employee createEmployeeFromResult(ResultSet resultSet)
             throws SQLException {
         Employee employee = new Employee();
         employee.setId(resultSet.getInt("id"));

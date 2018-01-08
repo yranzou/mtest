@@ -8,7 +8,7 @@ import java.util.List;
 /**
  *  Created by yuri on 27.11.17.
  */
-public class TestSelectById {
+public class TestSelectEmployeeById {
     private EmployeeDao employeeDao = new EmployeeDao();
 
     @Test
