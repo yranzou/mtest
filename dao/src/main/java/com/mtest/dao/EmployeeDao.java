@@ -1,7 +1,6 @@
 package com.mtest.dao;
 
 
-
 import com.mtest.model.Employee;
 
 import java.io.IOException;
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- *  Created by yuri on 26.11.17.
+ * Created by yuri on 26.11.17.
  */
 public class EmployeeDao {
 
@@ -21,14 +20,14 @@ public class EmployeeDao {
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE id=?";
     //    private static final String SELECT_BY_ID = SELECT_ALL + " WHERE EMP_ID=?";
     private static final String DELETE_BY_ID = "DELETE FROM employee WHERE id=?";
-//    private static final String DELETE_BY_ID = "DELETE FROM EMPLOYEE_TBL WHERE id=?";
+    //    private static final String DELETE_BY_ID = "DELETE FROM EMPLOYEE_TBL WHERE id=?";
 //    private static final String UPDATE = "UPDATE employee " +
 //        "SET 'name'=?, middle_name=?, birthdate=?, address_home=?, " +
 //        "address_work=?, email=?, icq=?, skype=?, info=?, phone_private=?, " +
 //        "phone_work=?, chief_id=?, address=?, department_id=? " +
 //        "WHERE id=?";
     private static final String UPDATE = "UPDATE employee " +
-        "SET `name`=?, surname=?, phone_private=? WHERE id=?";
+            "SET `name`=?, surname=?, phone_private=? WHERE id=?";
     private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`) " +
             "VALUES (?, ?, ?)";
     private static final String UPDATE_CHIEF_ID_WITH_NULL = "UPDATE employee " +
@@ -46,8 +45,7 @@ public class EmployeeDao {
 
             try {
                 Class.forName(driver);
-            } catch (ClassNotFoundException e)
-            {
+            } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
             String url = props.getProperty("database.url");
@@ -62,9 +60,8 @@ public class EmployeeDao {
         }
     }
 
-    public synchronized Employee get(int id) {
-        try (PreparedStatement prepareStatement = this.connection.prepareStatement(SELECT_BY_ID))
-        {
+    public Employee get(int id) {
+        try (PreparedStatement prepareStatement = this.connection.prepareStatement(SELECT_BY_ID)) {
             prepareStatement.setInt(1, id);
             try (ResultSet resultSet = prepareStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -79,16 +76,20 @@ public class EmployeeDao {
         }
     }
 
-    public synchronized void persist(Employee employee) {
+    public void persist(Employee employee) {
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(INSERT)) {
-//            prepareStatement.setInt(15, id);
             prepareStatement.setString(1, employee.getName());
             prepareStatement.setString(2, employee.getSurname());
             prepareStatement.setString(3, employee.getPhone());
             prepareStatement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
-
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
@@ -104,15 +105,12 @@ public class EmployeeDao {
             connection.commit();
         } catch (SQLException e) {
             // TODO Auto-generated catch  block
-
             e.printStackTrace();
             try {
                 connection.rollback();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-
-
         }
     }
 
@@ -153,13 +151,18 @@ public class EmployeeDao {
 //                    "phone_work=?, chief_id=?, address=?, department_id=? " +
 //                    "WHERE id=?";
             prepareStatement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
-
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
 
-    public synchronized List<Employee> getAll() {
+    public List<Employee> getAll() {
         try (ResultSet resultSet = this.connection.createStatement()
                 .executeQuery(SELECT_ALL)) {
             List<Employee> employees = new ArrayList<>();
@@ -185,35 +188,45 @@ public class EmployeeDao {
         return employee;
     }
 
-    private void setChiefIdToNull(int id)
-    {
+    private void setChiefIdToNull(int id) {
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(UPDATE_CHIEF_ID_WITH_NULL)) {
             prepareStatement.setInt(1, id);
             prepareStatement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             // TODO Auto-generated catch  block
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
             e.printStackTrace();
         } finally {
             System.out.println("Employee setChiefIdToNull is set");
             List<Employee> employees = getAll();
-            for (Employee e: employees
+            for (Employee e : employees
                     ) {
                 System.out.println(e);
             }
         }
     }
 
-    public void updateEmployeeDepartmentWithNull(int id)
-    {
+    public void updateEmployeeDepartmentWithNull(int id) {
         try (PreparedStatement prepareStatement = this.connection
-            .prepareStatement(UPDATE_EMPLOYEE_DEPARTMENT_WITH_NULL)) {
-        prepareStatement.setInt(1, id);
-        prepareStatement.executeUpdate();
-    } catch (SQLException e) {
-        // TODO Auto-generated catch  block
-        e.printStackTrace();
-    }
+                .prepareStatement(UPDATE_EMPLOYEE_DEPARTMENT_WITH_NULL)) {
+            prepareStatement.setInt(1, id);
+            prepareStatement.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch  block
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        }
     }
 
 }

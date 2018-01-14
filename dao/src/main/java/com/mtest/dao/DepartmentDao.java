@@ -71,12 +71,17 @@ public class DepartmentDao {
     public void persist(Department department) {
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(INSERT)) {
-//            prepareStatement.setInt(3, department.getId());
             prepareStatement.setString(1, department.getName());
             prepareStatement.setInt(2, department.getChief_id());
             prepareStatement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
-
+            // TODO Auto-generated catch  block
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
@@ -89,8 +94,15 @@ public class DepartmentDao {
                 .prepareStatement(DELETE_BY_ID)) {
             prepareStatement.setInt(1, id);
             prepareStatement.executeUpdate();
+            int tmp; // TODO clean duplicated code int tmp
+            connection.commit();
         } catch (SQLException e) {
-            // TODO Auto-generated catch  block
+            // TODO Auto-generated catch block
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
@@ -106,7 +118,14 @@ public class DepartmentDao {
             prepareStatement.setInt(2, department.getChief_id());
             prepareStatement.setInt(3, department.getId());
             prepareStatement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
+            // TODO Auto-generated catch  block
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
             e.printStackTrace();
         }
     }
