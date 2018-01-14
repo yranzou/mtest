@@ -9,7 +9,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.CriteriaQuery;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -92,24 +91,24 @@ public class JpaEmployeeDao implements JpaEmployeeDaoInterface<Employee, Integer
         getCurrentSession().delete(entity);
     }
 
-//    @SuppressWarnings("unchecked")
-//    public List<Employee> findAll() {
-//        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Idea_Hibernate");
-//        EntityManager entityManager = entityManagerFactory.createEntityManager();
-//        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-//        javax.persistence.criteria.CriteriaQuery<Object> criteriaQuery = criteriaBuilder.createQuery();
-//        Root<Employee> from = criteriaQuery.from(Employee.class);
-//        javax.persistence.criteria.CriteriaQuery<Object> select = criteriaQuery.select(from);
-//
-//
-//        List<Employee> employees = (List<Employee>) getCurrentSession().createQuery(select).list();
-//        return employees;
-//    }
+    @SuppressWarnings("unchecked")
+    public List<Employee> findAll() {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Idea_Hibernate");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        javax.persistence.criteria.CriteriaQuery<Object> criteriaQuery = criteriaBuilder.createQuery();
+        Root<Employee> from = criteriaQuery.from(Employee.class);
+        javax.persistence.criteria.CriteriaQuery<Object> select = criteriaQuery.select(from);
 
-//    public void deleteAll() {
-//        List<Employee> entityList = findAll();
-//        for (Employee entity : entityList) {
-//            delete(entity);
-//        }
-//    }
+
+        List employees = getCurrentSession().createQuery(select).list();
+        return (List<Employee>) employees;
+    }
+
+    public void deleteAll() {
+        List<Employee> entityList = findAll();
+        for (Employee entity : entityList) {
+            delete(entity);
+        }
+    }
 }

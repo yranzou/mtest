@@ -9,6 +9,7 @@ public class Employee {
     private String name;
     private String surname;
     private String phone;
+    private int chief_id;
 
     public int getId() {
         return id;
@@ -42,6 +43,14 @@ public class Employee {
         this.phone = phone;
     }
 
+    public int getChief_id() {
+        return chief_id;
+    }
+
+    public void setChief_id(int chief_id) {
+        this.chief_id = chief_id;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -53,6 +62,8 @@ public class Employee {
         builder.append(surname);
         builder.append(", phone=");
         builder.append(phone);
+        builder.append(", chief_id=");
+        builder.append(chief_id);
         builder.append("]");
         return builder.toString();
     }

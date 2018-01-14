@@ -19,9 +19,11 @@ public class DepartmentDao {
     private static final String DELETE_BY_ID = "DELETE FROM department WHERE id=?";
 
     private static final String UPDATE = "UPDATE department " +
-            "SET 'name'=?, chief_id=? WHERE id=?";
-    private static final String INSERT = "INSERT INTO department " +
-            "VALUES ('name'=?, cief_id=?)";
+            "SET `name`=?, chief_id=? WHERE id=?";
+    private static final String UPDATE_CHIEF_ID_WITH_NULL = "UPDATE department " +
+            "SET `chief_id`=NULL WHERE chief_id=?";
+    private static final String INSERT = "INSERT INTO department (`name`, `chief_id`) " +
+            "VALUES (?, ?)";
 
     private Connection connection;
 
@@ -69,9 +71,9 @@ public class DepartmentDao {
     public void persist(Department department) {
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(INSERT)) {
-//            prepareStatement.setInt(15, id);
+//            prepareStatement.setInt(3, department.getId());
             prepareStatement.setString(1, department.getName());
-            prepareStatement.setString(2, department.getChief_id());
+            prepareStatement.setInt(2, department.getChief_id());
             prepareStatement.executeUpdate();
         } catch (SQLException e) {
 
@@ -80,6 +82,9 @@ public class DepartmentDao {
     }
 
     public void delete(int id) {
+        EmployeeDao employeeDao = new EmployeeDao();
+        employeeDao.updateEmployeeDepartmentWithNull(id);
+
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(DELETE_BY_ID)) {
             prepareStatement.setInt(1, id);
@@ -90,15 +95,42 @@ public class DepartmentDao {
         }
     }
 
+    public void delete(Department department) {
+        delete(department.getId());
+    }
+
     public void update(Department department) {
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(UPDATE)) {
             prepareStatement.setString(1, department.getName());
-            prepareStatement.setString(2, department.getChief_id());
+            prepareStatement.setInt(2, department.getChief_id());
             prepareStatement.setInt(3, department.getId());
             prepareStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void updateChiefIdWithNull(int chief_id) {
+        try (PreparedStatement prepareStatement = this.connection
+                .prepareStatement(UPDATE_CHIEF_ID_WITH_NULL)) {
+            prepareStatement.setInt(1, chief_id);
+            prepareStatement.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } finally {
+            System.out.println("Department setChiefIdToNull is set");
+            List<Department> departments = getAll();
+            for (Department d: departments
+                 ) {
+                System.out.println(d);
+            }
         }
     }
 
@@ -122,9 +154,9 @@ public class DepartmentDao {
         Department department = new Department();
         department.setId(resultSet.getInt("id"));
         department.setName(resultSet.getString("name"));
-        department.setChief_id(resultSet.getString("chief_id"));
-
+        department.setChief_id(resultSet.getInt("chief_id"));
         return department;
     }
+
 
 }

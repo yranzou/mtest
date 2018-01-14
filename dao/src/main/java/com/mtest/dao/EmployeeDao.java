@@ -31,8 +31,10 @@ public class EmployeeDao {
         "SET `name`=?, surname=?, phone_private=? WHERE id=?";
     private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`) " +
             "VALUES (?, ?, ?)";
-    private static final String UPDATE_BY_CHIEF_ID = "UPDATE employee " +
+    private static final String UPDATE_CHIEF_ID_WITH_NULL = "UPDATE employee " +
             "SET chief_id=NULL WHERE chief_id=?";
+    private static final String UPDATE_EMPLOYEE_DEPARTMENT_WITH_NULL = "UPDATE employee " +
+            "SET department_id=NULL WHERE department_id=?";
 
     private Connection connection;
 
@@ -91,27 +93,26 @@ public class EmployeeDao {
         }
     }
 
-    private synchronized void setChiefIdToNull(int id)
-    {
-        try (PreparedStatement prepareStatement = this.connection
-                .prepareStatement(UPDATE_BY_CHIEF_ID)) {
-            prepareStatement.setInt(1, id);
-            prepareStatement.executeUpdate();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch  block
-            e.printStackTrace();
-        }
-    }
-
-    public synchronized void delete(int id) {
+    public void delete(int id) {
         setChiefIdToNull(id);
+        DepartmentDao departmentDao = new DepartmentDao();
+        departmentDao.updateChiefIdWithNull(id);
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(DELETE_BY_ID)) {
             prepareStatement.setInt(1, id);
             prepareStatement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             // TODO Auto-generated catch  block
+
             e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+
+
         }
     }
 
@@ -173,14 +174,46 @@ public class EmployeeDao {
         }
     }
 
-    private synchronized Employee createEmployeeFromResult(ResultSet resultSet)
+    private Employee createEmployeeFromResult(ResultSet resultSet)
             throws SQLException {
         Employee employee = new Employee();
         employee.setId(resultSet.getInt("id"));
         employee.setName(resultSet.getString("name"));
         employee.setSurname(resultSet.getString("surname"));
         employee.setPhone(resultSet.getString("phone_private"));
+        employee.setChief_id(resultSet.getInt("chief_id"));
         return employee;
+    }
+
+    private void setChiefIdToNull(int id)
+    {
+        try (PreparedStatement prepareStatement = this.connection
+                .prepareStatement(UPDATE_CHIEF_ID_WITH_NULL)) {
+            prepareStatement.setInt(1, id);
+            prepareStatement.executeUpdate();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch  block
+            e.printStackTrace();
+        } finally {
+            System.out.println("Employee setChiefIdToNull is set");
+            List<Employee> employees = getAll();
+            for (Employee e: employees
+                    ) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    public void updateEmployeeDepartmentWithNull(int id)
+    {
+        try (PreparedStatement prepareStatement = this.connection
+            .prepareStatement(UPDATE_EMPLOYEE_DEPARTMENT_WITH_NULL)) {
+        prepareStatement.setInt(1, id);
+        prepareStatement.executeUpdate();
+    } catch (SQLException e) {
+        // TODO Auto-generated catch  block
+        e.printStackTrace();
+    }
     }
 
 }

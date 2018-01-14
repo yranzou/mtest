@@ -9,10 +9,17 @@ import org.junit.runners.Suite;
  */
 @RunWith(Categories.class)
 @Categories.IncludeCategory({
-        TestCRUDEmployee.Create.class,
-        TestCRUDEmployee.Read.class,
-        TestCRUDEmployee.Update.class,
+//        TestCRUDEmployee.Create.class,
+//        TestCRUDEmployee.Read.class,
+//        TestCRUDEmployee.Update.class,
         TestCRUDEmployee.Destroy.class,
+//        TestCRUDDepartment.Create.class,
+//        TestCRUDDepartment.Read.class,
+//        TestCRUDDepartment.Update.class,
+//        TestCRUDDepartment.Destroy.class,
+
+
+
 //        TestChecks.TestId.class,
 //        TestChecks.TestMail.class,
 //        TestChecks.TestName.class,
@@ -20,7 +27,9 @@ import org.junit.runners.Suite;
 //        TestChecks.TestPrice.class,
 //        TestChecks.TestQtyRequired.class
 })
-@Suite.SuiteClasses({TestCRUDEmployee.class})
+@Suite.SuiteClasses({
+        TestCRUDEmployee.class,
+        TestCRUDDepartment.class})
 public class RunTests {
     @Before
     public void init() {

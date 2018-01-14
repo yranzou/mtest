@@ -6,7 +6,7 @@ package com.mtest.model;
 public class Department {
     private int id;
     private String name;
-    private String chief_id;
+    private int chief_id;
 
     public int getId() {
         return id;
@@ -24,11 +24,11 @@ public class Department {
         this.name = name;
     }
 
-    public String getChief_id() {
+    public int getChief_id() {
         return chief_id;
     }
 
-    public void setChief_id(String chief_id) {
+    public void setChief_id(int chief_id) {
         this.chief_id = chief_id;
     }
 

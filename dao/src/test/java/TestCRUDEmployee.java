@@ -1,6 +1,5 @@
 import com.mtest.dao.EmployeeDao;
 import com.mtest.model.Employee;
-import com.sun.org.apache.regexp.internal.RE;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,17 +11,17 @@ import java.util.List;
  *  Created by yuri on 04.01.18.
  */
 public class TestCRUDEmployee {
-    public interface Create { /* category marker */ }
-    public interface Read { /* category marker */ }
-    public interface Update { /* category marker */ }
-    public interface Destroy { /* category marker */ }
+    interface Create { /* category marker */ }
+    interface Read { /* category marker */ }
+    interface Update { /* category marker */ }
+    interface Destroy { /* category marker */ }
 
-    public EmployeeDao employeeDao;
-    public int testId;
-    Employee employee;
-    Employee emp2;
+    private EmployeeDao employeeDao;
+    private int testId;
+    private Employee employee;
+    private Employee emp2;
 
-    List<Employee> employees;
+    private List<Employee> employees;
     @Before
     public void init()
     {
@@ -41,24 +40,28 @@ public class TestCRUDEmployee {
     @Category(Create.class)
     public void createEmployee() {
 
+
         employeeDao.persist(employee);
-        employees = employeeDao.getAll();
-        for (Employee emp:employees
-                ) {
-            System.out.println(emp.getSurname());
-            if (emp.getSurname().equals("Kusanagi"))
-                emp2 = emp;
 
-        }
+//        employees = employeeDao.getAll();
+//        for (Employee emp:employees
+//                ) {
+//            System.out.println(emp.getSurname());
+//            if (emp.getSurname().equals("Kusanagi"))
+//                emp2 = emp;
+//
+//        }
+//
+//        Assert.assertEquals("Expected Motoko", "Motoko", emp2.getName());
+//        Assert.assertEquals("Expected Kusanagi", "Kusanagi", emp2.getSurname());
 
-        Assert.assertEquals("Expected Motoko", "Motoko", emp2.getName());
-        Assert.assertEquals("Expected Kusanagi", "Kusanagi", emp2.getSurname());
     }
 
 
     @Test
     @Category(Read.class)
     public void selectBySurname() {
+
 
         Employee emp3 = new Employee();
         List<Employee> employees;
@@ -101,23 +104,17 @@ public class TestCRUDEmployee {
     @Test
     @Category(Destroy.class)
     public void delete() {
-
-        employeeDao.delete(employeeDao.get(1));
-        Assert.assertEquals("Expected Null", null, employeeDao.get(1));
-
+        int id_c = 3;
+        employeeDao.delete(employeeDao.get(id_c));
+        Assert.assertEquals("Expected Null", null, employeeDao.get(id_c));
     }
 
-    @Test
-    @Category(Destroy.class)
-    public void deleteById() {
-        employeeDao.delete(22);
-//        List<Employee> employees = employeeDao.getAll();
-//        for (Employee emp:employees
-//                ) {
-//            System.out.println(emp.getSurname());
-//        }
-        Assert.assertEquals("Expected Null", null, employeeDao.get(22));
-    }
+//    @Test
+//    @Category(Destroy.class)
+//    public void deleteById() {
+//        employeeDao.delete(3);
+//        Assert.assertEquals("Expected Null", null, employeeDao.get(3));
+//    }
 
 
 }

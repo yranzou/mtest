@@ -9,6 +9,9 @@
         <module>jpadao</module>
         <module>hmodel</module>
         <module>hservice</module>
+        <module>view</module>
+        <module>server</module>
+        <module>console-ui</module>
     </modules>
 
     <properties>

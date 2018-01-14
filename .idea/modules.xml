@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/console-ui/console-ui.iml" filepath="$PROJECT_DIR$/console-ui/console-ui.iml" />
       <module fileurl="file://$PROJECT_DIR$/dao/dao.iml" filepath="$PROJECT_DIR$/dao/dao.iml" />
       <module fileurl="file://$PROJECT_DIR$/hmodel/hmodel.iml" filepath="$PROJECT_DIR$/hmodel/hmodel.iml" />
       <module fileurl="file://$PROJECT_DIR$/hservice/hservice.iml" filepath="$PROJECT_DIR$/hservice/hservice.iml" />
@@ -9,6 +10,8 @@
       <module fileurl="file://$PROJECT_DIR$/jpadao/jpadao.iml" filepath="$PROJECT_DIR$/jpadao/jpadao.iml" />
       <module fileurl="file://$PROJECT_DIR$/model/model.iml" filepath="$PROJECT_DIR$/model/model.iml" />
       <module fileurl="file://$PROJECT_DIR$/mtest.iml" filepath="$PROJECT_DIR$/mtest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server/server.iml" filepath="$PROJECT_DIR$/server/server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/view/view.iml" filepath="$PROJECT_DIR$/view/view.iml" />
       <module fileurl="file://$PROJECT_DIR$/webapp/webapp.iml" filepath="$PROJECT_DIR$/webapp/webapp.iml" />
     </modules>
   </component>

@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <resourceExtensions />
+    <wildcardResourcePatterns>
+      <entry name="!?*.java" />
+      <entry name="!?*.form" />
+      <entry name="!?*.class" />
+      <entry name="!?*.groovy" />
+      <entry name="!?*.scala" />
+      <entry name="!?*.flex" />
+      <entry name="!?*.kt" />
+      <entry name="!?*.clj" />
+      <entry name="!?*.aj" />
+    </wildcardResourcePatterns>
     <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+      <profile default="false" name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="console-ui" />
         <module name="dao" />
         <module name="hmodel" />
         <module name="hservice" />
@@ -13,17 +30,21 @@
         <module name="jpadao" />
         <module name="lesson16" />
         <module name="model" />
+        <module name="server" />
         <module name="untitled" />
+        <module name="view" />
         <module name="webapp" />
       </profile>
-      <profile name="Annotation profile for mtest" enabled="true">
+      <profile default="false" name="Annotation profile for mtest" enabled="true">
         <sourceOutputDir name="../untitled/target/generated-sources/annotations" />
         <sourceTestOutputDir name="../untitled/target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
         <module name="webapptest" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="console-ui" target="1.7" />
       <module name="dao" target="1.7" />
       <module name="hmodel" target="1.7" />
       <module name="hservice" target="1.7" />
@@ -31,6 +52,8 @@
       <module name="jpadao" target="1.7" />
       <module name="model" target="1.7" />
       <module name="mtest" target="1.7" />
+      <module name="server" target="1.7" />
+      <module name="view" target="1.7" />
       <module name="webapp" target="1.7" />
       <module name="webui" target="1.7" />
     </bytecodeTargetLevel>
