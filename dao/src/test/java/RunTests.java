@@ -7,6 +7,7 @@ import org.junit.runners.Suite;
 /**
  * Created by yuri on 04.01.18.
  */
+
 @RunWith(Categories.class)
 @Categories.IncludeCategory({
         TestCRUDEmployee.Create.class,

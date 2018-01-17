@@ -93,12 +93,12 @@ public class TestCRUDDepartment {
         Assert.assertEquals("Expected MegaFans", "MegaFans", department.getName());
     }
 
-//    @Test
-//    @Category(TestCRUDDepartment.Destroy.class)
-//    public void delete() {
-//        departmentDao.delete(departmentDao.get(1));
-//        Assert.assertEquals("Expected Null", null, departmentDao.get(1));
-//    }
+    @Test
+    @Category(TestCRUDDepartment.Destroy.class)
+    public void delete() {
+        departmentDao.delete(departmentDao.get(1));
+        Assert.assertEquals("Expected Null", null, departmentDao.get(1));
+    }
 
     @Test
     @Category(TestCRUDDepartment.Destroy.class)

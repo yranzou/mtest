@@ -26,7 +26,7 @@ public class TestCRUDEmployee {
     public void init()
     {
         employeeDao = new EmployeeDao();
-         employee = new Employee();
+        employee = new Employee();
         employee.setName("Motoko");
         employee.setSurname("Kusanagi");
         employee.setPhone("9163337733");
@@ -43,17 +43,17 @@ public class TestCRUDEmployee {
 
         employeeDao.persist(employee);
 
-//        employees = employeeDao.getAll();
-//        for (Employee emp:employees
-//                ) {
-//            System.out.println(emp.getSurname());
-//            if (emp.getSurname().equals("Kusanagi"))
-//                emp2 = emp;
-//
-//        }
-//
-//        Assert.assertEquals("Expected Motoko", "Motoko", emp2.getName());
-//        Assert.assertEquals("Expected Kusanagi", "Kusanagi", emp2.getSurname());
+        employees = employeeDao.getAll();
+        for (Employee emp:employees
+                ) {
+            System.out.println(emp.getSurname());
+            if (emp.getSurname().equals("Kusanagi"))
+                emp2 = emp;
+
+        }
+
+        Assert.assertEquals("Expected Motoko", "Motoko", emp2.getName());
+        Assert.assertEquals("Expected Kusanagi", "Kusanagi", emp2.getSurname());
 
     }
 
@@ -104,17 +104,18 @@ public class TestCRUDEmployee {
     @Test
     @Category(Destroy.class)
     public void delete() {
-        int id_c = 3;
+        int id_c = 22;
         employeeDao.delete(employeeDao.get(id_c));
         Assert.assertEquals("Expected Null", null, employeeDao.get(id_c));
     }
 
-//    @Test
-//    @Category(Destroy.class)
-//    public void deleteById() {
-//        employeeDao.delete(3);
-//        Assert.assertEquals("Expected Null", null, employeeDao.get(3));
-//    }
+
+    @Test
+    @Category(Destroy.class)
+    public void deleteById() {
+        employeeDao.delete(40);
+        Assert.assertEquals("Expected Null", null, employeeDao.get(40));
+    }
 
 
 }
