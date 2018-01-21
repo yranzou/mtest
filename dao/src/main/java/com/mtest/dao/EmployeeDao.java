@@ -1,6 +1,7 @@
 package com.mtest.dao;
 
 
+import com.mtest.model.Department;
 import com.mtest.model.Employee;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ public class EmployeeDao {
     //    private static final String SELECT_ALL = "SELECT * FROM EMPLOYEE_TBL";
 //
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE id=?";
-    //    private static final String SELECT_BY_ID = SELECT_ALL + " WHERE EMP_ID=?";
+    private static final String SELECT_BY_DEPARTMENT_ID = SELECT_ALL + " WHERE department_id=?";
     private static final String DELETE_BY_ID = "DELETE FROM employee WHERE id=?";
     //    private static final String DELETE_BY_ID = "DELETE FROM EMPLOYEE_TBL WHERE id=?";
 //    private static final String UPDATE = "UPDATE employee " +
@@ -34,6 +35,7 @@ public class EmployeeDao {
             "SET chief_id=NULL WHERE chief_id=?";
     private static final String UPDATE_EMPLOYEE_DEPARTMENT_WITH_NULL = "UPDATE employee " +
             "SET department_id=NULL WHERE department_id=?";
+
 
     private Connection connection;
 
@@ -165,6 +167,22 @@ public class EmployeeDao {
     public List<Employee> getAll() {
         try (ResultSet resultSet = this.connection.createStatement()
                 .executeQuery(SELECT_ALL)) {
+            List<Employee> employees = new ArrayList<>();
+            while (resultSet.next()) {
+                employees.add(createEmployeeFromResult(resultSet));
+            }
+            return employees;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Employee> getSubordinates(Department department)
+    {
+        try (ResultSet resultSet = this.connection.createStatement()
+                .executeQuery(SELECT_BY_DEPARTMENT_ID)) {
             List<Employee> employees = new ArrayList<>();
             while (resultSet.next()) {
                 employees.add(createEmployeeFromResult(resultSet));
