@@ -106,7 +106,7 @@ public class EmployeeDao {
             prepareStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
-            // TODO Auto-generated catch  block
+            // TODO Auto-generated catch block
             e.printStackTrace();
             try {
                 connection.rollback();
@@ -181,15 +181,17 @@ public class EmployeeDao {
 
     public List<Employee> getSubordinates(Department department)
     {
-        try (ResultSet resultSet = this.connection.createStatement()
-                .executeQuery(SELECT_BY_DEPARTMENT_ID)) {
-            List<Employee> employees = new ArrayList<>();
-            while (resultSet.next()) {
-                employees.add(createEmployeeFromResult(resultSet));
+        try (PreparedStatement prepareStatement = this.connection.prepareStatement(SELECT_BY_DEPARTMENT_ID)) {
+            prepareStatement.setInt(1, department.getId());
+            try (ResultSet resultSet = prepareStatement.executeQuery()) {
+                List<Employee> employees = new ArrayList<>();
+                while (resultSet.next()) {
+                    employees.add(createEmployeeFromResult(resultSet));
+                }
+                return employees;
             }
-            return employees;
         } catch (SQLException e) {
-            // TODO Auto-generated catch block//
+            // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
         }
