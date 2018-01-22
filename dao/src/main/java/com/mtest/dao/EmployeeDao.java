@@ -179,7 +179,7 @@ public class EmployeeDao {
         }
     }
 
-    public List<Employee> getSubordinates(Department department)
+    public List<Employee> getEmployees(Department department)
     {
         try (PreparedStatement prepareStatement = this.connection.prepareStatement(SELECT_BY_DEPARTMENT_ID)) {
             prepareStatement.setInt(1, department.getId());
@@ -196,6 +196,8 @@ public class EmployeeDao {
             return null;
         }
     }
+
+    public getSubordinates(Employee leader);
 
     private Employee createEmployeeFromResult(ResultSet resultSet)
             throws SQLException {
@@ -232,7 +234,7 @@ public class EmployeeDao {
         }
     }
 
-    public void updateEmployeeDepartmentWithNull(int id) {
+    void updateEmployeeDepartmentWithNull(int id) {
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(UPDATE_EMPLOYEE_DEPARTMENT_WITH_NULL)) {
             prepareStatement.setInt(1, id);
