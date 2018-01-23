@@ -16,17 +16,10 @@ import java.util.Properties;
 public class EmployeeDao {
 
     private static final String SELECT_ALL = "SELECT * FROM employee";
-    //    private static final String SELECT_ALL = "SELECT * FROM EMPLOYEE_TBL";
-//
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE id=?";
     private static final String SELECT_BY_DEPARTMENT_ID = SELECT_ALL + " WHERE department_id=?";
+    private static final String SELECT_BY_CHIEF_ID = SELECT_ALL + " WHERE chief_id=?";
     private static final String DELETE_BY_ID = "DELETE FROM employee WHERE id=?";
-    //    private static final String DELETE_BY_ID = "DELETE FROM EMPLOYEE_TBL WHERE id=?";
-//    private static final String UPDATE = "UPDATE employee " +
-//        "SET 'name'=?, middle_name=?, birthdate=?, address_home=?, " +
-//        "address_work=?, email=?, icq=?, skype=?, info=?, phone_private=?, " +
-//        "phone_work=?, chief_id=?, address=?, department_id=? " +
-//        "WHERE id=?";
     private static final String UPDATE = "UPDATE employee " +
             "SET `name`=?, surname=?, phone_private=? WHERE id=?";
     private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`) " +
@@ -117,14 +110,6 @@ public class EmployeeDao {
     }
 
     public synchronized void delete(Employee employee) {
-//        try (PreparedStatement prepareStatement = this.connection
-//                .prepareStatement(DELETE_BY_ID)) {
-//            prepareStatement.setInt(1, employee.getId());
-//            prepareStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch  block
-//            e.printStackTrace();
-//        }
         delete(employee.getId());
     }
 
@@ -136,22 +121,6 @@ public class EmployeeDao {
             prepareStatement.setString(2, employee.getSurname());
             prepareStatement.setString(3, employee.getPhone());
             prepareStatement.setInt(4, employee.getId());
-//            prepareStatement.set(5, employee.);
-//            prepareStatement.set(6, employee.);
-//            prepareStatement.set(7, employee.);
-//            prepareStatement.set(8, employee.);
-//            prepareStatement.set(9, employee.);
-//            prepareStatement.set(10, employee.);
-//            prepareStatement.set(11, employee.);
-//            prepareStatement.set(12, employee.);
-//            prepareStatement.set(13, employee.);
-//            prepareStatement.set(14, employee.);
-//            prepareStatement.set(15, employee.);
-
-//                    middle_name=?, birthdate=?, address_home=?, " +
-//            "address_work=?, email=?, icq=?, skype=?, info=?, phone_private=?, " +
-//                    "phone_work=?, chief_id=?, address=?, department_id=? " +
-//                    "WHERE id=?";
             prepareStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
@@ -179,10 +148,19 @@ public class EmployeeDao {
         }
     }
 
-    public List<Employee> getEmployees(Department department)
+    public List<Employee> getCoworkers(Department department)
     {
-        try (PreparedStatement prepareStatement = this.connection.prepareStatement(SELECT_BY_DEPARTMENT_ID)) {
-            prepareStatement.setInt(1, department.getId());
+        return getEmployees(SELECT_BY_DEPARTMENT_ID, department.getId());
+    }
+
+    public List<Employee> getSubordinates(Employee leader) {
+        return getEmployees(SELECT_BY_CHIEF_ID, leader.getId());
+        
+    }
+
+    private List<Employee> getEmployees(String query, int id) {
+        try (PreparedStatement prepareStatement = this.connection.prepareStatement(query)) {
+            prepareStatement.setInt(1, id);
             try (ResultSet resultSet = prepareStatement.executeQuery()) {
                 List<Employee> employees = new ArrayList<>();
                 while (resultSet.next()) {
@@ -196,8 +174,6 @@ public class EmployeeDao {
             return null;
         }
     }
-
-    public getSubordinates(Employee leader);
 
     private Employee createEmployeeFromResult(ResultSet resultSet)
             throws SQLException {
