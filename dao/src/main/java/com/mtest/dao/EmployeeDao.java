@@ -21,7 +21,7 @@ public class EmployeeDao {
     private static final String SELECT_BY_CHIEF_ID = SELECT_ALL + " WHERE chief_id=?";
     private static final String DELETE_BY_ID = "DELETE FROM employee WHERE id=?";
     private static final String UPDATE = "UPDATE employee " +
-            "SET `name`=?, surname=?, phone_private=? WHERE id=?";
+            "SET `name`=?, surname=?, phone_private=?, department_id=?, chief_id=? WHERE id=?";
     private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`) " +
             "VALUES (?, ?, ?)";
     private static final String UPDATE_CHIEF_ID_WITH_NULL = "UPDATE employee " +
@@ -120,7 +120,9 @@ public class EmployeeDao {
             prepareStatement.setString(1, employee.getName());
             prepareStatement.setString(2, employee.getSurname());
             prepareStatement.setString(3, employee.getPhone());
-            prepareStatement.setInt(4, employee.getId());
+            prepareStatement.setInt(4,employee.getDepartmentId());
+            prepareStatement.setInt(5,employee.getChiefId());
+            prepareStatement.setInt(6, employee.getId());
             prepareStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
@@ -155,7 +157,7 @@ public class EmployeeDao {
 
     public List<Employee> getSubordinates(Employee leader) {
         return getEmployees(SELECT_BY_CHIEF_ID, leader.getId());
-        
+
     }
 
     private List<Employee> getEmployees(String query, int id) {
@@ -182,7 +184,8 @@ public class EmployeeDao {
         employee.setName(resultSet.getString("name"));
         employee.setSurname(resultSet.getString("surname"));
         employee.setPhone(resultSet.getString("phone_private"));
-        employee.setChief_id(resultSet.getInt("chief_id"));
+        employee.setChiefId(resultSet.getInt("chief_id"));
+        employee.setDepartmentId(resultSet.getInt("department_id"));
         return employee;
     }
 

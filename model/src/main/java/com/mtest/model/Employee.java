@@ -9,7 +9,8 @@ public class Employee {
     private String name;
     private String surname;
     private String phone;
-    private int chief_id;
+    private int chiefId;
+    private int departmentId;
 
     public int getId() {
         return id;
@@ -43,12 +44,20 @@ public class Employee {
         this.phone = phone;
     }
 
-    public int getChief_id() {
-        return chief_id;
+    public int getChiefId() {
+        return chiefId;
     }
 
-    public void setChief_id(int chief_id) {
-        this.chief_id = chief_id;
+    public void setChiefId(int chief_id) {
+        this.chiefId = chiefId;
+    }
+
+    public int getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(int departmentId) {
+        this.departmentId = departmentId;
     }
 
     @Override
