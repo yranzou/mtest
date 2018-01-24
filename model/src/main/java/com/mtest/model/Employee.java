@@ -72,7 +72,7 @@ public class Employee {
         builder.append(", phone=");
         builder.append(phone);
         builder.append(", chief_id=");
-        builder.append(chief_id);
+        builder.append(chiefId);
         builder.append("]");
         return builder.toString();
     }

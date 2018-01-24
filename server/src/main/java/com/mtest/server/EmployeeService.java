@@ -9,30 +9,33 @@ import java.util.List;
 /**
  * Created by yuri on 20.01.18.
  */
-public class EmployeeService implements Service {
-    EmployeeDao employeeDao;
+public class EmployeeService {
+    private EmployeeDao employeeDao;
 
-    List<Employee> getEmployees(Department department) {
+    public EmployeeService() {
         employeeDao = new EmployeeDao();
-        employeeDao.
     }
 
-    List<Employee> getSubordinates(Employee leader) {
-        return null;
+    public List<Employee> getCoworkers(Department department) {
+        return employeeDao.getCoworkers(department);
     }
 
-    @Override
-    public void create() {
-
+    public List<Employee> getSubordinates(Employee leader) {
+        return employeeDao.getSubordinates(leader);
     }
 
-    @Override
-    public void update() {
 
+    public void create(Employee employee) {
+        employeeDao.persist(employee);
     }
 
-    @Override
-    public void delete() {
 
+    public void update(Employee employee) {
+        employeeDao.update(employee);
+    }
+
+
+    public void delete(Employee employee) {
+        employeeDao.delete(employee);
     }
 }

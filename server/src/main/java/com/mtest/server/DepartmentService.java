@@ -1,21 +1,28 @@
 package com.mtest.server;
 
+import com.mtest.dao.DepartmentDao;
+import com.mtest.model.Department;
+
 /**
  * Created by yuri on 20.01.18.
  */
-public class DepartmentService implements Service {
-    @Override
-    public void create() {
-
+public class DepartmentService{
+    private DepartmentDao departmentDao;
+    public DepartmentService() {
+        departmentDao = new DepartmentDao();
     }
 
-    @Override
-    public void update() {
-
+    public void create(Department department) {
+        departmentDao.persist(department);
     }
 
-    @Override
-    public void delete() {
 
+    public void update(Department department) {
+        departmentDao.update(department);
+    }
+
+
+    public void delete(Department department) {
+        departmentDao.delete(department);
     }
 }
