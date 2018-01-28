@@ -9,6 +9,9 @@ import java.util.Scanner;
  * Created by yuri on 27.01.18.
  */
 public class UI {
+    private String phone;
+    private String name;
+    private String surname;
     private Scanner sc;
     private EmployeeService employeeService;
     private DepartmentService departmentService;
@@ -110,14 +113,25 @@ public class UI {
 
     private void employeeUsage(String subCat) {
         System.out.println(subCat + "\n" +
+
+
+
                 "0 - ../\n" +
-                "1 - Enter 'Name' 'Surname' 'Phone' split by space\n");
+                "1 - Set name\n" +
+                "2 - Set surname\n" +
+                "3 - Set phone\n" +
+                "4 - Commit:\n" +
+                "    Name = " + name +
+                "    Surname = " + surname +
+                "    Phone = " + phone);
     }
 
     private void employee(String cat) {
-        String subCat = cat + "Employee/";
         String phone = "";
-        S
+        String name = "";
+        String surname = "";
+        String subCat = cat + "Employee/";
+
         boolean isRun = true;
         employeeUsage(subCat);
         while (isRun) {
@@ -125,20 +139,20 @@ public class UI {
                 String _next = sc.next();
                 switch (_next) {
                     case "1":
-                        employeePersist(subCat);
-                        break;
-                    case "2":
                         employeeSetName(subCat);
                         break;
-                    case "3":
+                    case "2":
                         employeeSetSurname(subCat);
                         break;
-                    case "4":
+                    case "3":
                         employeeSetPhone(subCat);
+                        break;
+                    case "4":
+                        employeePersist(subCat);
                         break;
                     case "0":
                         isRun = false;
-                        System.out.println("wtf");
+//                        System.out.println("wtf");
 
                 }
             }
@@ -153,23 +167,25 @@ public class UI {
     }
 
     private void employeePersist(String cat) {
-        String subCat = cat + "save/";
-        boolean isRun = true;
-        employeePersistUsage(subCat);
-        while (isRun) {
-            if (sc.hasNext()) {
-                String _next = sc.next();
-                switch (_next) {
-                    case "0":
-                        isRun = false;
-                        break;
-                    default:
-                        employeeService.create(_next);
 
-                }
-            }
-        }
-        start();
+        employeeService.create(name, surname, phone);
+//        String subCat = cat + "save/";
+//        boolean isRun = true;
+//        employeePersistUsage(subCat);
+//        while (isRun) {
+//            if (sc.hasNext()) {
+//                String _next = sc.next();
+//                switch (_next) {
+//                    case "0":
+//                        isRun = false;
+//                        break;
+//                    default:
+//                        employeeService.create(_next);
+//
+//                }
+//            }
+//        }
+//        start();
     }
 
     private void employeeSetPhoneUsage(String subCat) {
@@ -190,27 +206,23 @@ public class UI {
                         isRun = false;
                         break;
                     default:
-                        phone =
+                        phone = _next;
 
                 }
             }
         }
     }
 
-    private void employeeSetSurname(String cat) {
-
-    }
-
-    private void employeeSetNameUsage(String subCat) {
+    private void employeeSetSurnameUsage(String subCat) {
         System.out.println(subCat + "\n" +
-                "1 - Enter name\n" +
+                "1 - Enter surname\n" +
                 "0 - Parent dir\n");
     }
 
-    private void employeeSetName(String cat) {
-        String subCat = cat + "SetName/";
+    private void employeeSetSurname(String cat) {
+        String subCat = cat + "SetSurname/";
         boolean isRun = true;
-        employeeSetPhoneUsage(subCat);
+        employeeSetSurnameUsage(subCat);
         while (isRun) {
             if (sc.hasNext()) {
                 String _next = sc.next();
@@ -219,6 +231,34 @@ public class UI {
                         isRun = false;
                         break;
                     default:
+                        surname = _next;
+
+                }
+            }
+        }
+    }
+
+    private void employeeSetNameUsage(String subCat) {
+        System.out.println(subCat + "\n" +
+                "Enter name without spaces\n" +
+                "0 - Parent dir\n");
+    }
+
+    private void employeeSetName(String cat) {
+        String subCat = cat + "SetName/";
+        boolean isRun = true;
+        employeeSetNameUsage(subCat);
+        while (isRun) {
+            if (sc.hasNext()) {
+                String _next = sc.next();
+                switch (_next) {
+                    case "0":
+                        isRun = false;
+                        break;
+                    default:
+                        name = _next;
+                        isRun = false;
+                        break;
 
                 }
             }

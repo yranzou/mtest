@@ -29,16 +29,20 @@ public class EmployeeService {
         employeeDao.persist(employee);
     }
 
-    public void create(String next) {
-        System.out.println(next);
-        String[] args = next.split("\\s+");
+    public void create(String name, String surname, String phone) {
+//        System.out.println(next);
+//        String[] args = next.split("\\s+");
         Employee employee = new Employee();
+//
+//        System.out.println(args[0] + " " + args.length);
+//        System.out.println(args[0] + " " + args[1] + " " + args[2]);
+//        employee.setName(args[0]);
+//        employee.setSurname(args[1]);
+//        employee.setPhone(args[2]);
+        employee.setName(name);
+        employee.setSurname(surname);
+        employee.setPhone(phone);
 
-        System.out.println(args[0] + " " + args.length);
-        System.out.println(args[0] + " " + args[1] + " " + args[2]);
-        employee.setName(args[0]);
-        employee.setSurname(args[1]);
-        employee.setPhone(args[2]);
 
         create(employee);
     }
