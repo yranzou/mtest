@@ -19,14 +19,6 @@ import org.junit.runners.Suite;
         TestCRUDDepartment.Update.class,
         TestCRUDDepartment.Destroy.class,
 
-
-
-//        TestChecks.TestId.class,
-//        TestChecks.TestMail.class,
-//        TestChecks.TestName.class,
-//        TestChecks.TestPhone.class,
-//        TestChecks.TestPrice.class,
-//        TestChecks.TestQtyRequired.class
 })
 @Suite.SuiteClasses({
         TestCRUDEmployee.class,

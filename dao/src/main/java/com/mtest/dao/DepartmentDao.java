@@ -20,8 +20,6 @@ public class DepartmentDao {
 
     private static final String UPDATE = "UPDATE department " +
             "SET `name`=?, chief_id=? WHERE id=?";
-    private static final String UPDATE_CHIEF_ID_WITH_NULL = "UPDATE department " +
-            "SET `chief_id`=NULL WHERE chief_id=?";
     private static final String INSERT = "INSERT INTO department (`name`, `chief_id`) " +
             "VALUES (?, ?)";
 
@@ -87,14 +85,11 @@ public class DepartmentDao {
     }
 
     public void delete(int id) {
-        EmployeeDao employeeDao = new EmployeeDao();
-        employeeDao.updateEmployeeDepartmentWithNull(id);
 
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(DELETE_BY_ID)) {
             prepareStatement.setInt(1, id);
             prepareStatement.executeUpdate();
-            int tmp; // TODO clean duplicated code int tmp
             connection.commit();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -115,7 +110,11 @@ public class DepartmentDao {
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(UPDATE)) {
             prepareStatement.setString(1, department.getName());
-            prepareStatement.setInt(2, department.getChief_id());
+            if (department.getChief_id() == 0) {
+                prepareStatement.setNull(2, department.getChief_id());
+            } else {
+                prepareStatement.setInt(2, department.getChief_id());
+            }
             prepareStatement.setInt(3, department.getId());
             prepareStatement.executeUpdate();
             connection.commit();
@@ -127,29 +126,6 @@ public class DepartmentDao {
                 ex.printStackTrace();
             }
             e.printStackTrace();
-        }
-    }
-
-    public void updateChiefIdWithNull(int chief_id) {
-        try (PreparedStatement prepareStatement = this.connection
-                .prepareStatement(UPDATE_CHIEF_ID_WITH_NULL)) {
-            prepareStatement.setInt(1, chief_id);
-            prepareStatement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                connection.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        } finally {
-            System.out.println("Department setChiefIdToNull is set");
-            List<Department> departments = getAll();
-            for (Department d: departments
-                 ) {
-                System.out.println(d);
-            }
         }
     }
 

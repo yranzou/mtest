@@ -25,10 +25,23 @@ public class EmployeeService {
     }
 
 
-    public void create(Employee employee) {
+    private void create(Employee employee) {
         employeeDao.persist(employee);
     }
 
+    public void create(String next) {
+        System.out.println(next);
+        String[] args = next.split("\\s+");
+        Employee employee = new Employee();
+
+        System.out.println(args[0] + " " + args.length);
+        System.out.println(args[0] + " " + args[1] + " " + args[2]);
+        employee.setName(args[0]);
+        employee.setSurname(args[1]);
+        employee.setPhone(args[2]);
+
+        create(employee);
+    }
 
     public void update(Employee employee) {
         employeeDao.update(employee);
@@ -38,4 +51,5 @@ public class EmployeeService {
     public void delete(Employee employee) {
         employeeDao.delete(employee);
     }
+
 }

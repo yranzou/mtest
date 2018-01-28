@@ -91,10 +91,11 @@ public class TestCRUDEmployee {
                 testId = emp4.getId();
             }
         }
-        System.out.println("In updateByName: " + emp4);
+        System.out.println("before update: " + emp4);
         emp4.setName("Mega");
         emp4.setSurname("Man");
         emp4.setPhone("7000000000");
+        System.out.println("class changed: " + emp4);
         employeeDao.update(emp4);
         employee = employeeDao.get(testId);
         Assert.assertEquals("Expected Mega", "Mega", employee.getName());
@@ -104,7 +105,7 @@ public class TestCRUDEmployee {
     @Test
     @Category(Destroy.class)
     public void delete() {
-        int id_c = 22;
+        int id_c = 1;
         employeeDao.delete(employeeDao.get(id_c));
         Assert.assertEquals("Expected Null", null, employeeDao.get(id_c));
     }
@@ -113,6 +114,7 @@ public class TestCRUDEmployee {
     @Test
     @Category(Destroy.class)
     public void deleteById() {
+        Assert.assertEquals("Expected Employee.class", Employee.class, employeeDao.get(40).getClass());
         employeeDao.delete(40);
         Assert.assertEquals("Expected Null", null, employeeDao.get(40));
     }

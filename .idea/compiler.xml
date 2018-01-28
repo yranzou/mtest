@@ -23,6 +23,7 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="console-ui" />
+        <module name="consoleui" />
         <module name="dao" />
         <module name="hmodel" />
         <module name="hservice" />
@@ -45,6 +46,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="console-ui" target="1.7" />
+      <module name="consoleui" target="1.7" />
       <module name="dao" target="1.7" />
       <module name="hmodel" target="1.7" />
       <module name="hservice" target="1.7" />
