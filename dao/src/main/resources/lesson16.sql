@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.20, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.21, for Linux (x86_64)
 --
 -- Host: localhost    Database: lesson16
 -- ------------------------------------------------------
--- Server version	5.7.20-0ubuntu0.16.04.1
+-- Server version	5.7.21-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,8 +28,8 @@ CREATE TABLE `department` (
   `chief_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `chief_id` (`chief_id`),
-  CONSTRAINT `chief_id_fk` FOREIGN KEY (`chief_id`) REFERENCES `employee` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+  CONSTRAINT `chief_id_fk` FOREIGN KEY (`chief_id`) REFERENCES `employee` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `department` (
 
 LOCK TABLES `department` WRITE;
 /*!40000 ALTER TABLE `department` DISABLE KEYS */;
-INSERT INTO `department` VALUES (1,'FUN',3),(9,'TIME',2);
+INSERT INTO `department` VALUES (1,'FUN',3),(9,'TIME',2),(10,'TEST',1);
 /*!40000 ALTER TABLE `department` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -69,8 +69,8 @@ CREATE TABLE `employee` (
   PRIMARY KEY (`id`),
   KEY `fk_chief_id` (`chief_id`),
   KEY `department_id_fk` (`department_id`),
-  CONSTRAINT `department_id_fk` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`),
-  CONSTRAINT `fk_chief_id` FOREIGN KEY (`chief_id`) REFERENCES `employee` (`id`)
+  CONSTRAINT `fk_chief_id` FOREIGN KEY (`chief_id`) REFERENCES `employee` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `fk_department_id` FOREIGN KEY (`department_id`) REFERENCES `department` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -93,4 +93,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-01-17 22:05:29
+-- Dump completed on 2018-01-28 16:09:09
