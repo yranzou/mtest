@@ -42,9 +42,10 @@ public class UI {
 
     private void create(String cat) {
         String subCat = cat + "Create/";
-        boolean isRun = true;
-        createUsage(subCat);
-        while (isRun) {
+        boolean isxRun = true;
+
+        while (isxRun) {
+            createUsage(subCat);
             if (sc.hasNext()) {
                 String _next = sc.next();
                 switch (_next) {
@@ -52,16 +53,16 @@ public class UI {
                         employee(subCat);
                         break;
                     case "2":
-                        isRun = false;
+                        isxRun = false;
                         department(subCat);
                         break;
                     case "0":
-                        isRun = false;
-
+                        isxRun = false;
+                        break;
                 }
             }
         }
-        start();
+        //start();
     }
 
     private void department(String subCat) {
@@ -71,9 +72,9 @@ public class UI {
     {
         String cat = "\n/CRUD/";
         boolean isRun = true;
-        usage(cat);
-        while (isRun)  {
 
+        while (isRun)  {
+            usage(cat);
             if (sc.hasNext())
             {
                 String _next = sc.next();
@@ -98,12 +99,11 @@ public class UI {
                                 "2 - List subordinates");
                         break;
                     case "0":
-//                        isRun = false;
+                        isRun = false;
                         System.exit(0);
                         break;
-                    default:
-                        usage(cat);
-
+//                    default:
+//                        usage(cat);
                 }
             }
         }
@@ -133,8 +133,9 @@ public class UI {
         String subCat = cat + "Employee/";
 
         boolean isRun = true;
-        employeeUsage(subCat);
+
         while (isRun) {
+            employeeUsage(subCat);
             if (sc.hasNext()) {
                 String _next = sc.next();
                 switch (_next) {
@@ -152,12 +153,13 @@ public class UI {
                         break;
                     case "0":
                         isRun = false;
+                        break;
 //                        System.out.println("wtf");
 
                 }
             }
         }
-        start();
+//        start();
     }
 
     private void employeePersistUsage(String subCat) {
@@ -197,8 +199,8 @@ public class UI {
     private void employeeSetPhone(String cat) {
         String subCat = cat + "SetPhone/";
         boolean isRun = true;
-        employeeSetPhoneUsage(subCat);
         while (isRun) {
+            employeeSetPhoneUsage(subCat);
             if (sc.hasNext()) {
                 String _next = sc.next();
                 switch (_next) {
@@ -207,7 +209,8 @@ public class UI {
                         break;
                     default:
                         phone = _next;
-
+                        isRun = false;
+                        break;
                 }
             }
         }
@@ -258,7 +261,6 @@ public class UI {
                     default:
                         name = _next;
                         isRun = false;
-                        break;
 
                 }
             }
