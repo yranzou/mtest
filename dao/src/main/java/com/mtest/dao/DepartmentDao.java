@@ -70,7 +70,12 @@ public class DepartmentDao {
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(INSERT)) {
             prepareStatement.setString(1, department.getName());
-            prepareStatement.setInt(2, department.getChief_id());
+            if (department.getChiefId() == 0) {
+                prepareStatement.setNull(2, department.getChiefId());
+            }
+            else {
+                prepareStatement.setInt(2, department.getChiefId());
+            }
             prepareStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
@@ -110,10 +115,10 @@ public class DepartmentDao {
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(UPDATE)) {
             prepareStatement.setString(1, department.getName());
-            if (department.getChief_id() == 0) {
-                prepareStatement.setNull(2, department.getChief_id());
+            if (department.getChiefId() == 0) {
+                prepareStatement.setNull(2, department.getChiefId());
             } else {
-                prepareStatement.setInt(2, department.getChief_id());
+                prepareStatement.setInt(2, department.getChiefId());
             }
             prepareStatement.setInt(3, department.getId());
             prepareStatement.executeUpdate();
@@ -149,7 +154,7 @@ public class DepartmentDao {
         Department department = new Department();
         department.setId(resultSet.getInt("id"));
         department.setName(resultSet.getString("name"));
-        department.setChief_id(resultSet.getInt("chief_id"));
+        department.setChiefId(resultSet.getInt("chief_id"));
         return department;
     }
 

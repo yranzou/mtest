@@ -22,7 +22,7 @@ public class UI {
         departmentService = new DepartmentService();
     }
 
-    private void usage(String str) {
+    private void startUsage(String str) {
         System.out.println(
                 str + "\n" +
                 "\n" +
@@ -33,71 +33,13 @@ public class UI {
                 "0 - exit");
     }
 
-    private void createUsage(String subCat) {
-        System.out.println(subCat + "\n" +
-                "1 - Employee\n" +
-                "2 - Department\n" +
-                "0 - Parent dir");
-    }
-
-    private void create(String cat) {
-        String subCat = cat + "Create/";
-        boolean isxRun = true;
-
-        while (isxRun) {
-            createUsage(subCat);
-            if (sc.hasNext()) {
-                String _next = sc.next();
-                switch (_next) {
-                    case "1":
-                        employee(subCat);
-                        break;
-                    case "2":
-                        isxRun = false;
-                        department(subCat);
-                        break;
-                    case "0":
-                        isxRun = false;
-                        break;
-                }
-            }
-        }
-        //start();
-    }
-
-    private void department(String cat) {
-        name = "";
-        String subCat = cat + "Department/";
-
-        boolean isRun = true;
-
-        while (isRun) {
-            employeeUsage(subCat);
-            if (sc.hasNext()) {
-                String _next = sc.next();
-                switch (_next) {
-                    case "1":
-                        departmentSetName(subCat);
-                        break;
-                    case "2":
-                        departmentPersist(subCat);
-                        break;
-                    case "0":
-                        name = "";
-                        isRun = false;
-                        break;
-                }
-            }
-        }
-    }
-
     public void start()
     {
         String cat = "\n/CRUD/";
         boolean isRun = true;
 
         while (isRun)  {
-            usage(cat);
+            startUsage(cat);
             if (sc.hasNext())
             {
                 String _next = sc.next();
@@ -132,6 +74,37 @@ public class UI {
         }
     }
 
+    private void createUsage(String subCat) {
+        System.out.println(subCat + "\n" +
+                "1 - Employee\n" +
+                "2 - Department\n" +
+                "0 - Parent dir");
+    }
+
+    private void create(String cat) {
+        String subCat = cat + "Create/";
+        boolean isxRun = true;
+
+        while (isxRun) {
+            createUsage(subCat);
+            if (sc.hasNext()) {
+                String _next = sc.next();
+                switch (_next) {
+                    case "1":
+                        employee(subCat);
+                        break;
+                    case "2":
+                        department(subCat);
+                        break;
+                    case "0":
+                        isxRun = false;
+                        break;
+                }
+            }
+        }
+        //start();
+    }
+    ///////////////////////////////////////
     private void employeeUsage(String subCat) {
         System.out.println(subCat + "\n" +
 
@@ -149,9 +122,9 @@ public class UI {
     }
 
     private void employee(String cat) {
-        String phone = "";
-        String name = "";
-        String surname = "";
+        phone = "";
+        name = "";
+        surname = "";
         String subCat = cat + "Employee/";
 
         boolean isRun = true;
@@ -187,11 +160,11 @@ public class UI {
 //        start();
     }
 
-//    private void employeePersistUsage(String subCat) {
-//        System.out.println(subCat + "\n" +
-//                "0 - ../\n" +
-//                "Enter - save\n");
-//    }
+    private void employeePersistUsage(String subCat) {
+        System.out.println(subCat + "\n" +
+                "0 - ../\n" +
+                "Enter - save\n");
+    }
 
     private void employeePersist(String cat) {
 
@@ -295,6 +268,45 @@ public class UI {
         }
     }
 
+
+    private void departmentUsage(String subCat) {
+        System.out.println(subCat + "\n" +
+
+
+
+
+                "1 - Set department name\n" +
+                "2 - Commit:\n" +
+                "0 - ../\n\n" +
+                "    Department name = " + name);
+    }
+
+    private void department(String cat) {
+        name = "";
+        String subCat = cat + "Department/";
+
+        boolean isRun = true;
+
+        while (isRun) {
+            departmentUsage(subCat);
+            if (sc.hasNext()) {
+                String _next = sc.next();
+                switch (_next) {
+                    case "1":
+                        departmentSetName(subCat);
+                        break;
+                    case "2":
+                        departmentPersist(subCat);
+                        break;
+                    case "0":
+                        name = "";
+                        isRun = false;
+                        break;
+                }
+            }
+        }
+    }
+
     private void departmentSetNameUsage(String subCat) {
         System.out.println(subCat + "\n" +
                 "Enter name without spaces\n" +
@@ -326,5 +338,7 @@ public class UI {
         name = "";
         System.out.println("created new entry");
     }
+    ///////////////////////////////////////
+
 
 }

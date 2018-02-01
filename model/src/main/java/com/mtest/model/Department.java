@@ -6,7 +6,7 @@ package com.mtest.model;
 public class Department {
     private int id;
     private String name;
-    private int chief_id;
+    private int chiefId;
 
     public int getId() {
         return id;
@@ -24,12 +24,12 @@ public class Department {
         this.name = name;
     }
 
-    public int getChief_id() {
-        return chief_id;
+    public int getChiefId() {
+        return chiefId;
     }
 
-    public void setChief_id(int chief_id) {
-        this.chief_id = chief_id;
+    public void setChiefId(int chiefId) {
+        this.chiefId = chiefId;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class Department {
         builder.append(", name=");
         builder.append(name);
         builder.append(", chief_id=");
-        builder.append(chief_id);
+        builder.append(chiefId);
         builder.append("]");
         return builder.toString();
     }

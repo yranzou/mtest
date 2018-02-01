@@ -5,6 +5,6 @@ package com.mtest.consoleui;
  */
 public class Phonebook {
     public static void main(String[] args) {
-        new UI().start();
+        CRUD.start();
     }
 }

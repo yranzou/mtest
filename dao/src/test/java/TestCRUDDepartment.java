@@ -29,7 +29,7 @@ public class TestCRUDDepartment {
         departmentDao = new DepartmentDao();
         department = new Department();
         department.setName("SegaFans");
-        department.setChief_id(1);
+        department.setChiefId(1);
         dep2= new Department();
 
     }
@@ -87,7 +87,7 @@ public class TestCRUDDepartment {
         }
         System.out.println("In updateByName: " + dep4);
         dep4.setName("MegaFans");
-        dep4.setChief_id(3);
+        dep4.setChiefId(3);
         departmentDao.update(dep4);
         department = departmentDao.get(testId);
         Assert.assertEquals("Expected MegaFans", "MegaFans", department.getName());
