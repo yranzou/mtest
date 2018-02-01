@@ -16,6 +16,12 @@ public class DepartmentService{
         departmentDao.persist(department);
     }
 
+    public void create(String departmentName) {
+        Department department = new Department();
+        department.setName(departmentName);
+        departmentDao.persist(department);
+    }
+
 
     public void update(Department department) {
         departmentDao.update(department);
