@@ -25,10 +25,6 @@
         <module name="console-ui" />
         <module name="consoleui" />
         <module name="dao" />
-        <module name="hmodel" />
-        <module name="hservice" />
-        <module name="jpaapp" />
-        <module name="jpadao" />
         <module name="lesson16" />
         <module name="model" />
         <module name="server" />
