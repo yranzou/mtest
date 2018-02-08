@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -43,6 +44,9 @@ public class DisplayEmployeeServlet extends HttpServlet {
      //   EmployeeDao employeeDao = new EmployeeDao();
 
      //   sb.append(employeeDao.str1.toString());
+
+        resp.setContentType("text/html");
+        HttpSession session = req.getSession(true);
 
         resp.getOutputStream().write(sb.toString().getBytes());
 //        resp.getOutputStream().write(.getBytes());
