@@ -29,6 +29,9 @@ public class DisplayEmployeeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Employee> employees = this.employeeDao.getAll();
+        resp.setContentType("text/html");
+        HttpSession session = req.getSession(true);
+        session.setMaxInactiveInterval(50);
         StringBuilder sb = new StringBuilder("<html><head><title>Employees</title></head><body><table>");
         for (Employee emmployee:employees
              ) {
@@ -40,15 +43,13 @@ public class DisplayEmployeeServlet extends HttpServlet {
             sb.append(emmployee.getSurname());
             sb.append("</td></tr>");
         }
-        sb.append("</table></body></html>");
+        sb.append("</table>"+ session.getId() +"</body></html>");
      //   EmployeeDao employeeDao = new EmployeeDao();
 
      //   sb.append(employeeDao.str1.toString());
 
-        resp.setContentType("text/html");
-        HttpSession session = req.getSession(true);
+
 
         resp.getOutputStream().write(sb.toString().getBytes());
-//        resp.getOutputStream().write(.getBytes());
     }
 }
