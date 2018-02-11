@@ -18,16 +18,16 @@ import java.util.List;
 public class DisplayEmployeeServlet extends HttpServlet {
     private final long serialVersionID = 1L;
     private EmployeeService employeeService = new EmployeeService();
-    @Override
-    public void init(ServletConfig config) throws ServletException {
-        super.init(config);
-    }
+//    @Override
+//    public void init(ServletConfig config) throws ServletException {
+//        super.init(config);
+//    }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Employee> employees = employeeService.getAllEmployees();
+//        List<Employee> employees = employeeService.getAllEmployees();
 //        HttpSession session = req.getSession(true);
 //        session.setMaxInactiveInterval(50);
-        req.setAttribute("employees", employees);
+        req.setAttribute("employees", this.employeeService.getAllEmployees());
         req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
 //        StringBuilder sb = new StringBuilder("<html><head><title>Employees</title></head><body><table>");
 //        for (Employee emmployee:employees

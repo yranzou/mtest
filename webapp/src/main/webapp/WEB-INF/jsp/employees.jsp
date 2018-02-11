@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
 <html>
 <head>
     <title>Display Employees</title>
@@ -15,7 +15,7 @@
     <td>${employee.surname}</td>
     <td>${employee.phone}</td>
     <td>${employee.departmentId}</td>
-    <td></td>
+    <td>-</td>
 </tr>
         </c:forEach>
     <%--<% } %>--%>
