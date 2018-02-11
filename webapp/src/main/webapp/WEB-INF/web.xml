@@ -6,17 +6,43 @@
 
     <!-- To save as <CATALINA_HOME>\webapps\helloservlet\WEB-INF\web.xml -->
 
+    <!--<servlet>-->
+        <!--<servlet-name>DisplayEmployeeServlet</servlet-name>-->
+        <!--&lt;!&ndash;<servlet-class>com.mtest.webapp.DisplayEmployeeServlet</servlet-class>&ndash;&gt;-->
+        <!--<jsp-file>/WEB-INF/jsp/employees.jsp</jsp-file>-->
+    <!--</servlet>-->
     <servlet>
-        <servlet-name>DisplayEmployeeServlet</servlet-name>
+        <servlet-name>EmployeeServlet</servlet-name>
         <servlet-class>com.mtest.webapp.DisplayEmployeeServlet</servlet-class>
+        <!--<jsp-file>/WEB-INF/jsp/employees.jsp</jsp-file>-->
+    </servlet>
+    <servlet>
+        <servlet-name>AddEmployeeServlet</servlet-name>
+        <servlet-class>com.mtest.webapp.AddEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddEmployeePage</servlet-name>
+        <jsp-file>/WEB-INF/jsp/addEmployee.jsp</jsp-file>
     </servlet>
 
     <!-- Note: All <servlet> elements MUST be grouped together and
           placed IN FRONT of the <servlet-mapping> elements -->
 
     <servlet-mapping>
-        <servlet-name>DisplayEmployeeServlet</servlet-name>
-        <url-pattern>/webapp</url-pattern>
+        <servlet-name>EmployeeServlet</servlet-name>
+        <url-pattern>/displayEmployees</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddEmployeeServlet</servlet-name>
+        <url-pattern>/doAddEmployee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddEmployeePage</servlet-name>
+        <url-pattern>/addEmployee</url-pattern>
+    </servlet-mapping>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>DisplayEmployeeServlet</servlet-name>-->
+        <!--<url-pattern>/webapp</url-pattern>-->
+    <!--</servlet-mapping>-->
 
 </web-app>

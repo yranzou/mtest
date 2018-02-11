@@ -25,18 +25,16 @@
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
             <scope>provided</scope>
-
         </dependency>
         <dependency>
             <groupId>com.mtest</groupId>
-            <artifactId>dao</artifactId>
+            <artifactId>server</artifactId>
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.36</version>
-
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
         </dependency>
     </dependencies>
     <build>
@@ -52,7 +50,4 @@
             </plugin>
         </plugins>
     </build>
-
-
-
 </project>

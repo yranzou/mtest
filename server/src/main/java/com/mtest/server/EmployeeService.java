@@ -24,6 +24,10 @@ public class EmployeeService {
         return employeeDao.getSubordinates(leader);
     }
 
+    public List<Employee> getAllEmployees() {
+        return employeeDao.getAll();
+    }
+
 
     private void create(Employee employee) {
         employeeDao.persist(employee);
