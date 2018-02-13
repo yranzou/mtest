@@ -40,8 +40,8 @@ public class CRUD {
     public static void start()
     {
         Scanner sc = new Scanner(System.in);
-        EmployeeService employeeService = new EmployeeService();
-        DepartmentService departmentService = new DepartmentService();
+//        EmployeeService employeeService = new EmployeeService();
+//        DepartmentService departmentService = new DepartmentService();
         String cat = "\n/CRUD/";
         boolean isRun = true;
 
@@ -66,9 +66,7 @@ public class CRUD {
                                 "2 - Department");
                         break;
                     case "4":
-                        System.out.println("Report\n" +
-                                "1 - List department employees\n" +
-                                "2 - List subordinates");
+                        Read.menu(cat, sc);
                         break;
                     case "0":
                         isRun = false;

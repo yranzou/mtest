@@ -18,29 +18,32 @@ import java.util.List;
 public class DisplayEmployeeServlet extends HttpServlet {
     private final long serialVersionID = 1L;
     private EmployeeService employeeService = new EmployeeService();
-//    @Override
-//    public void init(ServletConfig config) throws ServletException {
-//        super.init(config);
-//    }
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+    }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        List<Employee> employees = employeeService.getAllEmployees();
-//        HttpSession session = req.getSession(true);
-//        session.setMaxInactiveInterval(50);
-        req.setAttribute("employees", this.employeeService.getAllEmployees());
-        req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
-//        StringBuilder sb = new StringBuilder("<html><head><title>Employees</title></head><body><table>");
-//        for (Employee emmployee:employees
-//             ) {
-//            sb.append("<tr><td>");
-//            sb.append(emmployee.getId());
-//            sb.append("</td><td>");
-//            sb.append(emmployee.getName());
-//            sb.append("</td><td>");
-//            sb.append(emmployee.getSurname());
-//            sb.append("</td></tr>");
-//        }
-//        sb.append("</table>"+ session.getId() +"</body></html>");
-//        resp.getOutputStream().write(sb.toString().getBytes());
+        List<Employee> employees = employeeService.getAllEmployees();
+        HttpSession session = req.getSession(true);
+        session.setMaxInactiveInterval(50);
+//        req.setAttribute("employees", this.employeeService.getAllEmployees());
+//        resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+//        resp.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+//        resp.setDateHeader("Expires", 0); // Proxies.
+//        req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
+        StringBuilder sb = new StringBuilder("<html><head><title>Employees</title></head><body><table>");
+        for (Employee emmployee:employees
+             ) {
+            sb.append("<tr><td>");
+            sb.append(emmployee.getId());
+            sb.append("</td><td>");
+            sb.append(emmployee.getName());
+            sb.append("</td><td>");
+            sb.append(emmployee.getSurname());
+            sb.append("</td></tr>");
+        }
+        sb.append("</table>"+ session.getId() +"</body></html>");
+        resp.getOutputStream().write(sb.toString().getBytes());
     }
 }

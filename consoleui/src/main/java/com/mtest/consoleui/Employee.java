@@ -28,8 +28,8 @@ public class Employee {
             case CREATE:
                 EmployeeCreate.menu(subCat, sc);
                 break;
-//            case READ:
-//                read(subCat, sc);
+            case READ:
+                EmployeeRead.menu(subCat, sc);
 //                break;
             case UPDADE:
                 EmployeeUpdate.menu(subCat, sc);
