@@ -24,10 +24,11 @@ public class EmployeeService {
         return employeeDao.getSubordinates(leader);
     }
 
-    public List<Employee> getAllEmployees() {
+    public List<Employee> getAll() {
         return employeeDao.getAll();
     }
 
+    public Employee get(int id) {return employeeDao.get(id);}
 
     private void create(Employee employee) {
         employeeDao.persist(employee);
@@ -55,6 +56,7 @@ public class EmployeeService {
         employeeDao.update(employee);
     }
 
+    public void delete(int id) {employeeDao.delete(id);}
 
     public void delete(Employee employee) {
         employeeDao.delete(employee);

@@ -40,13 +40,7 @@ public class EmployeeRead {
                     case "3":
                         employeeGetAll(subCat, sc);
                         break;
-                    case "4":
-                        employeePersist(subCat);
-                        break;
                     case "0":
-                        phone = "";
-                        name = "";
-                        surname = "";
                         isRun = false;
                         break;
 //                        System.out.println("wtf");
@@ -72,12 +66,12 @@ public class EmployeeRead {
 
     private static void employeeGetAllUsage(String subCat) {
         System.out.println(subCat + "\n" +
-                "press 3 to get all employees\n" +
+                "1 - get all employees\n" +
                 "0 - Parent dir\n");
     }
 
     private static void printEmployees() {
-        List<Employee> employees = new EmployeeService().getAllEmployees();
+        List<Employee> employees = new EmployeeService().getAll();
         for (Employee employee : employees) {
             System.out.println("Id = " + employee.getId());
             System.out.println("Name = " + employee.getName());

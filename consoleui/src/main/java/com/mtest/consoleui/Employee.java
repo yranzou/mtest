@@ -30,9 +30,10 @@ public class Employee {
                 break;
             case READ:
                 EmployeeRead.menu(subCat, sc);
-//                break;
+                break;
             case UPDADE:
                 EmployeeUpdate.menu(subCat, sc);
+                break;
 //            case DESTROY:
 //                delete(subCat, sc);
         }

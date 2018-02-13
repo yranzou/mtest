@@ -42,9 +42,9 @@ public class TestCRUDEmployee {
     public void createEmployee() {
 
 
-        employeeService.create(employee);
+        employeeService.create(employee.getName(),employee.getSurname(),employee.getPhone());
 
-        employees = employeeDao.getAll();
+        employees = employeeService.getAll();
         for (Employee emp:employees
                 ) {
             System.out.println(emp.getSurname());
@@ -66,7 +66,7 @@ public class TestCRUDEmployee {
 
         Employee emp3 = new Employee();
         List<Employee> employees;
-        employees = employeeDao.getAll();
+        employees = employeeService.getAll();
         for (Employee emp:employees
              ) {
             System.out.println(emp.getSurname());
@@ -83,7 +83,7 @@ public class TestCRUDEmployee {
     public void updateBySurname() {
         Employee emp4 = new Employee();
 
-        employees = employeeDao.getAll();
+        employees = employeeService.getAll();
         for (Employee emp:employees
                 ) {
             System.out.println(emp.getSurname());
@@ -97,8 +97,8 @@ public class TestCRUDEmployee {
         emp4.setSurname("Man");
         emp4.setPhone("7000000000");
         System.out.println("class changed: " + emp4);
-        employeeDao.update(emp4);
-        employee = employeeDao.get(testId);
+        employeeService.update(emp4);
+        employee = employeeService.get(testId);
         Assert.assertEquals("Expected Mega", "Mega", employee.getName());
         Assert.assertEquals("Expected Man", "Man", employee.getSurname());
     }
@@ -107,17 +107,17 @@ public class TestCRUDEmployee {
     @Category(Destroy.class)
     public void delete() {
         int id_c = 1;
-        employeeDao.delete(employeeDao.get(id_c));
-        Assert.assertEquals("Expected Null", null, employeeDao.get(id_c));
+        employeeService.delete(employeeService.get(id_c));
+        Assert.assertEquals("Expected Null", null, employeeService.get(id_c));
     }
 
 
     @Test
     @Category(Destroy.class)
     public void deleteById() {
-        Assert.assertEquals("Expected Employee.class", Employee.class, employeeDao.get(40).getClass());
-        employeeDao.delete(40);
-        Assert.assertEquals("Expected Null", null, employeeDao.get(40));
+        Assert.assertEquals("Expected Employee.class", Employee.class, employeeService.get(40).getClass());
+        employeeService.delete(40);
+        Assert.assertEquals("Expected Null", null, employeeService.get(40));
     }
 
 
