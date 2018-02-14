@@ -1,5 +1,6 @@
 package com.mtest.consoleui;
 
+import com.mtest.dao.EmployeeDao;
 import com.mtest.model.Employee;
 import com.mtest.server.EmployeeService;
 
@@ -32,10 +33,10 @@ public class EmployeeRead {
                 String _next = sc.next();
                 switch (_next) {
                     case "1":
-                        employeeSetName(subCat, sc);
+//                        employeeSetName(subCat, sc);
                         break;
                     case "2":
-                        employeeSetSurname(subCat, sc);
+//                        employeeSetSurname(subCat, sc);
                         break;
                     case "3":
                         employeeGetAll(subCat, sc);
@@ -55,15 +56,6 @@ public class EmployeeRead {
                 "Enter - save\n");
     }
 
-    private static void employeePersist(String cat) {
-
-        new EmployeeService().create(name, surname, phone);
-        name = "";
-        surname = "";
-        phone = "";
-        System.out.println("created new entry");
-    }
-
     private static void employeeGetAllUsage(String subCat) {
         System.out.println(subCat + "\n" +
                 "1 - get all employees\n" +
@@ -71,11 +63,13 @@ public class EmployeeRead {
     }
 
     private static void printEmployees() {
-        List<Employee> employees = new EmployeeService().getAll();
-        for (Employee employee : employees) {
-            System.out.println("Id = " + employee.getId());
-            System.out.println("Name = " + employee.getName());
-        }
+//        List<Employee> employees = new EmployeeService().getAll();
+//        List<Employee> employees = new EmployeeDao().getAll();
+//        for (Employee employee : employees) {
+//            System.out.println("Id = " + employee.getId());
+//            System.out.println("Name = " + employee.getName());
+//        }
+
     }
 
     private static void employeeGetAll(String cat, Scanner sc) {
@@ -98,54 +92,8 @@ public class EmployeeRead {
         }
     }
 
-    private static void employeeSetSurnameUsage(String subCat) {
-        System.out.println(subCat + "\n" +
-                "1 - Enter surname\n" +
-                "0 - Parent dir\n");
-    }
 
-    private static void employeeSetSurname(String cat, Scanner sc) {
-        String subCat = cat + "SetSurname/";
-        boolean isRun = true;
-        employeeSetSurnameUsage(subCat);
-        while (isRun) {
-            if (sc.hasNext()) {
-                String next = sc.next();
-                switch (next) {
-                    case "0":
-                        isRun = false;
-                        break;
-                    default:
-                        surname = next;
-                        isRun = false;
 
-                }
-            }
-        }
-    }
 
-    private static void employeeSetNameUsage(String subCat) {
-        System.out.println(subCat + "\n" +
-                "Enter name without spaces\n" +
-                "0 - Parent dir\n");
-    }
 
-    static void employeeSetName(String cat, Scanner sc) {
-        String subCat = cat + "SetName/";
-        boolean isRun = true;
-        employeeSetNameUsage(subCat);
-        while (isRun) {
-            if (sc.hasNext()) {
-                String next = sc.next();
-                switch (next) {
-                    case "0":
-                        isRun = false;
-                        break;
-                    default:
-                        name = next;
-                        isRun = false;
-                }
-            }
-        }
-    }
 }

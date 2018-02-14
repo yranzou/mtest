@@ -35,7 +35,9 @@ public class EmployeeDao {
             String driver = props.getProperty("database.driver");
 
             try {
+                System.out.println("try load driver jdbc");
                 Class.forName(driver);
+                System.out.println(driver + " loaded");
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

@@ -24,26 +24,27 @@ public class DisplayEmployeeServlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Employee> employees = employeeService.getAllEmployees();
+//        List<Employee> employees = new EmployeeService().getAll();
         HttpSession session = req.getSession(true);
         session.setMaxInactiveInterval(50);
-//        req.setAttribute("employees", this.employeeService.getAllEmployees());
-//        resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-//        resp.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-//        resp.setDateHeader("Expires", 0); // Proxies.
-//        req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
-        StringBuilder sb = new StringBuilder("<html><head><title>Employees</title></head><body><table>");
-        for (Employee emmployee:employees
-             ) {
-            sb.append("<tr><td>");
-            sb.append(emmployee.getId());
-            sb.append("</td><td>");
-            sb.append(emmployee.getName());
-            sb.append("</td><td>");
-            sb.append(emmployee.getSurname());
-            sb.append("</td></tr>");
-        }
-        sb.append("</table>"+ session.getId() +"</body></html>");
-        resp.getOutputStream().write(sb.toString().getBytes());
+        req.setAttribute("employees",  new EmployeeService().getAll());
+        resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+        resp.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+        resp.setDateHeader("Expires", 0); // Proxies.
+        req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
+//        StringBuilder sb = new StringBuilder("<html><head><title>Employees</title></head><body><table>");
+//        for (Employee emmployee:employees
+//             ) {
+//            System.out.println(emmployee.getName());
+//            sb.append("<tr><td>");
+//            sb.append(emmployee.getId());
+//            sb.append("</td><td>");
+//            sb.append(emmployee.getName());
+//            sb.append("</td><td>");
+//            sb.append(emmployee.getSurname());
+//            sb.append("</td></tr>");
+//        }
+//        sb.append("</table>"+ session.getId() +"</body></html>");
+//        resp.getOutputStream().write(sb.toString().getBytes());
     }
 }
