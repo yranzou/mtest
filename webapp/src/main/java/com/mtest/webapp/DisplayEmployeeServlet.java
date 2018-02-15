@@ -28,9 +28,9 @@ public class DisplayEmployeeServlet extends HttpServlet {
         HttpSession session = req.getSession(true);
         session.setMaxInactiveInterval(50);
         req.setAttribute("employees",  new EmployeeService().getAll());
-        resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-        resp.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-        resp.setDateHeader("Expires", 0); // Proxies.
+//        resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+//        resp.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+//        resp.setDateHeader("Expires", 0); // Proxies.
         req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
 //        StringBuilder sb = new StringBuilder("<html><head><title>Employees</title></head><body><table>");
 //        for (Employee emmployee:employees
