@@ -24,6 +24,7 @@ public class EmployeeDao {
             "SET `name`=?, surname=?, phone_private=?, department_id=?, chief_id=? WHERE id=?";
     private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`) " +
             "VALUES (?, ?, ?)";
+    private static final String SELECT_LIKE = "SELECT * FROM employee WHERE name LIKE ";
 
 
     private Connection connection;

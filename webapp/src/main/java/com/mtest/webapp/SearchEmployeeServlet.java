@@ -24,7 +24,7 @@ public class SearchEmployeeServlet extends HttpServlet {
 
         String name = req.getParameter("name");
         String surName = req.getParameter("surname");
-        employeeService.create(name, surName, phone);
+        employeeService.search(name, surName, phone);
 //        resp.sendRedirect("/displayEmployees");
         resp.sendRedirect(resp.encodeRedirectURL("displayEmployees"));
     }
