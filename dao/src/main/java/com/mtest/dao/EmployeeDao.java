@@ -24,7 +24,7 @@ public class EmployeeDao {
             "SET `name`=?, surname=?, phone_private=?, department_id=?, chief_id=? WHERE id=?";
     private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`) " +
             "VALUES (?, ?, ?)";
-    private static final String SELECT_LIKE = "SELECT * FROM employee WHERE name LIKE ";
+    private static final String SELECT_LIKE = "SELECT * FROM employee WHERE name LIKE ? OR surname LIKE ?";
 
 
     private Connection connection;
@@ -161,6 +161,24 @@ public class EmployeeDao {
 
     public List<Employee> getSubordinates(Employee leader) {
         return getEmployees(SELECT_BY_CHIEF_ID, leader.getId());
+    }
+
+    public List<Employee> search(String str) {
+        try (PreparedStatement preparedStatement = this.connection.prepareStatement(SELECT_LIKE)) {
+            preparedStatement.setString(1, str);
+            preparedStatement.setString(2, str);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                List<Employee> employees = new ArrayList<>();
+                while (resultSet.next()) {
+//                    employees.add(createEmployeeFromResult(resultSet));
+                }
+                return employees;
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+//            return null;
+        }
     }
 
     private List<Employee> getEmployees(String query, int id) {
