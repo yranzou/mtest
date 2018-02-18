@@ -26,6 +26,7 @@ public class EmployeeDao {
             "VALUES (?, ?, ?)";
 //    private static final String SELECT_LIKE = "SELECT * FROM employee WHERE name LIKE ? OR surname LIKE ?";
     private static final String SELECT_LIKE = "SELECT * FROM employee WHERE `name` LIKE ?";
+    private static final String SEARCH_IN_NAME = "SELECT * FROM employee WHERE `name` LIKE ?";
 
 
     private Connection connection;
@@ -164,11 +165,30 @@ public class EmployeeDao {
         return getEmployees(SELECT_BY_CHIEF_ID, leader.getId());
     }
 
-    public List<Employee> search(String str) {
-        str = "%"+str+"%";
+//    public List<Employee> search(String str) {
+//        str = "%"+str+"%";
+//        try (PreparedStatement preparedStatement = this.connection.prepareStatement(SELECT_LIKE)) {
+//            preparedStatement.setString(1, str);
+////            preparedStatement.setString(2, str);
+//            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+//                List<Employee> employees = new ArrayList<>();
+//                while (resultSet.next()) {
+//                    employees.add(createEmployeeFromResult(resultSet));
+//                }
+//                return employees;
+//            }
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+
+    public List<Employee> search(String searchIn, String searchValue) {
+        searchValue = "%"+searchValue+"%";
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(SELECT_LIKE)) {
-            preparedStatement.setString(1, str);
-//            preparedStatement.setString(2, str);
+            preparedStatement.setString(1, "name");
+            preparedStatement.setString(2, searchValue);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<Employee> employees = new ArrayList<>();
                 while (resultSet.next()) {
