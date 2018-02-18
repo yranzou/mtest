@@ -30,6 +30,10 @@ public class EmployeeService {
 
     public Employee get(int id) {return employeeDao.get(id);}
 
+    public List<Employee> search (String str) {
+        return employeeDao.search(str);
+    }
+
     private void create(Employee employee) {
         employeeDao.persist(employee);
     }
@@ -51,6 +55,8 @@ public class EmployeeService {
 
         create(employee);
     }
+
+
 
     public void update(Employee employee) {
         employeeDao.update(employee);

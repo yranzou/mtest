@@ -79,6 +79,26 @@ public class TestCRUDEmployee {
     }
 
     @Test
+    @Category(Read.class)
+    public void search() {
+
+
+        Employee emp3 = new Employee();
+        List<Employee> employees;
+//        employees = employeeService.search("na");
+        employees = new EmployeeDao().search("%na%");
+        for (Employee emp:employees
+                ) {
+            System.out.println(emp.getSurname() + " ---");
+            if (emp.getSurname().equals("ThOrENS"))
+                emp3 = emp;
+
+        }
+//        Assert.assertEquals("Expected NINA", "NINA", emp3.getName());
+//        Assert.assertEquals("Expected ThOrENS", "ThOrENS", emp3.getSurname());
+    }
+
+    @Test
     @Category(Update.class)
     public void updateBySurname() {
         Employee emp4 = new Employee();

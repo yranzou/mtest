@@ -6,13 +6,12 @@
 </head>
 <body>
 <form action="<c:url value="/doSearchEmployee"/>" method="post"><div>
-    Search by name:<br>
+    Search by name/surname:<br>
     <input type="text" name="name"/></div>
     <br>
-    <div>Search by surname:<br>
-    <input type="text" name="surname"/></div>
+
     <%--<input type="text" name="phone"/>--%>
-    <input type="submit" name="search" value="Search"/>
+    <input type="submit" name="name" value="Search"/>
 </form>
 </body>
 </html>

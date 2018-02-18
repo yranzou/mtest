@@ -12,8 +12,15 @@
         <!--<jsp-file>/WEB-INF/jsp/employees.jsp</jsp-file>-->
     <!--</servlet>-->
     <welcome-file-list>
-        <welcome-file>searchEmployee.jsp</welcome-file>
-        <welcome-file>default.html</welcome-file>
+
+        <!--<welcome-file>employees.jsp</welcome-file>-->
+        <welcome-file>searchEmployees</welcome-file>
+
+        <!--<welcome-file>/employees.jsp</welcome-file>-->
+        <!--<welcome-file>/displayEmployees</welcome-file>-->
+        <!--<welcome-file>employees</welcome-file>-->
+        <!--<welcome-file>/employees</welcome-file>-->
+
     </welcome-file-list>
     <servlet>
         <servlet-name>EmployeeServlet</servlet-name>
@@ -58,7 +65,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchEmployeePage</servlet-name>
-        <url-pattern>/searchEmployee</url-pattern>
+        <url-pattern>/searchEmployees</url-pattern>
     </servlet-mapping>
     <!--<servlet-mapping>-->
         <!--<servlet-name>DisplayEmployeeServlet</servlet-name>-->

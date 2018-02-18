@@ -23,9 +23,13 @@ public class SearchEmployeeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String name = req.getParameter("name");
-        String surName = req.getParameter("surname");
-        employeeService.search(name, surName, phone);
+//        String surName = req.getParameter("surname");
 //        resp.sendRedirect("/displayEmployees");
-        resp.sendRedirect(resp.encodeRedirectURL("displayEmployees"));
+        req.setAttribute("employees",  employeeService.search(name));
+//        resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
+//        resp.setHeader("Pragma", "no-cache"); // HTTP 1.0.
+//        resp.setDateHeader("Expires", 0); // Proxies.
+        req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
+//
     }
 }
