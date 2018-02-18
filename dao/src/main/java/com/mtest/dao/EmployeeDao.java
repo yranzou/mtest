@@ -26,7 +26,14 @@ public class EmployeeDao {
             "VALUES (?, ?, ?)";
 //    private static final String SELECT_LIKE = "SELECT * FROM employee WHERE name LIKE ? OR surname LIKE ?";
     private static final String SELECT_LIKE = "SELECT * FROM employee WHERE `name` LIKE ?";
-    private static final String SEARCH_IN_NAME = "SELECT * FROM employee WHERE `name` LIKE ?";
+    private static final String NAME = "SELECT * FROM employee WHERE `name` LIKE ?";
+    enum Search {
+        NAME,
+        SURNAME,
+        PHONE,
+        DEPARTMENT,
+        LEADER
+    }
 
 
     private Connection connection;
@@ -186,11 +193,15 @@ public class EmployeeDao {
 
     public List<Employee> search(String searchIn, String searchValue) {
         searchValue = "%"+searchValue+"%";
-        try (PreparedStatement preparedStatement = this.connection.prepareStatement(SELECT_LIKE)) {
-            preparedStatement.setString(1, "name");
-            preparedStatement.setString(2, searchValue);
+        try (PreparedStatement preparedStatement = this.connection.prepareStatement(Search.NAME.)) {
+
+//            try (PreparedStatement preparedStatement = this.connection.prepareStatement(SELECT_LIKE)) {
+            preparedStatement.setString(1, searchValue);
+//            preparedStatement.setString(2, searchValue);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<Employee> employees = new ArrayList<>();
+
+//                System.out.println(Search.valueOf(sss).name());
                 while (resultSet.next()) {
                     employees.add(createEmployeeFromResult(resultSet));
                 }

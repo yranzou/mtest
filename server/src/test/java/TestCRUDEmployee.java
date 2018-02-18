@@ -86,7 +86,7 @@ public class TestCRUDEmployee {
         Employee emp3 = new Employee();
         List<Employee> employees;
 //        employees = employeeService.search("na");
-        employees = new EmployeeDao().search("name","%ina%");
+        employees = new EmployeeDao().search("NAME","%ina%");
         for (Employee emp:employees
                 ) {
             System.out.println(emp.getSurname() + " --- " + emp.getName());
