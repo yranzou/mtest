@@ -25,12 +25,7 @@ public class SearchEmployeeServlet extends HttpServlet {
         String name = req.getParameter("name");
         String searchIn = req.getParameter("searchIn");
         String searchValue = req.getParameter("searchValue");
-//        String surName = req.getParameter("surname");
-//        resp.sendRedirect("/displayEmployees");
         req.setAttribute("employees",  employeeService.search(searchIn, searchValue));
-//        resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-//        resp.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-//        resp.setDateHeader("Expires", 0); // Proxies.
         req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
 //
     }

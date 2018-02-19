@@ -24,15 +24,29 @@ public class EmployeeDao {
             "SET `name`=?, surname=?, phone_private=?, department_id=?, chief_id=? WHERE id=?";
     private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`) " +
             "VALUES (?, ?, ?)";
-//    private static final String SELECT_LIKE = "SELECT * FROM employee WHERE name LIKE ? OR surname LIKE ?";
-    private static final String SELECT_LIKE = "SELECT * FROM employee WHERE `name` LIKE ?";
-    private static final String NAME = "SELECT * FROM employee WHERE `name` LIKE ?";
+
+
+
     enum Search {
-        NAME,
-        SURNAME,
-        PHONE,
-        DEPARTMENT,
-        LEADER
+        NAME("SELECT * FROM employee WHERE `name` LIKE ?"),
+        SURNAME("SELECT * FROM employee WHERE `surname` LIKE ?"),
+        PHONE("SELECT * FROM employee WHERE `phone_private` LIKE ?"),
+        DEPARTMENT("SELECT * FROM employee WHERE `department_id` IN " +
+                "(SELECT `id` FROM `department` WHERE `name` LIKE ?)"),
+        LEADER("SELECT * FROM employee WHERE `chief_id` IN " +
+                "(SELECT `id` from employee WHERE `name` LIKE ?)");
+
+        private final String query;
+
+        Search(String query) {
+            this.query = query;
+        }
+
+
+        @Override
+        public String toString() {
+            return query;
+        }
     }
 
 
@@ -172,36 +186,15 @@ public class EmployeeDao {
         return getEmployees(SELECT_BY_CHIEF_ID, leader.getId());
     }
 
-//    public List<Employee> search(String str) {
-//        str = "%"+str+"%";
-//        try (PreparedStatement preparedStatement = this.connection.prepareStatement(SELECT_LIKE)) {
-//            preparedStatement.setString(1, str);
-////            preparedStatement.setString(2, str);
-//            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-//                List<Employee> employees = new ArrayList<>();
-//                while (resultSet.next()) {
-//                    employees.add(createEmployeeFromResult(resultSet));
-//                }
-//                return employees;
-//            }
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
 
     public List<Employee> search(String searchIn, String searchValue) {
-        searchValue = "%"+searchValue+"%";
-        try (PreparedStatement preparedStatement = this.connection.prepareStatement(Search.NAME.)) {
 
-//            try (PreparedStatement preparedStatement = this.connection.prepareStatement(SELECT_LIKE)) {
+        searchValue = "%"+searchValue+"%";
+        try (PreparedStatement preparedStatement = this.connection.prepareStatement(Search.valueOf(searchIn).toString())) {
+
             preparedStatement.setString(1, searchValue);
-//            preparedStatement.setString(2, searchValue);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 List<Employee> employees = new ArrayList<>();
-
-//                System.out.println(Search.valueOf(sss).name());
                 while (resultSet.next()) {
                     employees.add(createEmployeeFromResult(resultSet));
                 }

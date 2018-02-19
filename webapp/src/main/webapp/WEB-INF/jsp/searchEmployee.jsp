@@ -5,22 +5,14 @@
     <title>Search Employee</title>
 </head>
 <body>
-<%--<form action="<c:url value="/doSearchEmployee"/>" method="post"><div>--%>
-    <%--Search by<br>--%>
-    <%----%>
-    <%--<input type="text" name="name"/></div>--%>
-    <%--<br>--%>
 
-    <%--&lt;%&ndash;<input type="text" name="phone"/>&ndash;%&gt;--%>
-    <%--<input type="submit" name="name" value="Search"/>--%>
-<%--</form>--%>
 <form action="<c:url value="/doSearchEmployee"/>" method="post" id="searchForm">
     Search in: <select name="searchIn" form="searchForm">
-    <option value="name">name</option>
-    <option value="surname">surname</option>
-    <option value="phone">phone</option>
-    <option value="department">department</option>
-    <option value="leaderName">leader name</option>
+    <option value="NAME">name</option>
+    <option value="SURNAME">surname</option>
+    <option value="PHONE">phone</option>
+    <option value="DEPARTMENT">department</option>
+    <option value="LEADER">leaders name</option>
 </select><input type="text" name="searchValue">
     <input type="submit">
 </form>

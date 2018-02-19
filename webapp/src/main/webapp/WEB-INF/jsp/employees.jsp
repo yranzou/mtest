@@ -5,7 +5,8 @@
     <title>Display Employees</title>
 </head>
 <body>
-<a href="<c:url value="/addEmployee" />">Add employee</a>
+<jsp:include page="/WEB-INF/jsp/searchEmployee.jsp"  />
+
 <table>
         <%--<jsp:useBean id="employeeService" scope="application" class="com.mtest.server.EmployeeService"/>--%>
         <%--<c:set var="employees" value="${employeeService.getAllEmployees}"/>--%>
@@ -21,5 +22,6 @@
         </c:forEach>
     <%--<% } %>--%>
 </table>
+<a href="<c:url value="/addEmployee" />">Add employee</a>
 </body>
 </html>
