@@ -43,7 +43,11 @@
         <servlet-name>SearchEmployeePage</servlet-name>
         <jsp-file>/WEB-INF/jsp/searchEmployee.jsp</jsp-file>
     </servlet>
-
+    <servlet>
+        <servlet-name>EmployeePageServlet</servlet-name>
+        <servlet-class>com.mtest.webapp.EmployeePageServlet</servlet-class>
+        <!--<jsp-file>/WEB-INF/jsp/employees.jsp</jsp-file>-->
+    </servlet>
     <!-- Note: All <servlet> elements MUST be grouped together and
           placed IN FRONT of the <servlet-mapping> elements -->
 
@@ -66,6 +70,10 @@
     <servlet-mapping>
         <servlet-name>SearchEmployeePage</servlet-name>
         <url-pattern>/searchEmployees</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmployeePageServlet</servlet-name>
+        <url-pattern>/employeePage</url-pattern>
     </servlet-mapping>
     <!--<servlet-mapping>-->
         <!--<servlet-name>DisplayEmployeeServlet</servlet-name>-->
