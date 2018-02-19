@@ -10,7 +10,7 @@
 <table>
         <%--<jsp:useBean id="employeeService" scope="application" class="com.mtest.server.EmployeeService"/>--%>
         <%--<c:set var="employees" value="${employeeService.getAllEmployees}"/>--%>
-        <c:forEach var="employee" items="${employee}">
+        <c:forEach var="employee" items="${employees}">
 <tr>
     <td>${employee.id}</td>
     <td>${employee.name}</td>
