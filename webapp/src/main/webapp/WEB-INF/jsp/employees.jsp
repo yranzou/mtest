@@ -11,7 +11,7 @@
         <%--<jsp:useBean id="employeeService" scope="application" class="com.mtest.server.EmployeeService"/>--%>
         <%--<c:set var="employees" value="${employeeService.getAllEmployees}"/>--%>
         <c:forEach var="employee" items="${employees}">
-            <a href="<c:url value="/employeePage" />">
+            <a href="<c:url value="/employeePage?id=${employee.id}" />">
 <tr>
     <td>${employee.id}</td>
     <td>${employee.name}</td>

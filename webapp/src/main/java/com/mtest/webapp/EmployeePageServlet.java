@@ -23,9 +23,10 @@ public class EmployeePageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        List<Employee> employees = new EmployeeService().getAll();
-        HttpSession session = req.getSession(true);
-        session.setMaxInactiveInterval(50);
-        req.setAttribute("employee",  new EmployeeService().get());
+        int id = Integer.parseInt(req.getParameter("id"));
+//        HttpSession session = req.getSession(true);
+//        session.setMaxInactiveInterval(50);
+        req.setAttribute("employee",  new EmployeeService().get(id));
 //        resp.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
 //        resp.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 //        resp.setDateHeader("Expires", 0); // Proxies.
