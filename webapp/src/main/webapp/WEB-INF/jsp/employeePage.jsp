@@ -24,8 +24,10 @@
         </div>
         <p>${employee.phone}</p>
     </div>
-<h2 style="text-align:center">::::::::::::</h2>
-<a href="<c:url value="/editEmployee" />">Edit employee</a>
-<a href="<c:url value="/addEmployee" />">Add employee</a>
+<h3 style="text-align:center">
+    <a href="<c:url value="/editEmployee?id=${employee.id}&name=${employee.name}&surname=${employee.surname}&phone=${employee.phone}" />">Edit employee</a>
+    <a href="<c:url value="/addEmployee" />">Add employee</a>
+</h3>
+
 </body>
 </html>

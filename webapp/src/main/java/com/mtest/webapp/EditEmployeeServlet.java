@@ -1,5 +1,6 @@
 package com.mtest.webapp;
 
+import com.mtest.model.Employee;
 import com.mtest.server.EmployeeService;
 
 import javax.servlet.ServletConfig;
@@ -23,9 +24,14 @@ public class EditEmployeeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String name = req.getParameter("name");
-        String surName = req.getParameter("surname");//dd
+        String surName = req.getParameter("surname");
         String phone = req.getParameter("phone");
-        employeeService.create(name, surName, phone);
+        int id = Integer.parseInt(req.getParameter("id"));
+        Employee employee = employeeService.get(id);
+        employee.setName(name);
+        employee.setSurname(surName);
+        employee.setPhone(phone);
+        employeeService.update(employee);
 //        resp.sendRedirect("/displayEmployees");
         resp.sendRedirect(resp.encodeRedirectURL("displayEmployees"));
     }
