@@ -23,7 +23,7 @@ public class EditEmployeeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String name = req.getParameter("name");
-        String surName = req.getParameter("surname");
+        String surName = req.getParameter("surname");//dd
         String phone = req.getParameter("phone");
         employeeService.create(name, surName, phone);
 //        resp.sendRedirect("/displayEmployees");
