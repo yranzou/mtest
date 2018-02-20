@@ -11,14 +11,14 @@
         <%--<jsp:useBean id="employeeService" scope="application" class="com.mtest.server.EmployeeService"/>--%>
         <%--<c:set var="employees" value="${employeeService.getAllEmployees}"/>--%>
         <c:forEach var="employee" items="${employees}">
-
+            <a href="#">
 <tr>
     <td><a href="<c:url value="/employeePage?id=${employee.id}" />">${employee.id}</a></td>
     <td>${employee.name}</td>
     <td>${employee.surname}</td>
     <td>${employee.phone}</td>
     <td>${employee.departmentId}</td>
-</tr>
+</tr></a>
 
         </c:forEach>
     <%--<% } %>--%>

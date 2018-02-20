@@ -3,25 +3,29 @@
 <html>
 <head>
     <title>Display Employees</title>
+    <link href="<c:url value="/css/employeePage.css"/>" rel="stylesheet" type="text/css">
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/searchEmployee.jsp"  />
+<br/>
 
-<table>
-        <%--<jsp:useBean id="employeeService" scope="application" class="com.mtest.server.EmployeeService"/>--%>
-        <%--<c:set var="employees" value="${employeeService.getAllEmployees}"/>--%>
-        <c:forEach var="employee" items="${employees}">
-<tr>
-    <td>${employee.id}</td>
-    <td>${employee.name}</td>
-    <td>${employee.surname}</td>
-    <td>${employee.phone}</td>
-    <td>${employee.departmentId}</td>
-    <td>-</td>
-</tr>
-        </c:forEach>
-    <%--<% } %>--%>
-</table>
+    <h2 style="text-align:center">User Profile Card</h2>
+<h2 style="text-align:center">::::::::::::</h2>
+
+    <div class="card">
+        <h1>${employee.surname} ${employee.name}</h1>
+        <p class="title">Department id: ${employee.departmentId}</p>
+        <p> </p>
+        <div style="margin: 24px 0;">
+            <a href="#"><i class="fa fa-dribbble"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-facebook"></i></a>
+        </div>
+        <p>${employee.phone}</p>
+    </div>
+<h2 style="text-align:center">::::::::::::</h2>
+<a href="<c:url value="/editEmployee" />">Edit employee</a>
 <a href="<c:url value="/addEmployee" />">Add employee</a>
 </body>
 </html>

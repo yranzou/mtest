@@ -32,12 +32,20 @@
         <servlet-class>com.mtest.webapp.AddEmployeeServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>EditEmployeeServlet</servlet-name>
+        <servlet-class>com.mtest.webapp.EditEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>SearchEmployeeServlet</servlet-name>
         <servlet-class>com.mtest.webapp.SearchEmployeeServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddEmployeePage</servlet-name>
         <jsp-file>/WEB-INF/jsp/addEmployee.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>EditEmployeePage</servlet-name>
+        <jsp-file>/WEB-INF/jsp/editEmployee.jsp</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>SearchEmployeePage</servlet-name>
@@ -60,12 +68,20 @@
         <url-pattern>/doAddEmployee</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>EditEmployeeServlet</servlet-name>
+        <url-pattern>/doEditEmployee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>SearchEmployeeServlet</servlet-name>
         <url-pattern>/doSearchEmployee</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddEmployeePage</servlet-name>
         <url-pattern>/addEmployee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditEmployeePage</servlet-name>
+        <url-pattern>/editEmployee</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchEmployeePage</servlet-name>
