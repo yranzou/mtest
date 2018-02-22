@@ -24,17 +24,26 @@ public class EmployeeDao {
             "SET `name`=?, surname=?, phone_private=?, department_id=?, chief_id=? WHERE id=?";
     private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`) " +
             "VALUES (?, ?, ?)";
+    private static final String SELECT_ALL_LEFT_JOIN_DEP = "SELECT employee.*, department.* from employee left join department on employee.department_id = department.id";
 
 
 
     enum Search {
-        NAME("SELECT * FROM employee WHERE `name` LIKE ?"),
-        SURNAME("SELECT * FROM employee WHERE `surname` LIKE ?"),
-        PHONE("SELECT * FROM employee WHERE `phone_private` LIKE ?"),
-        DEPARTMENT("SELECT * FROM employee WHERE `department_id` IN " +
-                "(SELECT `id` FROM `department` WHERE `name` LIKE ?)"),
-        LEADER("SELECT * FROM employee WHERE `chief_id` IN " +
-                "(SELECT `id` from employee WHERE `name` LIKE ?)");
+//        NAME("SELECT * FROM employee WHERE `name` LIKE ?"),
+//        SURNAME("SELECT * FROM employee WHERE `surname` LIKE ?"),
+//        PHONE("SELECT * FROM employee WHERE `phone_private` LIKE ?"),
+//        DEPARTMENT("SELECT * FROM employee WHERE `department_id` IN " +
+//                "(SELECT `id` FROM `department` WHERE `name` LIKE ?)"),
+//        LEADER("SELECT * FROM employee WHERE `chief_id` IN " +
+//                "(SELECT `id` from employee WHERE `name` LIKE ?)");
+
+        NAME(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `name` LIKE ?"),
+        SURNAME(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `surname` LIKE ?"),
+        PHONE(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `phone_private` LIKE ?"),
+        DEPARTMENT(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `department_id` IN " +
+                           "(SELECT `id` FROM `department` WHERE `name` LIKE ?)"),
+        LEADER(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `chief_id` IN " +
+                       "(SELECT `id` from employee WHERE `name` LIKE ?)");
 
         private final String query;
 

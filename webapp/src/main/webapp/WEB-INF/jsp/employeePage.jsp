@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Display Employees</title>
+    <title>Employee page</title>
     <link href="<c:url value="/css/employeePage.css"/>" rel="stylesheet" type="text/css">
 </head>
 <body>

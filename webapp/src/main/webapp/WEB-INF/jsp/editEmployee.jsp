@@ -7,10 +7,10 @@
 <body>
 
 <form action="<c:url value="/doEditEmployee"/>" method="post">
-Name:    <input type="text" name="name" value="$name"/>
-Surname:    <input type="text" name="surname" value="${surname}"/>
-Phone:    <input type="text" name="phone" value="${phone}"/>
-    <input type="hidden" name="id" value="<%request.getParameter("id").toString();%>">
+Name:    <input type="text" name="name" value="<%=request.getParameter("name")%>"/>
+Surname:    <input type="text" name="surname" value="<%=request.getParameter("surname")%>"/>
+Phone:    <input type="text" name="phone" value="<%=request.getParameter("phone")%>"/>
+    <input type="hidden" name="id" value="<%=request.getParameter("id")%>">
     <input type="submit" name="update" value="Update"/>
 </form>
 </body>

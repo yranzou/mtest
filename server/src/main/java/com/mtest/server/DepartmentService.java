@@ -28,6 +28,10 @@ public class DepartmentService{
         return departmentDao.getAll();
     }
 
+    public List<Department> search (String searchIn, String searchValue) {
+        return departmentDao.search(searchIn, searchValue);
+    }
+
     public Department get(int id) {return departmentDao.get(id);}
 
     public void update(Department department) {

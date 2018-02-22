@@ -1,5 +1,6 @@
 package com.mtest.webapp;
 
+import com.mtest.server.DepartmentService;
 import com.mtest.server.EmployeeService;
 
 import javax.servlet.ServletConfig;
@@ -14,7 +15,7 @@ import java.io.IOException;
  */
 public class SearchEmployeeServlet extends HttpServlet {
     private final long serialVersionID = 1L;
-    private EmployeeService employeeService = new EmployeeService();
+//    private EmployeeService employeeService = new EmployeeService();
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -22,10 +23,11 @@ public class SearchEmployeeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String name = req.getParameter("name");
+//        String name = req.getParameter("name");
         String searchIn = req.getParameter("searchIn");
         String searchValue = req.getParameter("searchValue");
-        req.setAttribute("employees",  employeeService.search(searchIn, searchValue));
+        req.setAttribute("employees",  new EmployeeService().search(searchIn, searchValue));
+        req.setAttribute("departments",  new DepartmentService().search(searchIn, searchValue));
         req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
 //
     }

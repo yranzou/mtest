@@ -3,26 +3,36 @@
 <html>
 <head>
     <title>Display Employees</title>
+    <link href="<c:url value="/css/employees.css"/>" rel="stylesheet" type="text/css">
 </head>
 <body>
 <jsp:include page="/WEB-INF/jsp/searchEmployee.jsp"  />
 
-<table>
-        <%--<jsp:useBean id="employeeService" scope="application" class="com.mtest.server.EmployeeService"/>--%>
-        <%--<c:set var="employees" value="${employeeService.getAllEmployees}"/>--%>
-        <c:forEach var="employee" items="${employees}">
-            <a href="#">
-<tr>
-    <td><a href="<c:url value="/employeePage?id=${employee.id}" />">${employee.id}</a></td>
-    <td>${employee.name}</td>
-    <td>${employee.surname}</td>
-    <td>${employee.phone}</td>
-    <td>${employee.departmentId}</td>
-</tr></a>
+<div class="divTable">
+    <div class="divTableBody">
+        <div class="divTableRow">
+            <div class="divTableCell">Id</div>
+            <div class="divTableCell">Name</div>
+            <div class="divTableCell">Surname</div>
+            <div class="divTableCell">Private phone</div>
+            <div class="divTableCell">Department</div>
+        </div>
+    <c:forEach var="employee" items="${employees}">
+        <a href="<c:url value="/employeePage?id=${employee.id}" />">
+            <div class="divTableRow">
+                <div class="divTableCell">${employee.id}</div>
+                <div class="divTableCell">${employee.name}</div>
+                <div class="divTableCell">${employee.surname}</div>
+                <div class="divTableCell">${employee.phone}</div>
+                <div class="divTableCell">${department.name}</div>
+            </div>
+        </a>
 
-        </c:forEach>
+    </c:forEach>
     <%--<% } %>--%>
-</table>
+    </div>
+</div>
+
 <a href="<c:url value="/addEmployee" />">Add employee</a>
 </body>
 </html>

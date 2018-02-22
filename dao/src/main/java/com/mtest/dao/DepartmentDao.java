@@ -23,6 +23,32 @@ public class DepartmentDao {
     private static final String INSERT = "INSERT INTO department (`name`, `chief_id`) " +
             "VALUES (?, ?)";
 
+    private static final String SELECT_ALL_LEFT_JOIN_DEP = "SELECT employee.*, department.* from employee left join department on employee.department_id = department.id";
+
+
+
+    enum Search {
+
+        NAME(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `name` LIKE ?"),
+        SURNAME(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `surname` LIKE ?"),
+        PHONE(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `phone_private` LIKE ?"),
+        DEPARTMENT(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `department_id` IN " +
+                "(SELECT `id` FROM `department` WHERE `name` LIKE ?)"),
+        LEADER(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `chief_id` IN " +
+                "(SELECT `id` from employee WHERE `name` LIKE ?)");
+        private final String query;
+
+        Search(String query) {
+            this.query = query;
+        }
+
+
+        @Override
+        public String toString() {
+            return query;
+        }
+    }
+
     private Connection connection;
 
     public DepartmentDao() {
@@ -142,6 +168,26 @@ public class DepartmentDao {
                 departments.add(createDepartmentFromResult(resultSet));
             }
             return departments;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Department> search(String searchIn, String searchValue) {
+
+        searchValue = "%"+searchValue+"%";
+        try (PreparedStatement preparedStatement = this.connection.prepareStatement(Search.valueOf(searchIn).toString())) {
+
+            preparedStatement.setString(1, searchValue);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                List<Department> departments = new ArrayList<>();
+                while (resultSet.next()) {
+                    departments.add(createDepartmentFromResult(resultSet));
+                }
+                return departments;
+            }
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
