@@ -6,7 +6,7 @@
     <link href="<c:url value="/css/employees.css"/>" rel="stylesheet" type="text/css">
 </head>
 <body>
-<jsp:include page="/WEB-INF/jsp/searchEmployee.jsp"  />
+<jsp:include page="/WEB-INF/jsp/searchEmployee.jsp"/>
 
 <div class="divTable">
     <div class="divTableBody">
@@ -17,19 +17,27 @@
             <div class="divTableCell">Private phone</div>
             <div class="divTableCell">Department</div>
         </div>
-    <c:forEach var="employee" items="${employees}">
-        <a href="<c:url value="/employeePage?id=${employee.id}" />">
+        <c:forEach var="employee" items="${employees}" varStatus="status">
             <div class="divTableRow">
                 <div class="divTableCell">${employee.id}</div>
-                <div class="divTableCell">${employee.name}</div>
-                <div class="divTableCell">${employee.surname}</div>
+                <div class="divTableCell">
+                    <a href="<c:url value="/employeePage?id=${employee.id}" />">
+                            ${employee.name}
+                    </a>
+                </div>
+                <div class="divTableCell">
+                    <a href="<c:url value="/employeePage?id=${employee.id}" />">
+                            ${employee.surname}
+                    </a>
+                </div>
                 <div class="divTableCell">${employee.phone}</div>
-                <div class="divTableCell">${department.name}</div>
+                <div class="divTableCell">
+                    <a href="<c:url value="/departmentPage?id=${departments[status.index].id}" />">
+                            ${departments[status.index].name}
+                    </a>
+                </div>
             </div>
-        </a>
-
-    </c:forEach>
-    <%--<% } %>--%>
+        </c:forEach>
     </div>
 </div>
 

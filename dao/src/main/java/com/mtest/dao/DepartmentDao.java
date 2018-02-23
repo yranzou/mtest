@@ -16,6 +16,9 @@ public class DepartmentDao {
 
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE id=?";
 
+    private static final String SELECT_BY_CHIEF_ID = SELECT_ALL + " WHERE chief_id=?";
+
+
     private static final String DELETE_BY_ID = "DELETE FROM department WHERE id=?";
 
     private static final String UPDATE = "UPDATE department " +
@@ -23,18 +26,18 @@ public class DepartmentDao {
     private static final String INSERT = "INSERT INTO department (`name`, `chief_id`) " +
             "VALUES (?, ?)";
 
-    private static final String SELECT_ALL_LEFT_JOIN_DEP = "SELECT employee.*, department.* from employee left join department on employee.department_id = department.id";
+    private static final String SELECT_ALL_LEFT_JOIN_DEP = "SELECT department.* from employee left join department on employee.department_id = department.id";
 
 
 
     enum Search {
 
-        NAME(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `name` LIKE ?"),
-        SURNAME(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `surname` LIKE ?"),
-        PHONE(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `phone_private` LIKE ?"),
-        DEPARTMENT(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `department_id` IN " +
+        NAME(SELECT_ALL_LEFT_JOIN_DEP + " WHERE employee.name LIKE ?"),
+        SURNAME(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `surname` LIKE ?"),
+        PHONE(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `phone_private` LIKE ?"),
+        DEPARTMENT(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `department_id` IN " +
                 "(SELECT `id` FROM `department` WHERE `name` LIKE ?)"),
-        LEADER(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `chief_id` IN " +
+        LEADER(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `chief_id` IN " +
                 "(SELECT `id` from employee WHERE `name` LIKE ?)");
         private final String query;
 
@@ -92,7 +95,9 @@ public class DepartmentDao {
         }
     }
 
-    public void persist(Department department) {
+
+
+    public Department persist(Department department) {
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(INSERT)) {
             prepareStatement.setString(1, department.getName());
@@ -104,6 +109,7 @@ public class DepartmentDao {
             }
             prepareStatement.executeUpdate();
             connection.commit();
+            return department;
         } catch (SQLException e) {
             // TODO Auto-generated catch  block
             try {
@@ -112,6 +118,7 @@ public class DepartmentDao {
                 ex.printStackTrace();
             }
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -199,7 +206,7 @@ public class DepartmentDao {
             throws SQLException {
         Department department = new Department();
         department.setId(resultSet.getInt("id"));
-        department.setName(resultSet.getString("name"));
+        department.setName(resultSet.getString("department.name"));
         department.setChiefId(resultSet.getInt("chief_id"));
         return department;
     }

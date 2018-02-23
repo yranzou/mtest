@@ -25,24 +25,18 @@ public class EmployeeDao {
     private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`) " +
             "VALUES (?, ?, ?)";
     private static final String SELECT_ALL_LEFT_JOIN_DEP = "SELECT employee.*, department.* from employee left join department on employee.department_id = department.id";
+    private static final String SELECT_ALL_DEPARTMENTS_CHIEFS = "SELECT employee.*, department.* from department right join employee on department.chief_id = employee.id";
+    private static final String SELECT_DEPARTMENT_CHIEF = "SELECT employee.* FROM employee INNER JOIN department ON employee.id = department.chief_id where department.id = ?";
 
 
 
     enum Search {
-//        NAME("SELECT * FROM employee WHERE `name` LIKE ?"),
-//        SURNAME("SELECT * FROM employee WHERE `surname` LIKE ?"),
-//        PHONE("SELECT * FROM employee WHERE `phone_private` LIKE ?"),
-//        DEPARTMENT("SELECT * FROM employee WHERE `department_id` IN " +
-//                "(SELECT `id` FROM `department` WHERE `name` LIKE ?)"),
-//        LEADER("SELECT * FROM employee WHERE `chief_id` IN " +
-//                "(SELECT `id` from employee WHERE `name` LIKE ?)");
-
-        NAME(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `name` LIKE ?"),
-        SURNAME(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `surname` LIKE ?"),
-        PHONE(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `phone_private` LIKE ?"),
-        DEPARTMENT(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `department_id` IN " +
+        NAME(SELECT_ALL_LEFT_JOIN_DEP + " WHERE employee.name LIKE ?"),
+        SURNAME(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `surname` LIKE ?"),
+        PHONE(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `phone_private` LIKE ?"),
+        DEPARTMENT(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `department_id` IN " +
                            "(SELECT `id` FROM `department` WHERE `name` LIKE ?)"),
-        LEADER(SELECT_ALL_LEFT_JOIN_DEP + "WHERE `chief_id` IN " +
+        LEADER(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `chief_id` IN " +
                        "(SELECT `id` from employee WHERE `name` LIKE ?)");
 
         private final String query;
@@ -101,6 +95,23 @@ public class EmployeeDao {
             return null;
         }
     }
+
+    public Employee getDepartmentChief(int departmentId) {
+        try (PreparedStatement prepareStatement = this.connection.prepareStatement(SELECT_DEPARTMENT_CHIEF)) {
+            prepareStatement.setInt(1, departmentId);
+            try (ResultSet resultSet = prepareStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return createEmployeeFromResult(resultSet);
+                }
+            }
+            return null;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     public void persist(Employee employee) {
         try (PreparedStatement prepareStatement = this.connection
@@ -174,6 +185,21 @@ public class EmployeeDao {
     public List<Employee> getAll() {
         try (ResultSet resultSet = this.connection.createStatement()
                 .executeQuery(SELECT_ALL)) {
+            List<Employee> employees = new ArrayList<>();
+            while (resultSet.next()) {
+                employees.add(createEmployeeFromResult(resultSet));
+            }
+            return employees;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Employee> getAllDepartmentsChiefs() {
+        try (ResultSet resultSet = this.connection.createStatement()
+                .executeQuery(SELECT_ALL_DEPARTMENTS_CHIEFS)) {
             List<Employee> employees = new ArrayList<>();
             while (resultSet.next()) {
                 employees.add(createEmployeeFromResult(resultSet));

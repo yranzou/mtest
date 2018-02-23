@@ -28,7 +28,14 @@ public class EmployeeService {
         return employeeDao.getAll();
     }
 
+    public List<Employee> getAllDepartmentsChiefs() {
+        return employeeDao.getAllDepartmentsChiefs();
+    }
+
     public Employee get(int id) {return employeeDao.get(id);}
+
+    public Employee getDepartmentChief(int id) {return employeeDao.getDepartmentChief(id);}
+
 
 //    public List<Employee> search (String str) {
 //        return employeeDao.search(str);
@@ -37,6 +44,8 @@ public class EmployeeService {
     public List<Employee> search (String searchIn, String searchValue) {
         return employeeDao.search(searchIn, searchValue);
     }
+
+
 
     private void create(Employee employee) {
         employeeDao.persist(employee);

@@ -73,6 +73,21 @@ public class TestCRUDDepartment {
     }
 
     @Test
+    @Category(Read.class)
+    public void searchByName() {
+        Department dep3 = new Department();
+        List<Department> departments;
+        departments = departmentDao.search("NAME", "na");
+        for (Department dep:departments
+                ) {
+            System.out.println(dep.getName());
+            if (dep.getName()!=null && dep.getName().equals("FUN"))
+                dep3 = dep;
+        }
+        Assert.assertEquals("Expected FUN", "FUN", dep3.getName());
+    }
+
+    @Test
     @Category(TestCRUDDepartment.Update.class)
     public void updateByName() {
         Department dep4 = new Department();

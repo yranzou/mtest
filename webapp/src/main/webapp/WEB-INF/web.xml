@@ -36,6 +36,14 @@
         <servlet-class>com.mtest.webapp.EditEmployeeServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>EditDepartmentPageServlet</servlet-name>
+        <servlet-class>com.mtest.webapp.EditDepartmentPageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateDepartmentServlet</servlet-name>
+        <servlet-class>com.mtest.webapp.UpdateDepartmentServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>SearchEmployeeServlet</servlet-name>
         <servlet-class>com.mtest.webapp.SearchEmployeeServlet</servlet-class>
     </servlet>
@@ -44,9 +52,21 @@
         <jsp-file>/WEB-INF/jsp/addEmployee.jsp</jsp-file>
     </servlet>
     <servlet>
+        <servlet-name>AddDepartmentPageServlet</servlet-name>
+        <servlet-class>com.mtest.webapp.AddDepartmentPageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddDepartmentServlet</servlet-name>
+        <servlet-class>com.mtest.webapp.AddDepartmentServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>EditEmployeePage</servlet-name>
         <jsp-file>/WEB-INF/jsp/editEmployee.jsp</jsp-file>
     </servlet>
+    <!--<servlet>-->
+        <!--<servlet-name>EditDepartmentPage</servlet-name>-->
+        <!--<jsp-file>/WEB-INF/jsp/editDepartment.jsp</jsp-file>-->
+    <!--</servlet>-->
     <servlet>
         <servlet-name>SearchEmployeePage</servlet-name>
         <jsp-file>/WEB-INF/jsp/searchEmployee.jsp</jsp-file>
@@ -55,6 +75,10 @@
         <servlet-name>EmployeePageServlet</servlet-name>
         <servlet-class>com.mtest.webapp.EmployeePageServlet</servlet-class>
         <!--<jsp-file>/WEB-INF/jsp/employees.jsp</jsp-file>-->
+    </servlet>
+    <servlet>
+        <servlet-name>DepartmentPageServlet</servlet-name>
+        <servlet-class>com.mtest.webapp.DepartmentPageServlet</servlet-class>
     </servlet>
     <!-- Note: All <servlet> elements MUST be grouped together and
           placed IN FRONT of the <servlet-mapping> elements -->
@@ -72,6 +96,10 @@
         <url-pattern>/doEditEmployee</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>UpdateDepartmentServlet</servlet-name>
+        <url-pattern>/updateDepartment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>SearchEmployeeServlet</servlet-name>
         <url-pattern>/doSearchEmployee</url-pattern>
     </servlet-mapping>
@@ -80,8 +108,20 @@
         <url-pattern>/addEmployee</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>AddDepartmentPageServlet</servlet-name>
+        <url-pattern>/addDepartment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddDepartmentServlet</servlet-name>
+        <url-pattern>/doAddDepartment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>EditEmployeePage</servlet-name>
         <url-pattern>/editEmployee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditDepartmentPageServlet</servlet-name>
+        <url-pattern>/editDepartment</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchEmployeePage</servlet-name>
@@ -90,6 +130,10 @@
     <servlet-mapping>
         <servlet-name>EmployeePageServlet</servlet-name>
         <url-pattern>/employeePage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DepartmentPageServlet</servlet-name>
+        <url-pattern>/departmentPage</url-pattern>
     </servlet-mapping>
     <!--<servlet-mapping>-->
         <!--<servlet-name>DisplayEmployeeServlet</servlet-name>-->
