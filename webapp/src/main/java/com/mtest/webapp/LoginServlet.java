@@ -1,5 +1,6 @@
 package com.mtest.webapp;
 
+import com.mtest.dao.LoginDao;
 import com.mtest.server.EmployeeService;
 
 import javax.servlet.ServletConfig;
@@ -23,7 +24,8 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String name = req.getParameter("uname");
-        String surName = req.getParameter("psw");
+        String pass = req.getParameter("psw");
+        boolean isValidated = LoginDao.validate(name, pass)
 //        resp.sendRedirect("/displayEmployees");
         resp.sendRedirect(resp.encodeRedirectURL("displayEmployees"));
     }
