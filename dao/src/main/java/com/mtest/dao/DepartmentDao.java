@@ -97,7 +97,7 @@ public class DepartmentDao {
 
 
 
-    public Department persist(Department department) {
+    public void persist(Department department) {
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(INSERT)) {
             prepareStatement.setString(1, department.getName());
@@ -109,7 +109,7 @@ public class DepartmentDao {
             }
             prepareStatement.executeUpdate();
             connection.commit();
-            return department;
+//            return department;
         } catch (SQLException e) {
             // TODO Auto-generated catch  block
             try {
@@ -118,7 +118,7 @@ public class DepartmentDao {
                 ex.printStackTrace();
             }
             e.printStackTrace();
-            return null;
+//            return null;
         }
     }
 

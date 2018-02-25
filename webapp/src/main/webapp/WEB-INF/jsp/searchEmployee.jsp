@@ -5,7 +5,9 @@
     <title>Search Employee</title>
 </head>
 <body>
-
+<a href="<c:url value="/login" />">
+    Login
+</a>
 <form action="<c:url value="/doSearchEmployee"/>" method="post" id="searchForm">
     Search in: <select name="searchIn" form="searchForm">
     <option value="NAME">name</option>

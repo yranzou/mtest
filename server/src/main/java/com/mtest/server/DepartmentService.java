@@ -14,14 +14,14 @@ public class DepartmentService{
         departmentDao = new DepartmentDao();
     }
 
-    public Department create(Department department) {
-        return departmentDao.persist(department);
+    public void create(Department department) {
+        departmentDao.persist(department);
     }
 
-    public Department create(String departmentName) {
+    public void create(String departmentName) {
         Department department = new Department();
         department.setName(departmentName);
-        return departmentDao.persist(department);
+        departmentDao.persist(department);
     }
 
     public List<Department> getAll() {

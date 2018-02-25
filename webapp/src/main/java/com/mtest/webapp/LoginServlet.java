@@ -1,7 +1,6 @@
 package com.mtest.webapp;
 
-import com.mtest.model.Department;
-import com.mtest.server.DepartmentService;
+import com.mtest.server.EmployeeService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -13,9 +12,9 @@ import java.io.IOException;
 /**
  *  Created by yuri on 30.11.17.
  */
-public class AddDepartmentServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
     private final long serialVersionID = 1L;
-//    private EmployeeService employeeService = new EmployeeService();
+    private EmployeeService employeeService = new EmployeeService();
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -23,14 +22,9 @@ public class AddDepartmentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String name = req.getParameter("name");
-        int chiefId = Integer.parseInt(req.getParameter("chiefId"));
-        DepartmentService departmentService = new DepartmentService();
-        Department department = new Department();
-        department.setChiefId(chiefId);
-        department.setName(name);
-        departmentService.create(department);
+        String name = req.getParameter("uname");
+        String surName = req.getParameter("psw");
+//        resp.sendRedirect("/displayEmployees");
         resp.sendRedirect(resp.encodeRedirectURL("displayEmployees"));
-
     }
 }
