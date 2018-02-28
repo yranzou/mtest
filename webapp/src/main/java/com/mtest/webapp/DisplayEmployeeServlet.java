@@ -27,8 +27,7 @@ public class DisplayEmployeeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //        List<Employee> employees = new EmployeeService().getAll();
-        HttpSession session = req.getSession(true);
-        session.setMaxInactiveInterval(50);
+
         req.setAttribute("departments",  new DepartmentService().search("NAME",""));
 
         req.setAttribute("employees",  new EmployeeService().search("NAME", ""));

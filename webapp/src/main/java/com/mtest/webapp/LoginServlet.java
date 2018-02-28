@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -25,7 +26,13 @@ public class LoginServlet extends HttpServlet {
 
         String name = req.getParameter("uname");
         String pass = req.getParameter("psw");
-        boolean isValidated = LoginDao.validate(name, pass)
+        boolean isValidated = LoginDao.validate(name, pass);
+        if (isValidated) {
+            HttpSession session = req.getSession(true);
+            session.setMaxInactiveInterval(50);
+        } else {
+
+        }
 //        resp.sendRedirect("/displayEmployees");
         resp.sendRedirect(resp.encodeRedirectURL("displayEmployees"));
     }
