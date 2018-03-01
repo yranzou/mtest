@@ -71,7 +71,7 @@
 
 <h2>Login Form</h2>
 
-<form action="/doLogin">
+<form action="<c:url value="/doLogin" />" method="post">
 
     <div class="container">
         <label for="uname"><b>Username</b></label>

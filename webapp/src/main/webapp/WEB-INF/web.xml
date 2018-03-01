@@ -88,6 +88,10 @@
         <servlet-name>LoginPage</servlet-name>
         <jsp-file>/WEB-INF/jsp/login.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.mtest.webapp.LogoutServlet</servlet-class>
+    </servlet>
     <!-- Note: All <servlet> elements MUST be grouped together and
           placed IN FRONT of the <servlet-mapping> elements -->
 
@@ -150,6 +154,10 @@
     <servlet-mapping>
         <servlet-name>LoginPage</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <!--<servlet-mapping>-->
         <!--<servlet-name>DisplayEmployeeServlet</servlet-name>-->

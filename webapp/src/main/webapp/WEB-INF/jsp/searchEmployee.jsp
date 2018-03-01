@@ -7,7 +7,10 @@
 <body>
 <a href="<c:url value="/login" />">
     Login
-</a>
+</a> &nbsp;
+<a href="<c:url value="/logout" />">
+    Logout
+</a>&nbsp;${name}
 <form action="<c:url value="/doSearchEmployee"/>" method="post" id="searchForm">
     Search in: <select name="searchIn" form="searchForm">
     <option value="NAME">name</option>

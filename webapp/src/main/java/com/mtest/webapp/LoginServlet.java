@@ -28,12 +28,14 @@ public class LoginServlet extends HttpServlet {
         String pass = req.getParameter("psw");
         boolean isValidated = LoginDao.validate(name, pass);
         if (isValidated) {
-            HttpSession session = req.getSession(true);
-            session.setMaxInactiveInterval(50);
+            HttpSession session = req.getSession();
+            session.setMaxInactiveInterval(30);
+            session.setAttribute("name", name);
+            resp.sendRedirect(resp.encodeRedirectURL("displayEmployees"));
         } else {
-
+            req.getRequestDispatcher("login").include(req, resp);
         }
 //        resp.sendRedirect("/displayEmployees");
-        resp.sendRedirect(resp.encodeRedirectURL("displayEmployees"));
+//        resp.sendRedirect(resp.encodeRedirectURL("displayEmployees"));
     }
 }
