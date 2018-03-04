@@ -2,14 +2,16 @@
 <web-app version="3.0"
          xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
 
     <!-- To save as <CATALINA_HOME>\webapps\helloservlet\WEB-INF\web.xml -->
 
     <!--<servlet>-->
-        <!--<servlet-name>DisplayEmployeeServlet</servlet-name>-->
-        <!--&lt;!&ndash;<servlet-class>com.mtest.webapp.DisplayEmployeeServlet</servlet-class>&ndash;&gt;-->
-        <!--<jsp-file>/WEB-INF/jsp/employees.jsp</jsp-file>-->
+    <!--<servlet-name>DisplayEmployeeServlet</servlet-name>-->
+    <!--&lt;!&ndash;<servlet-class>com.mtest.webapp.DisplayEmployeeServlet</servlet-class>&ndash;&gt;-->
+    <!--<jsp-file>/WEB-INF/jsp/employees.jsp</jsp-file>-->
     <!--</servlet>-->
     <welcome-file-list>
 
@@ -22,6 +24,9 @@
         <!--<welcome-file>/employees</welcome-file>-->
 
     </welcome-file-list>
+    <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
     <servlet>
         <servlet-name>EmployeeServlet</servlet-name>
         <servlet-class>com.mtest.webapp.DisplayEmployeeServlet</servlet-class>
@@ -64,8 +69,8 @@
         <jsp-file>/WEB-INF/jsp/editEmployee.jsp</jsp-file>
     </servlet>
     <!--<servlet>-->
-        <!--<servlet-name>EditDepartmentPage</servlet-name>-->
-        <!--<jsp-file>/WEB-INF/jsp/editDepartment.jsp</jsp-file>-->
+    <!--<servlet-name>EditDepartmentPage</servlet-name>-->
+    <!--<jsp-file>/WEB-INF/jsp/editDepartment.jsp</jsp-file>-->
     <!--</servlet>-->
     <servlet>
         <servlet-name>SearchEmployeePage</servlet-name>
@@ -160,8 +165,39 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <!--<servlet-mapping>-->
-        <!--<servlet-name>DisplayEmployeeServlet</servlet-name>-->
-        <!--<url-pattern>/webapp</url-pattern>-->
+    <!--<servlet-name>DisplayEmployeeServlet</servlet-name>-->
+    <!--<url-pattern>/webapp</url-pattern>-->
     <!--</servlet-mapping>-->
 
+
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>com.mtest.webapp.LoginFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>PrivilegeFilter</filter-name>
+        <filter-class>com.mtest.webapp.PrivilegeFilter</filter-class>
+    </filter>
+
+    <!--<filter>-->
+    <!--<filter-name>RequestLoggingFilter</filter-name>-->
+    <!--<filter-class>com.journaldev.servlet.filters.RequestLoggingFilter</filter-class>-->
+    <!--</filter>-->
+
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <!--<dispatcher>REQUEST</dispatcher>-->
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>PrivilegeFilter</filter-name>
+        <url-pattern>/editEmployee</url-pattern>
+        <url-pattern>/editDepartment</url-pattern>
+        <url-pattern>/addEmployee</url-pattern>
+        <url-pattern>/addDepartment</url-pattern>
+    </filter-mapping>
+    <!--<filter-mapping>-->
+    <!--<filter-name>AuthenticationFilter</filter-name>-->
+    <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
 </web-app>

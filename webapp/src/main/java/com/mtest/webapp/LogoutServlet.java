@@ -2,10 +2,7 @@ package com.mtest.webapp;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -18,8 +15,13 @@ public class LogoutServlet extends HttpServlet {
 
         HttpSession session=request.getSession();
         session.invalidate();
+
         String pageToForward = request.getContextPath();
+        Cookie cookie =new Cookie("name","");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
         response.sendRedirect(pageToForward);
+
 //        PrintWriter out = response.getWriter();
 //        out.println("In dispatcherServlet <BR>");
 //

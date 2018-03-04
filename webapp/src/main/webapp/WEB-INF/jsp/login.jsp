@@ -69,7 +69,10 @@
 </head>
 <body>
 
+${failMessage}
 <h2>Login Form</h2>
+
+
 
 <form action="<c:url value="/doLogin" />" method="post">
 
