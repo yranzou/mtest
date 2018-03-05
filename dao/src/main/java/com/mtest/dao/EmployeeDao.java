@@ -5,6 +5,7 @@ import com.mtest.model.Department;
 import com.mtest.model.Employee;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class EmployeeDao {
             "SET `name`=?, surname=?, phone_private=?, department_id=?, chief_id=? WHERE id=?";
     private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`) " +
             "VALUES (?, ?, ?)";
+    private static final String INSERT_BLOB = "INSERT into blobtest (pic_name,pic_file) values (?,?)";
     private static final String SELECT_ALL_LEFT_JOIN_DEP = "SELECT employee.*, department.* from employee left join department on employee.department_id = department.id";
     private static final String SELECT_ALL_DEPARTMENTS_CHIEFS = "SELECT employee.*, department.* from department right join employee on department.chief_id = employee.id";
     private static final String SELECT_DEPARTMENT_CHIEF = "SELECT employee.* FROM employee INNER JOIN department ON employee.id = department.chief_id where department.id = ?";
@@ -256,6 +258,22 @@ public class EmployeeDao {
             // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void saveFile(String string, InputStream inputStream) {
+        try (PreparedStatement preparedStatement = this.connection.prepareStatement() {
+
+            preparedStatement.setString(1, searchValue);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                List<Employee> employees = new ArrayList<>();
+                while (resultSet.next()) {
+                    employees.add(createEmployeeFromResult(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
