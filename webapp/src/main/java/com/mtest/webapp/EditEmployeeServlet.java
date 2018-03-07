@@ -31,7 +31,7 @@ public class EditEmployeeServlet extends HttpServlet {
         String surName = req.getParameter("surname");
         String phone = req.getParameter("phone");
         InputStream inputStream = null; // input stream of the upload file
-        Part filePart = req.getpar
+        Part filePart = req.getPart("photo");
         if (filePart != null) {
             // prints out some information for debugging
             System.out.println(filePart.getName());
