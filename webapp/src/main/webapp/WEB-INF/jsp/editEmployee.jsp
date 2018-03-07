@@ -6,10 +6,11 @@
 </head>
 <body>
 
-<form action="<c:url value="/doEditEmployee"/>" method="post">
+<form action="<c:url value="/doEditEmployee"/>" method="post" enctype="multipart/form-data">
 Name:    <input type="text" name="name" value="<%=request.getParameter("name")%>"/>
 Surname:    <input type="text" name="surname" value="<%=request.getParameter("surname")%>"/>
 Phone:    <input type="text" name="phone" value="<%=request.getParameter("phone")%>"/>
+    Upload photo: <input type="file" name="photo" />
     <input type="hidden" name="id" value="<%=request.getParameter("id")%>">
     <input type="submit" name="update" value="Update"/>
 </form>

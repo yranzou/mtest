@@ -5,10 +5,14 @@ import com.mtest.server.EmployeeService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  *  Created by yuri on 30.11.17.
@@ -26,6 +30,17 @@ public class EditEmployeeServlet extends HttpServlet {
         String name = req.getParameter("name");
         String surName = req.getParameter("surname");
         String phone = req.getParameter("phone");
+        InputStream inputStream = null; // input stream of the upload file
+        Part filePart = req.getPart
+        if (filePart != null) {
+            // prints out some information for debugging
+            System.out.println(filePart.getName());
+            System.out.println(filePart.getSize());
+            System.out.println(filePart.getContentType());
+
+            // obtains input stream of the upload file
+            inputStream = filePart.getInputStream();
+        }
         int id = Integer.parseInt(req.getParameter("id"));
         Employee employee = employeeService.get(id);
         employee.setName(name);

@@ -4,6 +4,7 @@ import com.mtest.dao.EmployeeDao;
 import com.mtest.model.Department;
 import com.mtest.model.Employee;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -43,6 +44,10 @@ public class EmployeeService {
 
     public List<Employee> search (String searchIn, String searchValue) {
         return employeeDao.search(searchIn, searchValue);
+    }
+
+    public void savePhoto(Employee employee, InputStream inputStream) {
+        employeeDao.savePhoto(employee, inputStream);
     }
 
 
