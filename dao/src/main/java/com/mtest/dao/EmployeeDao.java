@@ -59,26 +59,38 @@ public class EmployeeDao {
     private Connection connection;
 
     public EmployeeDao() {
+//        try {
+//            Properties props = new Properties();
+//            props.load(this.getClass().getClassLoader().getResourceAsStream("db.properties"));
+//            String driver = props.getProperty("database.driver");
+//
+//            try {
+//                System.out.println("try load driver jdbc");
+//                Class.forName(driver);
+//                System.out.println(driver + " loaded");
+//            } catch (ClassNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//            String url = props.getProperty("database.url");
+//            String user = props.getProperty("database.user");
+//            String password = props.getProperty("database.password");
+//
+//            this.connection = DriverManager.getConnection(url, user, password);
+//            this.connection.setAutoCommit(false);
+//        } catch (IOException | SQLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        try (Connection con = ConnectionProvider.getConnection()) {
         try {
-            Properties props = new Properties();
-            props.load(this.getClass().getClassLoader().getResourceAsStream("db.properties"));
-            String driver = props.getProperty("database.driver");
 
-            try {
-                System.out.println("try load driver jdbc");
-                Class.forName(driver);
-                System.out.println(driver + " loaded");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+            connection = ConnectionProvider.getConnection();
+            if (connection == null)
+            {
+                System.out.println("HUIbb");
             }
-            String url = props.getProperty("database.url");
-            String user = props.getProperty("database.user");
-            String password = props.getProperty("database.password");
-
-            this.connection = DriverManager.getConnection(url, user, password);
-            this.connection.setAutoCommit(false);
-        } catch (IOException | SQLException e) {
-            // TODO Auto-generated catch block
+            connection.setAutoCommit(false);
+        } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
     }

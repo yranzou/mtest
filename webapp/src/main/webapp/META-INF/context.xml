@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Context path="mtest">
+    <ResourceLink name="jdbc/phonebook" global="jdbc/global_phonebook" type="javax.sql.DataSource" />
+</Context>
