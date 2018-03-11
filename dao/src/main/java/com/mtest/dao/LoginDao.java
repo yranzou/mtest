@@ -3,7 +3,7 @@ package com.mtest.dao;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
+//
 public class LoginDao {
     public static boolean validate(String name,String pass){
         Properties props = new Properties();
