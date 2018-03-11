@@ -4,6 +4,7 @@ package com.mtest.dao;
 import com.mtest.model.Department;
 import com.mtest.model.Employee;
 
+import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -22,7 +23,7 @@ public class EmployeeDao {
     private static final String SELECT_BY_CHIEF_ID = SELECT_ALL + " WHERE chief_id=?";
     private static final String DELETE_BY_ID = "DELETE FROM employee WHERE id=?";
     private static final String UPDATE = "UPDATE employee " +
-            "SET `name`=?, surname=?, phone_private=?, department_id=?, chief_id=? WHERE id=?";
+            "SET `name`=?, surname=?, phone_private=?, department_id=?, chief_id=?, photo=? WHERE id=?";
     private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`) " +
             "VALUES (?, ?, ?)";
     private static final String INSERT_PHOTO = "UPDATE employee SET photo=? WHERE id=?";
@@ -171,7 +172,13 @@ public class EmployeeDao {
             } else {
                 prepareStatement.setInt(5, employee.getChiefId());
             }
-            prepareStatement.setInt(6, employee.getId());
+            if (employee.getPhoto() == null)
+            {
+                prepareStatement.setNull(6,0);
+            } else {
+                prepareStatement.setBlob(6, new SerialBlob(employee.getPhoto()));
+            }
+            prepareStatement.setInt(7, employee.getId());
             prepareStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
@@ -288,6 +295,7 @@ public class EmployeeDao {
         employee.setPhone(resultSet.getString("phone_private"));
         employee.setChiefId(resultSet.getInt("chief_id"));
         employee.setDepartmentId(resultSet.getInt("department_id"));
+        employee.setPhoto(resultSet.getBytes("photo"));
         return employee;
     }
 }

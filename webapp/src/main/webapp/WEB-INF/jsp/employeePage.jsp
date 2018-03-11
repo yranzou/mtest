@@ -14,6 +14,8 @@
 
 <div class="card">
     <br/>
+    <img src=${image} />
+
     <h1>User: ${employee.surname} ${employee.name}</h1>
     <p class="title">Department: ${employee.departmentId}</p>
     <p></p>

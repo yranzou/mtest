@@ -7,12 +7,13 @@
 <body>
 
 <form action="<c:url value="/doEditEmployee"/>" method="post" enctype="multipart/form-data">
-Name:    <input type="text" name="name" value="<%=request.getParameter("name")%>"/>
-Surname:    <input type="text" name="surname" value="<%=request.getParameter("surname")%>"/>
-Phone:    <input type="text" name="phone" value="<%=request.getParameter("phone")%>"/>
-    Upload photo: <input type="file" name="photo" />
-    <input type="hidden" name="id" value="<%=request.getParameter("id")%>">
-    <input type="submit" name="update" value="Update"/>
+Name:    <input type="text" id="name" name="name" value="<%=request.getParameter("name")%>"/>
+Surname:    <input type="text" id="surname" name="surname" value="<%=request.getParameter("surname")%>"/>
+Phone:    <input type="text" id="phone" name="phone" value="<%=request.getParameter("phone")%>"/>
+   <br/>
+    Upload photo: <input type="file" id="photo" name="photo" />
+    <input type="hidden" id="id" name="id" value="<%=request.getParameter("id")%>">
+    <input type="submit" name="update" id="update" value="Update"/>
 </form>
 </body>
 </html>

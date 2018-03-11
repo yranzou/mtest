@@ -1,5 +1,7 @@
 package com.mtest.model;
 
+import java.sql.Blob;
+
 /**
  *  Created by yuri on 26.11.17.
  */
@@ -11,6 +13,15 @@ public class Employee {
     private String phone;
     private int chiefId;
     private int departmentId;
+    private byte[] photo;
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
 
     public int getId() {
         return id;
