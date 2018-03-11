@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class DisplayEmployeeServlet extends HttpServlet {
     private final long serialVersionID = 1L;
-//    private EmployeeService employeeService = new EmployeeService();
+    private EmployeeService employeeService = new EmployeeService();
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -30,7 +30,7 @@ public class DisplayEmployeeServlet extends HttpServlet {
 
         req.setAttribute("departments",  new DepartmentService().search("NAME",""));
 
-        req.setAttribute("employees",  new EmployeeService().search("NAME", ""));
+        req.setAttribute("employees",  employeeService.search("NAME", ""));
         req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
     }
 }

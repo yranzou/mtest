@@ -3,6 +3,7 @@ package com.mtest.dao;
 
 import com.mtest.model.Department;
 import com.mtest.model.Employee;
+import org.springframework.stereotype.Component;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.util.Properties;
 /**
  *  Created by yuri on 26.11.17.
  */
+@Component
 public class EmployeeDao {
 
     private static final String SELECT_ALL = "SELECT * FROM employee";

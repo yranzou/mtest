@@ -1,6 +1,7 @@
 package com.mtest.dao;
 
 import com.mtest.model.Department;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.sql.*;
@@ -11,6 +12,7 @@ import java.util.Properties;
 /**
  *  Created by yuri on 04.01.18.
  */
+@Component
 public class DepartmentDao {
     private static final String SELECT_ALL = "SELECT * FROM department";
 
