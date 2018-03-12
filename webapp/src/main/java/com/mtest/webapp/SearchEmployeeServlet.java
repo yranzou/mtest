@@ -35,6 +35,7 @@ public class SearchEmployeeServlet extends HttpServlet {
         req.setAttribute("employees",  new EmployeeService().search(searchIn, searchValue));
         req.setAttribute("departments",  new DepartmentService().search(searchIn, searchValue));
 //        req.setAttribute("employees",  list);
+
         req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
 //
     }
