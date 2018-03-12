@@ -83,7 +83,6 @@ public class EmployeeDao {
 //            // TODO Auto-generated catch block
 //            e.printStackTrace();
 //        }
-//        try (Connection con = ConnectionProvider.getConnection()) {
         try {
 
             connection = ConnectionProvider.getConnection();
@@ -256,6 +255,7 @@ public class EmployeeDao {
                 while (resultSet.next()) {
                     employees.add(createEmployeeFromResult(resultSet));
                 }
+
                 return employees;
             }
         } catch (SQLException e) {

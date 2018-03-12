@@ -1,9 +1,11 @@
 package com.mtest.webapp;
 
+import com.mtest.dao.EmployeeDao;
 import com.mtest.model.Department;
 import com.mtest.model.Employee;
 import com.mtest.server.DepartmentService;
 import com.mtest.server.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -19,7 +21,9 @@ import java.util.List;
  */
 public class DisplayEmployeeServlet extends HttpServlet {
     private final long serialVersionID = 1L;
-    private EmployeeService employeeService = new EmployeeService();
+//    @Autowired
+//    private EmployeeService employeeService = new EmployeeService();
+    private EmployeeDao employeeDao = new EmployeeDao();
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -30,7 +34,8 @@ public class DisplayEmployeeServlet extends HttpServlet {
 
         req.setAttribute("departments",  new DepartmentService().search("NAME",""));
 
-        req.setAttribute("employees",  employeeService.search("NAME", ""));
+        req.setAttribute("employees",  employeeDao.search("NAME", ""));
+//        req.setAttribute("employees",  employeeService.search("NAME", ""));
         req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
     }
 }
