@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 /**
@@ -34,8 +35,15 @@ public class DisplayEmployeeServlet extends HttpServlet {
 
         req.setAttribute("departments",  new DepartmentService().search("NAME",""));
 
-        req.setAttribute("employees",  employeeDao.search("NAME", ""));
+        // Set standard HTTP/1.1 no-cache headers.
+        resp.setHeader("Cache-Control", "private, no-store, no-cache, must-revalidate");
+
+// Set standard HTTP/1.0 no-cache header.
+        resp.setHeader("Pragma", "no-cache");
+//        req.setAttribute("employees",  employeeDao.search("NAME", ""));
 //        req.setAttribute("employees",  employeeService.search("NAME", ""));
-        req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
+//        req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
+        PrintWriter printWriter = resp.getWriter();
+        printWriter.print(employeeDao.search("NAME", ""));
     }
 }

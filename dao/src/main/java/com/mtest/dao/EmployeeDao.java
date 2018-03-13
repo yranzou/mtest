@@ -247,7 +247,8 @@ public class EmployeeDao {
     public List<Employee> search(String searchIn, String searchValue) {
 
         searchValue = "%"+searchValue+"%";
-        try (PreparedStatement preparedStatement = this.connection.prepareStatement(Search.valueOf(searchIn).toString())) {
+//        try (PreparedStatement preparedStatement = this.connection.prepareStatement(Search.valueOf(searchIn).toString())) {
+        try {PreparedStatement preparedStatement = this.connection.prepareStatement(Search.valueOf(searchIn).toString());
 
             preparedStatement.setString(1, searchValue);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -257,6 +258,7 @@ public class EmployeeDao {
                 }
 
                 return employees;
+
             }
         } catch (SQLException e) {
             // TODO Auto-generated catch block
