@@ -38,6 +38,8 @@ public class DisplayEmployeeServlet extends HttpServlet {
         // Set standard HTTP/1.1 no-cache headers.
         resp.setHeader("Cache-Control", "private, no-store, no-cache, must-revalidate");
 
+
+        resp.setHeader("Expires", "-1");
 // Set standard HTTP/1.0 no-cache header.
         resp.setHeader("Pragma", "no-cache");
 //        req.setAttribute("employees",  employeeDao.search("NAME", ""));
