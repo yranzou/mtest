@@ -16,6 +16,11 @@
             <artifactId>server</artifactId>
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.mtest</groupId>
+            <artifactId>dao</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 

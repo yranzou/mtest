@@ -64,11 +64,12 @@ public class EmployeeRead {
 
     private static void printEmployees() {
 //        List<Employee> employees = new EmployeeService().getAll();
-//        List<Employee> employees = new EmployeeDao().getAll();
-//        for (Employee employee : employees) {
-//            System.out.println("Id = " + employee.getId());
-//            System.out.println("Name = " + employee.getName());
-//        }
+        EmployeeDao employeeDao = new EmployeeDao();
+        List<Employee> employees = employeeDao.getAll();
+        for (Employee employee : employees) {
+            System.out.println("Id = " + employee.getId());
+            System.out.println("Name = " + employee.getName());
+        }
 
     }
 
