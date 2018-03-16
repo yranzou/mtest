@@ -71,24 +71,24 @@ public class Employee {
         this.departmentId = departmentId;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Employee [id=");
-        builder.append(id);
-        builder.append(", name=");
-        builder.append(name);
-        builder.append(", surname=");
-        builder.append(surname);
-        builder.append(", phone=");
-        builder.append(phone);
-        builder.append(", chief_id=");
-        builder.append(chiefId);
-        builder.append(", department_id=");
-        builder.append(departmentId);
-        builder.append("]");
-        return builder.toString();
-    }
+//    @Override
+//    public String toString() {
+//        StringBuilder builder = new StringBuilder();
+//        builder.append("Employee [id=");
+//        builder.append(id);
+//        builder.append(", name=");
+//        builder.append(name);
+//        builder.append(", surname=");
+//        builder.append(surname);
+//        builder.append(", phone=");
+//        builder.append(phone);
+//        builder.append(", chief_id=");
+//        builder.append(chiefId);
+//        builder.append(", department_id=");
+//        builder.append(departmentId);
+//        builder.append("]");
+//        return builder.toString();
+//    }
 
 }
 

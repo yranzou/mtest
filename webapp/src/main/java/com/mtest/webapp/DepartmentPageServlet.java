@@ -15,7 +15,8 @@ import java.io.IOException;
  */
 public class DepartmentPageServlet extends HttpServlet {
     private final long serialVersionID = 1L;
-//    private EmployeeService employeeService = new EmployeeService();
+    private EmployeeService employeeService = new EmployeeService();
+    private DepartmentService departmentService = new DepartmentService();
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -25,8 +26,8 @@ public class DepartmentPageServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
 //        HttpSession session = req.getSession(true);
 //        session.setMaxInactiveInterval(50);
-        req.setAttribute("department",  new DepartmentService().get(id));
-        req.setAttribute("departmentChief",  new EmployeeService().getDepartmentChief(id));
+        req.setAttribute("department",  departmentService.get(id));
+        req.setAttribute("departmentChief",  employeeService.getDepartmentChief(id));
         req.getRequestDispatcher("/WEB-INF/jsp/departmentPage.jsp").forward(req,resp);
     }
 }

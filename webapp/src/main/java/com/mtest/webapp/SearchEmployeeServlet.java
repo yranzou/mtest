@@ -17,7 +17,8 @@ import java.util.List;
  */
 public class SearchEmployeeServlet extends HttpServlet {
     private final long serialVersionID = 1L;
-//    private EmployeeService employeeService = new EmployeeService();
+    private EmployeeService employeeService = new EmployeeService();
+    private DepartmentService departmentService = new DepartmentService();
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -32,8 +33,8 @@ public class SearchEmployeeServlet extends HttpServlet {
         String searchValue = req.getParameter("searchValue");
 //        list.addAll(new EmployeeService().search(searchIn, searchValue));
 //        list.addAll(new DepartmentService().search(searchIn, searchValue));
-        req.setAttribute("employees",  new EmployeeService().search(searchIn, searchValue));
-        req.setAttribute("departments",  new DepartmentService().search(searchIn, searchValue));
+        req.setAttribute("employees",  employeeService.search(searchIn, searchValue));
+        req.setAttribute("departments",  departmentService.search(searchIn, searchValue));
 //        req.setAttribute("employees",  list);
 
         req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);

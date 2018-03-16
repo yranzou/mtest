@@ -9,11 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+
 /**
  *  Created by yuri on 04.01.18.
  */
 @Component
 public class DepartmentDao {
+    private String driver;
+    private Properties props;
     private static final String SELECT_ALL = "SELECT * FROM department";
 
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE id=?";
@@ -56,42 +59,54 @@ public class DepartmentDao {
 
     private Connection connection;
 
-    public DepartmentDao() {
-//        try {
-//            Properties props = new Properties();
-//            props.load(this.getClass().getClassLoader().getResourceAsStream("db.properties"));
-//            String driver = props.getProperty("database.driver");
-//
-//            try {
-//                Class.forName(driver);
-//            } catch (ClassNotFoundException e)
-//            {
-//                e.printStackTrace();
-//            }
-//            String url = props.getProperty("database.url");
-//            String user = props.getProperty("database.user");
-//            String password = props.getProperty("database.password");
-//
-//            this.connection = DriverManager.getConnection(url, user, password);
-//            this.connection.setAutoCommit(false);
-//        } catch (IOException | SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
+    private Connection getConnection() {
         try {
-
-            connection = ConnectionProvider.getConnection();
-            if (connection == null)
-            {
-                System.out.println("HUIbb");
+            try {
+                System.out.println("try load driver jdbc");
+                Class.forName(driver);
+                System.out.println(driver + " loaded");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
+            String url = props.getProperty("database.url");
+            String user = props.getProperty("database.user");
+            String password = props.getProperty("database.password");
+
+            Connection connection = DriverManager.getConnection(url, user, password);
             connection.setAutoCommit(false);
-        } catch (SQLException | NullPointerException e) {
+            return connection;
+
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public DepartmentDao() {
+        try {
+            props = new Properties();
+            props.load(this.getClass().getClassLoader().getResourceAsStream("db.properties"));
+            driver = props.getProperty("database.driver");
+        } catch (IOException e) {
+
+        }
+        //////////////////////////////////////
+//        try {
+//
+//            connection = getConnection();
+//            if (connection == null)
+//            {
+//                System.out.println("HUIbb");
+//            }
+//            connection.setAutoCommit(false);
+//        } catch (SQLException | NullPointerException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public Department get(int id) {
+        connection = getConnection();
         try (PreparedStatement prepareStatement = this.connection.prepareStatement(SELECT_BY_ID))
         {
             prepareStatement.setInt(1, id);
@@ -105,12 +120,21 @@ public class DepartmentDao {
             // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
 
 
     public void persist(Department department) {
+        connection = getConnection();
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(INSERT)) {
             prepareStatement.setString(1, department.getName());
@@ -132,11 +156,19 @@ public class DepartmentDao {
             }
             e.printStackTrace();
 //            return null;
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void delete(int id) {
-
+        connection = getConnection();
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(DELETE_BY_ID)) {
             prepareStatement.setInt(1, id);
@@ -150,6 +182,14 @@ public class DepartmentDao {
                 ex.printStackTrace();
             }
             e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -158,6 +198,7 @@ public class DepartmentDao {
     }
 
     public void update(Department department) {
+        connection = getConnection();
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(UPDATE)) {
             prepareStatement.setString(1, department.getName());
@@ -177,10 +218,19 @@ public class DepartmentDao {
                 ex.printStackTrace();
             }
             e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public List<Department> getAll() {
+        connection = getConnection();
         try (ResultSet resultSet = this.connection.createStatement()
                 .executeQuery(SELECT_ALL)) {
             List<Department> departments = new ArrayList<>();
@@ -192,11 +242,19 @@ public class DepartmentDao {
             // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public List<Department> search(String searchIn, String searchValue) {
-
+        connection = getConnection();
         searchValue = "%"+searchValue+"%";
         try (PreparedStatement preparedStatement = this.connection.prepareStatement(Search.valueOf(searchIn).toString())) {
 
@@ -212,6 +270,14 @@ public class DepartmentDao {
             // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

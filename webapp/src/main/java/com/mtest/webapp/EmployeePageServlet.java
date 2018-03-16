@@ -33,7 +33,7 @@ public class EmployeePageServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
 //        HttpSession session = req.getSession(true);
 //        session.setMaxInactiveInterval(50);
-        Employee employee = new EmployeeService().get(id);
+        Employee employee = employeeService.get(id);
         String image = "data:image/png;base64," + Base64.encode(employee.getPhoto());
         req.setAttribute("employee",  employee);
         req.setAttribute("image",image);
