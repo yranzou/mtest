@@ -6,15 +6,15 @@
          version="3.1">
 <!--</web-app>-->
 
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:webapp-context.xml</param-value>
+    </context-param>
 
-    <!--<context-param>-->
-        <!--<param-name>contextConfigLocation</param-name>-->
-        <!--<param-value>classpath:webapp-context.xml</param-value>-->
-    <!--</context-param>-->
 
-    <!--<listener>-->
-        <!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
-    <!--</listener>-->
     <!-- To save as <CATALINA_HOME>\webapps\helloservlet\WEB-INF\web.xml -->
 
     <!--<servlet>-->

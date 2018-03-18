@@ -3,6 +3,7 @@ package com.mtest.dao;
 
 import com.mtest.model.Department;
 import com.mtest.model.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -12,6 +13,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+import static com.mtest.dao.ConnectionProvider.getConnection;
 
 /**
  * Created by yuri on 26.11.17.
@@ -62,29 +65,29 @@ public class EmployeeDao {
 
     private Connection connection;
 
-    private Connection getConnection() {
-        try {
-            try {
-                System.out.println("try load driver jdbc");
-                Class.forName(driver);
-                System.out.println(driver + " loaded");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            String url = props.getProperty("database.url");
-            String user = props.getProperty("database.user");
-            String password = props.getProperty("database.password");
-
-            Connection connection = DriverManager.getConnection(url, user, password);
-            connection.setAutoCommit(false);
-            return connection;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    private Connection getConnection() {
+//        try {
+//            try {
+//                System.out.println("try load driver jdbc");
+//                Class.forName(driver);
+//                System.out.println(driver + " loaded");
+//            } catch (ClassNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//            String url = props.getProperty("database.url");
+//            String user = props.getProperty("database.user");
+//            String password = props.getProperty("database.password");
+//
+//            Connection connection = DriverManager.getConnection(url, user, password);
+//            connection.setAutoCommit(false);
+//            return connection;
+//
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     public EmployeeDao() {
         try {
@@ -141,7 +144,8 @@ public class EmployeeDao {
             // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
-        } finally {
+        }
+        finally {
             try {
                 if (connection != null) {
                     connection.close();

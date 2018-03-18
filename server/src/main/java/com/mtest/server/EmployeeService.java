@@ -3,6 +3,8 @@ package com.mtest.server;
 import com.mtest.dao.EmployeeDao;
 import com.mtest.model.Department;
 import com.mtest.model.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 import java.util.List;
@@ -10,9 +12,11 @@ import java.util.List;
 /**
  * Created by yuri on 20.01.18.
  */
+@Component
 public class EmployeeService {
     private EmployeeDao employeeDao;
 
+    @Autowired
     public EmployeeService() {
         employeeDao = new EmployeeDao();
     }

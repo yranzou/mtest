@@ -6,6 +6,8 @@ import com.mtest.model.Employee;
 import com.mtest.server.DepartmentService;
 import com.mtest.server.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -22,13 +24,20 @@ import java.util.List;
  */
 public class DisplayEmployeeServlet extends HttpServlet {
     private final long serialVersionID = 1L;
-//    @Autowired
-    private EmployeeService employeeService = new EmployeeService();
-    private DepartmentService departmentService = new DepartmentService();
+    @Autowired
+    private EmployeeService employeeService;// = new EmployeeService();
+    @Autowired
+    private DepartmentService departmentService;// = new DepartmentService();
+    @Autowired
+    private ApplicationContext applicationContext;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                config.getServletContext());
+        this.applicationContext.getBean(EmployeeService.class);
+        this.applicationContext.getBean(DepartmentService.class);
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

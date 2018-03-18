@@ -4,6 +4,8 @@ import com.mtest.model.Department;
 import com.mtest.model.Employee;
 import com.mtest.server.DepartmentService;
 import com.mtest.server.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -17,14 +19,19 @@ import java.io.IOException;
  */
 public class UpdateDepartmentServlet extends HttpServlet {
     private final long serialVersionID = 1L;
+
+    @Autowired
+    DepartmentService departmentService;// = new DepartmentService();
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                config.getServletContext());
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        DepartmentService departmentService = new DepartmentService();
         String name = req.getParameter("name");
         int chiefId = Integer.parseInt(req.getParameter("chiefId"));
         int id = Integer.parseInt(req.getParameter("id"));

@@ -1,6 +1,7 @@
 package com.mtest.dao;
 
 import com.mtest.model.Department;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -8,6 +9,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+import static com.mtest.dao.ConnectionProvider.getConnection;
 
 
 /**
@@ -59,29 +62,29 @@ public class DepartmentDao {
 
     private Connection connection;
 
-    private Connection getConnection() {
-        try {
-            try {
-                System.out.println("try load driver jdbc");
-                Class.forName(driver);
-                System.out.println(driver + " loaded");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            String url = props.getProperty("database.url");
-            String user = props.getProperty("database.user");
-            String password = props.getProperty("database.password");
-
-            Connection connection = DriverManager.getConnection(url, user, password);
-            connection.setAutoCommit(false);
-            return connection;
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    private Connection getConnection() {
+//        try {
+//            try {
+//                System.out.println("try load driver jdbc");
+//                Class.forName(driver);
+//                System.out.println(driver + " loaded");
+//            } catch (ClassNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//            String url = props.getProperty("database.url");
+//            String user = props.getProperty("database.user");
+//            String password = props.getProperty("database.password");
+//
+//            Connection connection = DriverManager.getConnection(url, user, password);
+//            connection.setAutoCommit(false);
+//            return connection;
+//
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     public DepartmentDao() {
         try {

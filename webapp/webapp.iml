@@ -13,7 +13,6 @@
         <sourceRoots>
           <root url="file://$MODULE_DIR$/src/main/java" />
           <root url="file://$MODULE_DIR$/src/main/resources" />
-          <root url="file://$MODULE_DIR$/src/resources" />
           <root url="file://$MODULE_DIR$/target/maven-shared-archive-resources" />
         </sourceRoots>
       </configuration>
@@ -41,7 +40,6 @@
       <sourceFolder url="file://$MODULE_DIR$/target/maven-shared-archive-resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/resources" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

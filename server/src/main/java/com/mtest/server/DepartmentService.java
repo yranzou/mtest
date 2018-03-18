@@ -2,14 +2,19 @@ package com.mtest.server;
 
 import com.mtest.dao.DepartmentDao;
 import com.mtest.model.Department;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * Created by yuri on 20.01.18.
  */
+@Component
 public class DepartmentService{
     private DepartmentDao departmentDao;
+
+    @Autowired
     public DepartmentService() {
         departmentDao = new DepartmentDao();
     }
