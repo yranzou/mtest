@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import static com.mtest.dao.ConnectionProvider.getConnection;
+import static com.mtest.dao.ConnectionPool.getConnection;
 
 
 /**

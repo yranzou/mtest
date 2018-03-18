@@ -11,10 +11,12 @@ import java.sql.SQLException;
  * Created by yuri on 25.02.18.
  */
 @Component
-public class ConnectionProvider {
+public class ConnectionPool {
+
     private static DataSource dataSource;
+
     @Autowired
-    public ConnectionProvider(DataSource ds) {
+    public ConnectionPool(DataSource ds) {
         dataSource = ds;
     }
     static Connection getConnection() {

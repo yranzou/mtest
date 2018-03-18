@@ -14,13 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import static com.mtest.dao.ConnectionProvider.getConnection;
+import static com.mtest.dao.ConnectionPool.getConnection;
 
 /**
  * Created by yuri on 26.11.17.
  */
 @Component
 public class EmployeeDao {
+
 
     private String driver;
     private Properties props;
