@@ -17,7 +17,9 @@ public class ConnectionPool {
 
     @Autowired
     public ConnectionPool(DataSource ds) {
-        dataSource = ds;
+        if (dataSource==null) {
+            dataSource = ds;
+        }
     }
     static Connection getConnection() {
         // Obtain our environment naming context

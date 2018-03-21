@@ -18,6 +18,8 @@ import static com.mtest.dao.ConnectionPool.getConnection;
  */
 @Component
 public class DepartmentDao {
+
+    private ConnectionPool connectionPool;
     private String driver;
     private Properties props;
     private static final String SELECT_ALL = "SELECT * FROM department";

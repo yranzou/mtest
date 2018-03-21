@@ -21,8 +21,6 @@ import static com.mtest.dao.ConnectionPool.getConnection;
  */
 @Component
 public class EmployeeDao {
-
-
     private String driver;
     private Properties props;
 
