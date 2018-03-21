@@ -17,6 +17,9 @@
     <packaging>war</packaging>
     <name>Web Application</name>
     <url>http://maven.apache.org</url>
+    <properties>
+        <springVersion>4.3.14.RELEASE</springVersion>
+    </properties>
     <dependencies>
 
 
@@ -50,7 +53,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>RELEASE</version>
+            <version>${springVersion}</version>
         </dependency>
 
         <!--<dependency>-->
