@@ -20,11 +20,16 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
     <groupId>com.mtest</groupId>
     <artifactId>mtest</artifactId>
     <packaging>pom</packaging>
 
+    <url>http://maven.apache.org</url>
     <version>1.0.1-SNAPSHOT</version>
+
+
+
 
     <dependencies>
         <dependency>
@@ -38,6 +43,9 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
+
+
+
 
     </dependencies>
     <build>

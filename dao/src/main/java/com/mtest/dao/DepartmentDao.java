@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import static com.mtest.dao.ConnectionPool.getConnection;
 
 
 /**
@@ -19,7 +18,6 @@ import static com.mtest.dao.ConnectionPool.getConnection;
 @Component
 public class DepartmentDao {
 
-    private ConnectionPool connectionPool;
     private String driver;
     private Properties props;
     private static final String SELECT_ALL = "SELECT * FROM department";
@@ -136,6 +134,9 @@ public class DepartmentDao {
         }
     }
 
+    private Connection getConnection() {
+        return ConnectionPool.getConnection();
+    }
 
 
     public void persist(Department department) {

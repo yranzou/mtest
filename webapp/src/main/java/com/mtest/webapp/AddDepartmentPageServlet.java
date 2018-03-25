@@ -1,6 +1,9 @@
 package com.mtest.webapp;
 
 import com.mtest.server.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -14,10 +17,16 @@ import java.io.IOException;
  */
 public class AddDepartmentPageServlet extends HttpServlet {
     private final long serialVersionID = 1L;
-    private EmployeeService employeeService = new EmployeeService();
+    @Autowired
+    private EmployeeService employeeService;
+    @Autowired
+    private ApplicationContext applicationContext;
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                config.getServletContext());
+        this.applicationContext.getBean(EmployeeService.class);
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

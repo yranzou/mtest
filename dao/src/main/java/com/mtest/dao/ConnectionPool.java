@@ -17,14 +17,11 @@ public class ConnectionPool {
 
     @Autowired
     public ConnectionPool(DataSource ds) {
-        System.out.println("start autowire");
-        System.out.println("datasource = " + dataSource);
         if (dataSource==null) {
             dataSource = ds;
         }
     }
     static Connection getConnection() {
-        System.out.println("getConn!!!!!!!!!!!!!!!!!!!!!!!!");
         System.out.println(dataSource);
         // Obtain our environment naming context
 //        try {

@@ -6,6 +6,9 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import sun.misc.IOUtils;
 
 import javax.servlet.ServletConfig;
@@ -30,11 +33,16 @@ import java.util.Objects;
  */
 public class EditEmployeeServlet extends HttpServlet {
     private final long serialVersionID = 1L;
-    private EmployeeService employeeService = new EmployeeService();
-
+    @Autowired
+    private EmployeeService employeeService;
+    @Autowired
+    private ApplicationContext applicationContext;
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                config.getServletContext());
+        this.applicationContext.getBean(EmployeeService.class);
     }
 
     @Override

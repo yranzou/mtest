@@ -2,6 +2,9 @@ package com.mtest.webapp;
 
 import com.mtest.dao.LoginDao;
 import com.mtest.server.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -15,8 +18,6 @@ import java.io.PrintWriter;
  */
 public class LoginServlet extends HttpServlet {
     private final long serialVersionID = 1L;
-    private EmployeeService employeeService = new EmployeeService();
-
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
