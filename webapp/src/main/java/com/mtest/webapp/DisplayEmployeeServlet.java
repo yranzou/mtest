@@ -41,21 +41,8 @@ public class DisplayEmployeeServlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        List<Employee> employees = new EmployeeService().getAll();
-
         req.setAttribute("departments",  departmentService.search("NAME",""));
-
-        // Set standard HTTP/1.1 no-cache headers.
-        resp.setHeader("Cache-Control", "private, no-store, no-cache, must-revalidate");
-
-
-        resp.setHeader("Expires", "-1");
-// Set standard HTTP/1.0 no-cache header.
-        resp.setHeader("Pragma", "no-cache");
-//        req.setAttribute("employees",  employeeDao.search("NAME", ""));
         req.setAttribute("employees",  employeeService.search("NAME", ""));
         req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
-//        PrintWriter printWriter = resp.getWriter();
-//        printWriter.print(employeeDao.search("NAME", ""));
     }
 }

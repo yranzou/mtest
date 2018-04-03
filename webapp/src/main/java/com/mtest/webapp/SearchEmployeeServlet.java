@@ -36,19 +36,10 @@ public class SearchEmployeeServlet extends HttpServlet {
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-//        List<Object> list = new ArrayList<>();
-
-//        String name = req.getParameter("name");
         String searchIn = req.getParameter("searchIn");
         String searchValue = req.getParameter("searchValue");
-//        list.addAll(new EmployeeService().search(searchIn, searchValue));
-//        list.addAll(new DepartmentService().search(searchIn, searchValue));
         req.setAttribute("employees",  employeeService.search(searchIn, searchValue));
         req.setAttribute("departments",  departmentService.search(searchIn, searchValue));
-//        req.setAttribute("employees",  list);
-
         req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
-//
     }
 }

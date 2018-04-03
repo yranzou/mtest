@@ -29,10 +29,11 @@
     <br/>
 </div>
 <h3 style="text-align:center">
-    <a href="<c:url value="/editEmployee?id=${employee.id}&name=${employee.name}&surname=${employee.surname}&phone=${employee.phone}" />">Edit
+    <a href="<c:url value="/employee/edit/${employee.id}" />">Edit
+    <%--<a href="<c:url value="/editEmployee?id=${employee.id}&name=${employee.name}&surname=${employee.surname}&phone=${employee.phone}" />">Edit--%>
         </a>
     &nbsp;
-    <a href="<c:url value="/addEmployee" />">Add</a>
+    <a href="<c:url value="/employee/add" />">Add</a>
 </h3>
 
 </body>

@@ -4,7 +4,6 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
-<!--</web-app>-->
 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -36,47 +35,47 @@
     <session-config>
         <session-timeout>10</session-timeout>
     </session-config>
-    <servlet>
-        <servlet-name>EmployeeServlet</servlet-name>
-        <servlet-class>com.mtest.webapp.DisplayEmployeeServlet</servlet-class>
-        <!--<jsp-file>/WEB-INF/jsp/employees.jsp</jsp-file>-->
-    </servlet>
-    <servlet>
-        <servlet-name>AddEmployeeServlet</servlet-name>
-        <servlet-class>com.mtest.webapp.AddEmployeeServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EditEmployeeServlet</servlet-name>
-        <servlet-class>com.mtest.webapp.EditEmployeeServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EditDepartmentPageServlet</servlet-name>
-        <servlet-class>com.mtest.webapp.EditDepartmentPageServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>UpdateDepartmentServlet</servlet-name>
-        <servlet-class>com.mtest.webapp.UpdateDepartmentServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SearchEmployeeServlet</servlet-name>
-        <servlet-class>com.mtest.webapp.SearchEmployeeServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AddEmployeePage</servlet-name>
-        <jsp-file>/WEB-INF/jsp/addEmployee.jsp</jsp-file>
-    </servlet>
-    <servlet>
-        <servlet-name>AddDepartmentPageServlet</servlet-name>
-        <servlet-class>com.mtest.webapp.AddDepartmentPageServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AddDepartmentServlet</servlet-name>
-        <servlet-class>com.mtest.webapp.AddDepartmentServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EditEmployeePage</servlet-name>
-        <jsp-file>/WEB-INF/jsp/editEmployee.jsp</jsp-file>
-    </servlet>
+    <!--<servlet>-->
+        <!--<servlet-name>EmployeeServlet</servlet-name>-->
+        <!--<servlet-class>com.mtest.webapp.DisplayEmployeeServlet</servlet-class>-->
+        <!--&lt;!&ndash;<jsp-file>/WEB-INF/jsp/employees.jsp</jsp-file>&ndash;&gt;-->
+    <!--</servlet>-->
+    <!--<servlet>-->
+        <!--<servlet-name>AddEmployeeServlet</servlet-name>-->
+        <!--<servlet-class>com.mtest.webapp.AddEmployeeServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet>-->
+        <!--<servlet-name>EditEmployeeServlet</servlet-name>-->
+        <!--<servlet-class>com.mtest.webapp.EditEmployeeServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet>-->
+        <!--<servlet-name>EditDepartmentPageServlet</servlet-name>-->
+        <!--<servlet-class>com.mtest.webapp.EditDepartmentPageServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet>-->
+        <!--<servlet-name>UpdateDepartmentServlet</servlet-name>-->
+        <!--<servlet-class>com.mtest.webapp.UpdateDepartmentServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet>-->
+        <!--<servlet-name>SearchEmployeeServlet</servlet-name>-->
+        <!--<servlet-class>com.mtest.webapp.SearchEmployeeServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet>-->
+        <!--<servlet-name>AddEmployeePage</servlet-name>-->
+        <!--<jsp-file>/WEB-INF/jsp/addEmployee.jsp</jsp-file>-->
+    <!--</servlet>-->
+    <!--<servlet>-->
+        <!--<servlet-name>AddDepartmentPageServlet</servlet-name>-->
+        <!--<servlet-class>com.mtest.webapp.AddDepartmentPageServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet>-->
+        <!--<servlet-name>AddDepartmentServlet</servlet-name>-->
+        <!--<servlet-class>com.mtest.webapp.AddDepartmentServlet</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet>-->
+        <!--<servlet-name>EditEmployeePage</servlet-name>-->
+        <!--<jsp-file>/WEB-INF/jsp/editEmployee.jsp</jsp-file>-->
+    <!--</servlet>-->
     <!--<servlet>-->
     <!--<servlet-name>EditDepartmentPage</servlet-name>-->
     <!--<jsp-file>/WEB-INF/jsp/editDepartment.jsp</jsp-file>-->
@@ -85,15 +84,15 @@
         <servlet-name>SearchEmployeePage</servlet-name>
         <jsp-file>/WEB-INF/jsp/searchEmployee.jsp</jsp-file>
     </servlet>
-    <servlet>
-        <servlet-name>EmployeePageServlet</servlet-name>
-        <servlet-class>com.mtest.webapp.EmployeePageServlet</servlet-class>
-        <!--<jsp-file>/WEB-INF/jsp/employees.jsp</jsp-file>-->
-    </servlet>
-    <servlet>
-        <servlet-name>DepartmentPageServlet</servlet-name>
-        <servlet-class>com.mtest.webapp.DepartmentPageServlet</servlet-class>
-    </servlet>
+    <!--<servlet>-->
+        <!--<servlet-name>EmployeePageServlet</servlet-name>-->
+        <!--<servlet-class>com.mtest.webapp.EmployeePageServlet</servlet-class>-->
+        <!--&lt;!&ndash;<jsp-file>/WEB-INF/jsp/employees.jsp</jsp-file>&ndash;&gt;-->
+    <!--</servlet>-->
+    <!--<servlet>-->
+        <!--<servlet-name>DepartmentPageServlet</servlet-name>-->
+        <!--<servlet-class>com.mtest.webapp.DepartmentPageServlet</servlet-class>-->
+    <!--</servlet>-->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.mtest.webapp.LoginServlet</servlet-class>
@@ -114,58 +113,58 @@
     <!-- Note: All <servlet> elements MUST be grouped together and
           placed IN FRONT of the <servlet-mapping> elements -->
 
-    <servlet-mapping>
-        <servlet-name>EmployeeServlet</servlet-name>
-        <url-pattern>/displayEmployees</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddEmployeeServlet</servlet-name>
-        <url-pattern>/doAddEmployee</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EditEmployeeServlet</servlet-name>
-        <url-pattern>/doEditEmployee</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UpdateDepartmentServlet</servlet-name>
-        <url-pattern>/updateDepartment</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchEmployeeServlet</servlet-name>
-        <url-pattern>/doSearchEmployee</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddEmployeePage</servlet-name>
-        <url-pattern>/addEmployee</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddDepartmentPageServlet</servlet-name>
-        <url-pattern>/addDepartment</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddDepartmentServlet</servlet-name>
-        <url-pattern>/doAddDepartment</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EditEmployeePage</servlet-name>
-        <url-pattern>/editEmployee</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EditDepartmentPageServlet</servlet-name>
-        <url-pattern>/editDepartment</url-pattern>
-    </servlet-mapping>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>EmployeeServlet</servlet-name>-->
+        <!--<url-pattern>/displayEmployees</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>AddEmployeeServlet</servlet-name>-->
+        <!--<url-pattern>/doAddEmployee</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>EditEmployeeServlet</servlet-name>-->
+        <!--<url-pattern>/doEditEmployee</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>UpdateDepartmentServlet</servlet-name>-->
+        <!--<url-pattern>/updateDepartment</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>SearchEmployeeServlet</servlet-name>-->
+        <!--<url-pattern>/doSearchEmployee</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>AddEmployeePage</servlet-name>-->
+        <!--<url-pattern>/addEmployee</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>AddDepartmentPageServlet</servlet-name>-->
+        <!--<url-pattern>/addDepartment</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>AddDepartmentServlet</servlet-name>-->
+        <!--<url-pattern>/doAddDepartment</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>EditEmployeePage</servlet-name>-->
+        <!--<url-pattern>/editEmployee</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>EditDepartmentPageServlet</servlet-name>-->
+        <!--<url-pattern>/editDepartment</url-pattern>-->
+    <!--</servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>SearchEmployeePage</servlet-name>
         <url-pattern>/searchEmployees</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EmployeePageServlet</servlet-name>
-        <url-pattern>/employeePage</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DepartmentPageServlet</servlet-name>
-        <url-pattern>/departmentPage</url-pattern>
-    </servlet-mapping>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>EmployeePageServlet</servlet-name>-->
+        <!--<url-pattern>/employeePage</url-pattern>-->
+    <!--</servlet-mapping>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>DepartmentPageServlet</servlet-name>-->
+        <!--<url-pattern>/departmentPage</url-pattern>-->
+    <!--</servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/doLogin</url-pattern>
@@ -180,12 +179,13 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
-        <url-pattern>*.htm</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     <!--<servlet-mapping>-->
     <!--<servlet-name>DisplayEmployeeServlet</servlet-name>-->
     <!--<url-pattern>/webapp</url-pattern>-->
     <!--</servlet-mapping>-->
+
 
 
     <filter>
@@ -202,6 +202,8 @@
     <!--<filter-class>com.journaldev.servlet.filters.RequestLoggingFilter</filter-class>-->
     <!--</filter>-->
 
+
+
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/*</url-pattern>
@@ -209,10 +211,10 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>PrivilegeFilter</filter-name>
-        <url-pattern>/editEmployee</url-pattern>
-        <url-pattern>/editDepartment</url-pattern>
-        <url-pattern>/addEmployee</url-pattern>
-        <url-pattern>/addDepartment</url-pattern>
+        <url-pattern>/employee/edit</url-pattern>
+        <url-pattern>/department/edit</url-pattern>
+        <url-pattern>/employee/add</url-pattern>
+        <url-pattern>/department/add</url-pattern>
     </filter-mapping>
     <resource-ref>
         <res-ref-name>jdbc/phonebook</res-ref-name>

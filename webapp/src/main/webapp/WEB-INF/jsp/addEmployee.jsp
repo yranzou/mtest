@@ -5,11 +5,12 @@
     <title>Display Employees</title>
 </head>
 <body>
-<form action="<c:url value="/doAddEmployee"/>" method="post">
-    Name: <input type="text" name="name"/>
-    Surname: <input type="text" name="surname"/>
-    Phone: <input type="text" name="phone"/>
-    Upload photo: <input type="file" name="photo" />
+<form action="<c:url value="/employee/doAdd"/>" method="post" enctype="multipart/form-data">
+    Name:    <input type="text" id="name" name="name" value=""/>
+    Surname:    <input type="text" id="surname" name="surname" value=""/>
+    Phone:    <input type="text" id="phone" name="phone" value=""/>
+    <br/>
+    Upload photo: <input type="file" id="photo" name="photo" />
     <input type="submit" name="add" value="Add"/>
 </form>
 </body>

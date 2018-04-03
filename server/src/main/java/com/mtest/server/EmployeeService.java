@@ -56,7 +56,7 @@ public class EmployeeService {
 
 
 
-    private void create(Employee employee) {
+    public void create(Employee employee) {
         employeeDao.persist(employee);
     }
 

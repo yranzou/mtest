@@ -14,7 +14,7 @@
 
 <div class="card">
 
-    <form action="<c:url value="/doAddDepartment"/>" method="post" id="addDepartmentForm">
+    <form action="<c:url value="/department/doAdd"/>" method="post" id="addDepartmentForm">
         Select department name: <input type="text" name="name" value="${department.name}"/>
 
         <br/>

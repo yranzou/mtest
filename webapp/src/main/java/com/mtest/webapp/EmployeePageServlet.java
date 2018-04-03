@@ -39,10 +39,7 @@ public class EmployeePageServlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        List<Employee> employees = new EmployeeService().getAll();
         int id = Integer.parseInt(req.getParameter("id"));
-//        HttpSession session = req.getSession(true);
-//        session.setMaxInactiveInterval(50);
         Employee employee = employeeService.get(id);
         String image = "data:image/png;base64," + Base64.encode(employee.getPhoto());
         req.setAttribute("employee",  employee);

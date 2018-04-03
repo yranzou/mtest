@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 //            session.setAttribute("password", password);
 
 
-            resp.sendRedirect(resp.encodeRedirectURL("displayEmployees"));
+            resp.sendRedirect(resp.encodeRedirectURL("employee/all"));
         } else {
             String failMessage = "Sorry UserName or Password Error!";
             req.setAttribute("failMessage", failMessage);

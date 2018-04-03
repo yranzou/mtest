@@ -21,18 +21,18 @@
             <div class="divTableRow">
                 <div class="divTableCell">${employee.id}</div>
                 <div class="divTableCell">
-                    <a href="<c:url value="/employeePage?id=${employee.id}" />">
+                    <a href="<c:url value="/employee/${employee.id}" />">
                             ${employee.name}
                     </a>
                 </div>
                 <div class="divTableCell">
-                    <a href="<c:url value="/employeePage?id=${employee.id}" />">
+                    <a href="<c:url value="/employee/${employee.id}" />">
                             ${employee.surname}
                     </a>
                 </div>
                 <div class="divTableCell">${employee.phone}</div>
                 <div class="divTableCell">
-                    <a href="<c:url value="/departmentPage?id=${departments[status.index].id}" />">
+                    <a href="<c:url value="/department/${departments[status.index].id}" />">
                             ${departments[status.index].name}
                     </a>
                 </div>
@@ -41,6 +41,6 @@
     </div>
 </div>
 
-<a href="<c:url value="/addEmployee" />">Add employee</a>
+<a href="<c:url value="/employee/add" />">Add employee</a>
 </body>
 </html>

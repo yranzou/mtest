@@ -31,8 +31,8 @@ public class EmployeeDao {
     private static final String DELETE_BY_ID = "DELETE FROM employee WHERE id=?";
     private static final String UPDATE = "UPDATE employee " +
             "SET `name`=?, surname=?, phone_private=?, department_id=?, chief_id=?, photo=? WHERE id=?";
-    private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`) " +
-            "VALUES (?, ?, ?)";
+    private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`, `photo`) " +
+            "VALUES (?, ?, ?, ?)";
     private static final String INSERT_PHOTO = "UPDATE employee SET photo=? WHERE id=?";
     private static final String SELECT_ALL_LEFT_JOIN_DEP = "SELECT employee.*, department.* from employee left join department on employee.department_id = department.id";
     private static final String SELECT_ALL_DEPARTMENTS_CHIEFS = "SELECT employee.*, department.* FROM department RIGHT JOIN employee ON department.chief_id = employee.id";
@@ -60,7 +60,6 @@ public class EmployeeDao {
             return query;
         }
     }
-
 
     private Connection connection;
 
@@ -185,7 +184,6 @@ public class EmployeeDao {
         }
     }
 
-
     public void persist(Employee employee) {
         connection = getConnection();
         try (PreparedStatement prepareStatement = this.connection
@@ -193,6 +191,11 @@ public class EmployeeDao {
             prepareStatement.setString(1, employee.getName());
             prepareStatement.setString(2, employee.getSurname());
             prepareStatement.setString(3, employee.getPhone());
+            if (employee.getPhoto() == null) {
+                prepareStatement.setNull(4, 0);
+            } else {
+                prepareStatement.setBlob(4, new SerialBlob(employee.getPhoto()));
+            }
             prepareStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {

@@ -14,7 +14,7 @@
 
 <div class="card">
 
-    <form action="<c:url value="/updateDepartment"/>" method="post" id="editDepartmentForm">
+    <form action="<c:url value="/department/update"/>" method="post" id="editDepartmentForm">
         New department name: <input type="text" name="name" value="${department.name}"/>
 
         <br/>

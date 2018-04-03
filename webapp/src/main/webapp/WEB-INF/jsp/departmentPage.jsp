@@ -22,9 +22,10 @@
     <br/>
 </div>
 <h3 style="text-align:center">
-    <a href="<c:url value="/editDepartment?id=${department.id}&name=${department.name}&chiefId=${department.chiefId}" />">Edit
+    <a href="<c:url value="/department/edit/${department.id}" />">Edit
+    <%--<a href="<c:url value="/department/?id=${department.id}&name=${department.name}&chiefId=${department.chiefId}" />">Edit--%>
         </a>&nbsp;
-    <a href="<c:url value="/addDepartment" />">Add</a>
+    <a href="<c:url value="/department/add" />">Add</a>
 </h3>
 
 </body>
