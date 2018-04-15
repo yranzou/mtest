@@ -74,7 +74,7 @@ public class DepartmentController {
 
 
     @RequestMapping(value="edit/{id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("id") int id, Model model) {
+    public ModelAndView updatePage(@PathVariable("id") int id, Model model) {
         model.addAttribute("thisDepartmentChief", employeeService.getDepartmentChief(id));
         model.addAttribute("department",  departmentService.get(id));
         model.addAttribute("chiefs",  employeeService.getAllDepartmentsChiefs());

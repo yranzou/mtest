@@ -2,6 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <jsp:include page="/WEB-INF/jsp/header.jsp"/>
+
     <title>Display Employees</title>
     <link href="<c:url value="/css/employees.css"/>" rel="stylesheet" type="text/css">
 </head>

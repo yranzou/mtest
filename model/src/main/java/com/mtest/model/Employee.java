@@ -1,6 +1,7 @@
 package com.mtest.model;
 
 import java.sql.Blob;
+import java.sql.Date;
 
 /**
  *  Created by yuri on 26.11.17.
@@ -14,6 +15,15 @@ public class Employee {
     private int chiefId;
     private int departmentId;
     private byte[] photo;
+    private Date birthday;
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
 
     public byte[] getPhoto() {
         return photo;
@@ -59,7 +69,7 @@ public class Employee {
         return chiefId;
     }
 
-    public void setChiefId(int chief_id) {
+    public void setChiefId(int chiefId) {
         this.chiefId = chiefId;
     }
 

@@ -17,6 +17,8 @@
     <img src=${image} />
 
     <h1>User: ${employee.surname} ${employee.name}</h1>
+    <br/> Birthday: ${employee.birthday}
+    <br/> Chief id: ${employee.chiefId}
     <p class="title">Department: ${employee.departmentId}</p>
     <p></p>
     <div style="margin: 24px 0;">

@@ -31,8 +31,8 @@ public class EmployeeDao {
     private static final String DELETE_BY_ID = "DELETE FROM employee WHERE id=?";
     private static final String UPDATE = "UPDATE employee " +
             "SET `name`=?, surname=?, phone_private=?, department_id=?, chief_id=?, photo=? WHERE id=?";
-    private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`, `photo`) " +
-            "VALUES (?, ?, ?, ?)";
+    private static final String INSERT = "INSERT INTO employee (`name`, `surname`, `phone_private`, `photo`, `birthdate`) " +
+            "VALUES (?, ?, ?, ?, ?)";
     private static final String INSERT_PHOTO = "UPDATE employee SET photo=? WHERE id=?";
     private static final String SELECT_ALL_LEFT_JOIN_DEP = "SELECT employee.*, department.* from employee left join department on employee.department_id = department.id";
     private static final String SELECT_ALL_DEPARTMENTS_CHIEFS = "SELECT employee.*, department.* FROM department RIGHT JOIN employee ON department.chief_id = employee.id";
@@ -186,8 +186,10 @@ public class EmployeeDao {
 
     public void persist(Employee employee) {
         connection = getConnection();
+
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(INSERT)) {
+            connection.setAutoCommit(false);
             prepareStatement.setString(1, employee.getName());
             prepareStatement.setString(2, employee.getSurname());
             prepareStatement.setString(3, employee.getPhone());
@@ -195,6 +197,11 @@ public class EmployeeDao {
                 prepareStatement.setNull(4, 0);
             } else {
                 prepareStatement.setBlob(4, new SerialBlob(employee.getPhoto()));
+            }
+            if (employee.getBirthday() == null) {
+                prepareStatement.setNull(5, 0);
+            } else {
+                prepareStatement.setDate(5, employee.getBirthday());
             }
             prepareStatement.executeUpdate();
             connection.commit();
@@ -249,6 +256,7 @@ public class EmployeeDao {
         connection = getConnection();
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(UPDATE)) {
+            connection.setAutoCommit(false);
             prepareStatement.setString(1, employee.getName());
             prepareStatement.setString(2, employee.getSurname());
             prepareStatement.setString(3, employee.getPhone());
@@ -442,6 +450,7 @@ public class EmployeeDao {
         employee.setChiefId(resultSet.getInt("chief_id"));
         employee.setDepartmentId(resultSet.getInt("department_id"));
         employee.setPhoto(resultSet.getBytes("photo"));
+        employee.setBirthday(resultSet.getDate("birthdate"));
         return employee;
     }
 }

@@ -19,7 +19,9 @@
     <option value="DEPARTMENT">department</option>
     <option value="LEADER">leaders name</option>
 </select><input type="text" name="searchValue">
-    <input type="submit">
+    <div class="widget">
+    <input type="submit" value="Submit!">
+    </div>
 </form>
 <br />
 

@@ -20,9 +20,10 @@ import sun.misc.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("employee")
@@ -38,6 +39,8 @@ public class EmployeesController {
                                 @RequestParam("name") String name,
                                 @RequestParam("surname") String surname,
                                 @RequestParam("phone") String phone,
+                                @RequestParam("datepicker") String birthday,
+
                                 RedirectAttributes redirectAttributes) {
         Employee employee = new Employee();
 
@@ -53,6 +56,20 @@ public class EmployeesController {
         employee.setSurname(surname);
         employee.setPhone(phone);
 
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+
+        java.sql.Date sqlDate = null;
+        Date date = null;
+        try {
+            date = format.parse(birthday);
+            sqlDate = new java.sql.Date(date.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println(date);
+
+        employee.setBirthday(sqlDate);
+
         employeeService.create(employee);
         return "redirect:all";
     }
@@ -64,11 +81,12 @@ public class EmployeesController {
     }
 
     @PostMapping("update")
-    public String updateEmployee(@RequestParam("photo") MultipartFile photo,
+    public String update(@RequestParam("photo") MultipartFile photo,
                                    @RequestParam("id") int id,
                                    @RequestParam("name") String name,
                                    @RequestParam("surname") String surname,
                                    @RequestParam("phone") String phone,
+                                   @RequestParam("chiefId") int chiefId,
                                    RedirectAttributes redirectAttributes) {
 
         Employee employee = employeeService.get(id);
@@ -87,6 +105,8 @@ public class EmployeesController {
         employee.setName(name);
         employee.setSurname(surname);
         employee.setPhone(phone);
+        employee.setChiefId(chiefId);
+        System.out.println("!!!!!!!!!!!!!!!!!" + chiefId);
         employeeService.update(employee);
         return "redirect:" + id;
     }
@@ -95,10 +115,12 @@ public class EmployeesController {
 
 
     @RequestMapping(value="edit/{id}", method = RequestMethod.GET)
-    public ModelAndView edit(@PathVariable("id") int id,
+    public ModelAndView updatePage(@PathVariable("id") int id,
                              Model model) {
         Employee employee = employeeService.get(id);
-        model.addAttribute(employee);
+        List<Employee> employees = employeeService.getAll();
+        model.addAttribute("employee", employee);
+        model.addAttribute("employees", employees);
 //        model.addAttribute(employee.getSurname());
 //        model.addAttribute(employee.getPhone());
 //        model.addAttribute(id);
