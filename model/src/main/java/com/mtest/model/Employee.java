@@ -2,11 +2,15 @@ package com.mtest.model;
 
 import java.sql.Blob;
 import java.sql.Date;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *  Created by yuri on 26.11.17.
  */
 public class Employee {
+
+
 
     private int id;
     private String name;
@@ -16,6 +20,16 @@ public class Employee {
     private int departmentId;
     private byte[] photo;
     private Date birthday;
+    private Set<Phone> phones;
+
+
+    public Set<Phone> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(Set<Phone> phones) {
+        this.phones = phones;
+    }
 
     public Date getBirthday() {
         return birthday;

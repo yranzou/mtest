@@ -3,6 +3,7 @@ package com.mtest.dao;
 
 import com.mtest.model.Department;
 import com.mtest.model.Employee;
+import com.mtest.model.Phone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 
 /**
@@ -26,6 +28,7 @@ public class EmployeeDao {
 
     private static final String SELECT_ALL = "SELECT * FROM employee";
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE id=?";
+//    private static final String SELECT_BY_ID_II = SELECT_ALL + " WHERE id=?";
     private static final String SELECT_BY_DEPARTMENT_ID = SELECT_ALL + " WHERE department_id=?";
     private static final String SELECT_BY_CHIEF_ID = SELECT_ALL + " WHERE chief_id=?";
     private static final String DELETE_BY_ID = "DELETE FROM employee WHERE id=?";
@@ -62,6 +65,8 @@ public class EmployeeDao {
     }
 
     private Connection connection;
+    private PhoneDao phoneDao;// = new PhoneDao();
+
 
 //    private Connection getConnection() {
 //        try {
@@ -89,6 +94,7 @@ public class EmployeeDao {
 
     public EmployeeDao() {
         try {
+            phoneDao = new PhoneDao();
             props = new Properties();
             props.load(this.getClass().getClassLoader().getResourceAsStream("db.properties"));
             driver = props.getProperty("database.driver");
@@ -134,7 +140,12 @@ public class EmployeeDao {
             prepareStatement.setInt(1, id);
             try (ResultSet resultSet = prepareStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return createEmployeeFromResult(resultSet);
+                    Employee employee = createEmployeeFromResult(resultSet);
+                    Set<Phone> phones = phoneDao.get(id);
+                    if (phones != null) {
+                        employee.setPhones(phones);
+                    }
+                    return employee;
                 }
             }
             return null;
@@ -447,6 +458,7 @@ public class EmployeeDao {
         employee.setName(resultSet.getString("name"));
         employee.setSurname(resultSet.getString("surname"));
         employee.setPhone(resultSet.getString("phone_private"));
+//        employee.setPhone(resultSet.getString("phone"));
         employee.setChiefId(resultSet.getInt("chief_id"));
         employee.setDepartmentId(resultSet.getInt("department_id"));
         employee.setPhoto(resultSet.getBytes("photo"));

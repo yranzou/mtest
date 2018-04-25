@@ -2,8 +2,10 @@ package com.mtest.webapp.controllers;
 
 import com.mtest.model.Department;
 import com.mtest.model.Employee;
+import com.mtest.model.Phone;
 import com.mtest.server.DepartmentService;
 import com.mtest.server.EmployeeService;
+import com.mtest.server.PhoneService;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -33,6 +35,9 @@ public class EmployeesController {
 
     @Autowired
     private DepartmentService departmentService;
+
+    @Autowired
+    private PhoneService phoneService;
 
     @PostMapping("doAdd")
     public String doAddEmployee(@RequestParam("photo") MultipartFile photo,
@@ -118,9 +123,9 @@ public class EmployeesController {
     public ModelAndView updatePage(@PathVariable("id") int id,
                              Model model) {
         Employee employee = employeeService.get(id);
-        List<Employee> employees = employeeService.getAll();
+        Set<Phone> phones = phoneService.get(id);
         model.addAttribute("employee", employee);
-        model.addAttribute("employees", employees);
+        model.addAttribute("phones", phones);
 //        model.addAttribute(employee.getSurname());
 //        model.addAttribute(employee.getPhone());
 //        model.addAttribute(id);
@@ -150,6 +155,9 @@ public class EmployeesController {
     public ModelAndView display(@PathVariable("id") int id, Model model) {
         Employee employee = employeeService.get(id);
         String image = "data:image/png;base64," + Base64.encode(employee.getPhoto());
+        Set<Phone> phones = phoneService.get(id);
+        employee.setPhones(phones);
+        model.addAttribute("phones", phones);
         model.addAttribute("employee", employee);
         model.addAttribute("image", image);
         return new ModelAndView("employeePage");

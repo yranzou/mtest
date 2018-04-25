@@ -2,7 +2,7 @@
     display: table;
     width: 100%;
 }
-.divTableRow {
+.divTableRow,.divTableRowAdd {
     display: table-row;
 }
 /*.divTableRowBlank {*/

@@ -29,6 +29,10 @@
     </div>
     <p>Phone: ${employee.phone}</p>
     <br/>
+    <p>Contact phones:</p>
+<c:forEach var="phone" items="${phones}" varStatus="status">
+    ${phone.number} _____ ${phone.type}
+</c:forEach>
 </div>
 <h3 style="text-align:center">
     <a href="<c:url value="/employee/edit/${employee.id}" />">Edit
