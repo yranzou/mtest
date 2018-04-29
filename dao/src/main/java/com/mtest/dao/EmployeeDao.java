@@ -65,7 +65,6 @@ public class EmployeeDao {
     }
 
     private Connection connection;
-    private PhoneDao phoneDao;// = new PhoneDao();
 
 
 //    private Connection getConnection() {
@@ -94,7 +93,6 @@ public class EmployeeDao {
 
     public EmployeeDao() {
         try {
-            phoneDao = new PhoneDao();
             props = new Properties();
             props.load(this.getClass().getClassLoader().getResourceAsStream("db.properties"));
             driver = props.getProperty("database.driver");
@@ -141,10 +139,10 @@ public class EmployeeDao {
             try (ResultSet resultSet = prepareStatement.executeQuery()) {
                 if (resultSet.next()) {
                     Employee employee = createEmployeeFromResult(resultSet);
-                    Set<Phone> phones = phoneDao.get(id);
-                    if (phones != null) {
-                        employee.setPhones(phones);
-                    }
+//                    Set<Phone> phones = phoneDao.get(id);
+//                    if (phones != null) {
+//                        employee.setPhones(phones);
+//                    }
                     return employee;
                 }
             }

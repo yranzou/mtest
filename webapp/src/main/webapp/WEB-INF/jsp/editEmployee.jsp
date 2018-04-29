@@ -7,86 +7,18 @@
     <jsp:include page="header.jsp"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="<c:url value="/js/jquery/jquery.validate.js"/>"></script>
+    <script src="<c:url value="/js/jquery/chiefAutocomplete.js"/>"></script>
+    <script src="<c:url value="/js/jquery/editPhones.js"/>"></script>
     <script>
-
-  $( function() {
-
-  var projects = [
-    <c:forEach var="chief" items="${employees}" varStatus="status">
-        {
-        value: "${chief.id}",
-        label: "${chief.surname}&nbsp;${chief.name}"
-        },
-    </c:forEach>
-    {
-    value: "0",
-    label: "Empty"
-    }
-  ];
-
-  $("#chief").autocomplete({
-      minLength: 0,
-      source: projects,
-      focus: function(event, ui) {
-        $("#project").val(ui.item.label);
-        return false;
-      },
-      select: function(event, ui) {
-        $("#chief").val(ui.item.label);
-        $("#chiefId").val(ui.item.value);
-        <%--$("#project-description").html(ui.item.desc);--%>
-        return false;
-      }
-    })
-    .autocomplete("instance")._renderItem = function(ul, item) {
-      return $("<li>")
-        .append("<a>" + item.label + "<br>" + "</a>")
-         <%--item.desc + --%>
-
-        .appendTo(ul);
-    };
-
-});
-  $( function() {
-    $( document ).tooltip();
-  });
-
-    </script>
-    <script>
-        $(document).ready(function(){
-            var wr         = $(".divTableRow"); //Fields wrapper
-            $("#btn1").click(function(){
-
-                var regex = /^\+?(0|[1-9]\d*)$/;
-
-                if ($("#addPhone").val().length != 10 | !regex.test($("#addPhone").val()))
-                {
-                    alert( 'Проверьте, телефон должен состоять из 10 цифр' );
-                }
-                else {
-                    $("#add").before('' +
-                        '<div class="divTableRow">' +
-                        '<div class="divTableCell">' + $("#addPhone").val() + '</div>' +
-                        '<div class="divTableCell">' + $("#addType").val() + '</div>' +
-                        '<div class="divTableCell"><a href="#" class="remove_field">Remove</a></div>' +
-                        '</div>');
+        $(function() {
+            $("#update").click(function(event){
+                event.preventDefault();
+                if (confirm("Click OK to continue?")){
+                    $("#updateEmployeeForm").submit();
                 }
             });
-            // $("#rem").click(function(){
-            //     $(this).parent('div').remove();
-            // })
-            $(document).on("click",".remove_field", function(e){ //user click on remove text
-                e.preventDefault();
-                // $("#del").remove();
-                $(this).parent('div').parent('div').remove();
-            })
-
-
         });
-</script>
-
-
-
+    </script>
     <style>
         label {
             display: inline-block;
@@ -134,11 +66,18 @@
 
     <input type="hidden" id="id" name="id" value="${employee.id}">
 
+    <%--<input type="hidden" id="phoneNumber0" name="phoneNumber" value="1111111111">--%>
+    <%--<input type="hidden" id="phoneNumber1" name="phoneNumber" value="2222211111">--%>
+    <%--<input type="hidden" id="phoneNumber2" name="phoneNumber" value="3333311111">--%>
+    <%--<input type="hidden" id="phones[0].type" name="phonetyp" value="HOME">--%>
+    <%--<input type="hidden" id="phones[1].type" name="phones[1].type" value="WORK">--%>
+    <%--<input type="hidden" id="phones[2].type" name="phones[2].type" value="HOME">--%>
+
     <%--<div id="project-label">--%>
     <%--Chief id:</div>--%>
 
     Chief: <input id="chief" name="chief" title="Start to enter name/surname to select chief.">
-    <input id="chiefId" name="chiefId" value="0" type="hidden">
+    <input id="chiefId" name="chiefId" value="0" type="hidden" />
     <br/>
     Upload photo: <input type="file" id="photo" name="photo"/>
 
@@ -154,18 +93,28 @@
                 <div class="divTableCell">Type</div>
                 <div class="divTableCell"></div>
             </div>
+            <c:set var="count" value="0" scope="page" />
+            <input type="hidden" id="phoneNumber" name="phoneNumber" value="null" />
+            <input type="hidden" id="phoneType" name="phoneType" value="HOME"/>
+
             <c:forEach var="phone" items="${phones}" varStatus="status">
                 <div class="divTableRow">
-                    <div class="divTableCell">${phone.number}</div>
+                    <div class="divTableCell">
+                            ${phone.number}
+                                <input type="hidden" id="phoneNumber<c:set var="count" value="${count + 1}" scope="page"/>" name="phoneNumber" value="${phone.number}">
+
+                    </div>
                     <div class="divTableCell">
                             ${phone.type}
+                                <input type="hidden" id="phoneType<c:set var="count" value="${count + 1}" scope="page"/>" name="phoneType" value="${phone.type}">
+
                     </div>
                     <div class="divTableCell"><a href="#" class="remove_field">Remove</a></div>
                 </div>
             </c:forEach>
             <div id="add" class="divTableRowAdd">
                 <div class="divTableCell">
-                    <input type="text" id="addPhone" name="addPhone" length="10" required value=""/>
+                    <input type="text" id="addPhone" name="addPhone" length="10"/>
                     <%--<p>--%>
                         <%--<label for="cname">Name (required, at least 2 characters)</label>--%>
                         <%--<input id="cname" name="name" minlength="2" type="text" required>--%>
@@ -196,7 +145,7 @@
     <%--</div>--%>
 
 
-    <input type="submit" name="update" id="update" value="Update"/>
+    <input type="submit" name="update" id="update" value="Save changes"/>
 </form>
 
 <form class="cmxform" id="commentForm" method="get" action="">

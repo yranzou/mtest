@@ -28,7 +28,7 @@ public class PhoneDao {
     private Properties props;
 
     private static final String SELECT_BY_ID = "SELECT * FROM phone WHERE employee_id=?";
-    private static final String DELETE_BY_ID = "DELETE * FROM phone WHERE employee_id=?";
+    private static final String DELETE_BY_ID = "DELETE FROM phone WHERE employee_id=?";
     private static final String INSERT = "INSERT INTO phone (`employee_id`, `number`, `type`) " +
             "VALUES (?, ?, ?)";
 
@@ -88,6 +88,7 @@ public class PhoneDao {
         connection = getConnection();
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(DELETE_BY_ID)) {
+            connection.setAutoCommit(false);
             prepareStatement.setInt(1, id);
             prepareStatement.executeUpdate();
             connection.commit();
@@ -108,10 +109,6 @@ public class PhoneDao {
                 e.printStackTrace();
             }
         }
-    }
-
-    public synchronized void delete(Employee employee) {
-        delete(employee.getId());
     }
 
     public Set<Phone> get(int id) {

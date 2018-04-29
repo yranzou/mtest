@@ -3,6 +3,7 @@ package com.mtest.webapp.controllers;
 import com.mtest.model.Department;
 import com.mtest.model.Employee;
 import com.mtest.model.Phone;
+import com.mtest.model.PhoneType;
 import com.mtest.server.DepartmentService;
 import com.mtest.server.EmployeeService;
 import com.mtest.server.PhoneService;
@@ -90,8 +91,11 @@ public class EmployeesController {
                                    @RequestParam("id") int id,
                                    @RequestParam("name") String name,
                                    @RequestParam("surname") String surname,
-                                   @RequestParam("phone") String phone,
+//                                   @RequestParam("phone") String phone,
                                    @RequestParam("chiefId") int chiefId,
+                                   @RequestParam("phoneNumber") String[] phoneNumber,
+                                   @RequestParam("phoneType") String[] phoneType,
+
                                    RedirectAttributes redirectAttributes) {
 
         Employee employee = employeeService.get(id);
@@ -107,11 +111,28 @@ public class EmployeesController {
                 e.printStackTrace();
             }
         }
+
         employee.setName(name);
         employee.setSurname(surname);
-        employee.setPhone(phone);
+//        employee.setPhone(phone);
         employee.setChiefId(chiefId);
-        System.out.println("!!!!!!!!!!!!!!!!!" + chiefId);
+        phoneService.delete(id);
+        if (phoneNumber.length!=1)
+        {
+            Set<Phone> phones = new TreeSet<>();
+            for (int i = 1; i < phoneNumber.length; i++) {
+                Phone phone = new Phone();
+                phone.setNumber(phoneNumber[i]);
+                phone.setType(PhoneType.valueOf(phoneType[i]));
+                phones.add(phone);
+            }
+
+            phoneService.create(phones, id);
+        } else
+        {
+            System.out.println("LENGHT = 1");
+        }
+
         employeeService.update(employee);
         return "redirect:" + id;
     }
