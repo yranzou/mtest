@@ -3,27 +3,27 @@ package com.mtest.dao;
 
 import com.mtest.model.Department;
 import com.mtest.model.Employee;
-import com.mtest.model.Phone;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.rowset.serial.SerialBlob;
-import java.io.IOException;
 import java.io.InputStream;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
 
 
 /**
  * Created by yuri on 26.11.17.
  */
 @Component
-public class EmployeeDao {
+public class EmployeeDaoHibernate {
 
     private String driver;
     private Properties props;
@@ -134,26 +134,16 @@ public class EmployeeDao {
 ////        }
 //    }
 
+    @Autowired
+    private SessionFactory sessionFactory;
 
     public Employee get(int id) {
-        connection = getConnection();
-        try (PreparedStatement prepareStatement = connection.prepareStatement(SELECT_BY_ID)) {
-            prepareStatement.setInt(1, id);
-            try (ResultSet resultSet = prepareStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    Employee employee = createEmployeeFromResult(resultSet);
-//                    Set<Phone> phones = phoneDao.get(id);
-//                    if (phones != null) {
-//                        employee.setPhones(phones);
-//                    }
-                    return employee;
-                }
-            }
-            return null;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
+
+        Session session = null;
+        try  {
+            session = sessionFactory.openSession();
+            return (Employee) session.get(Employee.class, id);
+
         }
         finally {
             try {
@@ -162,6 +152,9 @@ public class EmployeeDao {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+            }
+            if (session != null) {
+                session.close();
             }
         }
     }
@@ -309,18 +302,13 @@ public class EmployeeDao {
     }
 
     public List<Employee> getAll() {
+        Session session = null;
         connection = getConnection();
-        try (ResultSet resultSet = this.connection.createStatement()
-                .executeQuery(SELECT_ALL)) {
-            List<Employee> employees = new ArrayList<>();
-            while (resultSet.next()) {
-                employees.add(createEmployeeFromResult(resultSet));
-            }
-            return employees;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
+        try {
+            session = sessionFactory.openSession();
+
+            return  session.createCriteria(Employee.class).list();
+
         } finally {
             try {
                 if (connection != null) {
@@ -328,6 +316,9 @@ public class EmployeeDao {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
+            }
+            if (session != null) {
+                session.close();
             }
         }
     }

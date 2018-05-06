@@ -13,4 +13,20 @@
                      jndi-name="jdbc/phonebook"
                      expected-type="javax.sql.DataSource" />
 
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="mappingResources">
+            <list>
+                <value>orm/Employee.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <value>
+                hibernate.dialect=org.hibernate.dialect.MySQLDialect
+            </value>
+        </property>
+    </bean>
+
 </beans>

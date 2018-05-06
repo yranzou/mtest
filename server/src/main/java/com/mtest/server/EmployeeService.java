@@ -1,6 +1,7 @@
 package com.mtest.server;
 
 import com.mtest.dao.EmployeeDao;
+import com.mtest.dao.EmployeeDaoHibernate;
 import com.mtest.model.Department;
 import com.mtest.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,10 @@ import java.util.List;
  */
 @Component
 public class EmployeeService {
+//    private EmployeeDaoHibernate employeeDao;
     private EmployeeDao employeeDao;
+
+//    private EmployeeDaoHibernate employeeDaoHibernate;
 
     @Autowired
     public EmployeeService() {

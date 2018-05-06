@@ -55,6 +55,11 @@
             <artifactId>spring-context</artifactId>
             <version>${springVersion}</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
 
     </dependencies>
     <build>

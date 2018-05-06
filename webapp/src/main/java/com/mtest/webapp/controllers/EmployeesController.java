@@ -8,10 +8,8 @@ import com.mtest.server.DepartmentService;
 import com.mtest.server.EmployeeService;
 import com.mtest.server.PhoneService;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import sun.misc.IOUtils;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,6 +27,9 @@ import java.util.*;
 @Controller
 @RequestMapping("employee")
 public class EmployeesController {
+
+    private static final Logger logger = LogManager.getLogger();
+
     @Autowired
     private EmployeeService employeeService;
 
@@ -50,6 +49,7 @@ public class EmployeesController {
                                 RedirectAttributes redirectAttributes) {
         Employee employee = new Employee();
 
+        logger.debug("Going to add Employee " + name + " " + surname);
         if (!photo.isEmpty()) {
             try {
                 employee.setPhoto(photo.getBytes());
@@ -72,11 +72,12 @@ public class EmployeesController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        System.out.println(date);
+//        System.out.println(date);
 
         employee.setBirthday(sqlDate);
 
         employeeService.create(employee);
+        logger.info("Employee has been created with unknown id: ");
         return "redirect:all";
     }
 
@@ -130,7 +131,7 @@ public class EmployeesController {
             phoneService.create(phones, id);
         } else
         {
-            System.out.println("LENGHT = 1");
+
         }
 
         employeeService.update(employee);
@@ -165,6 +166,8 @@ public class EmployeesController {
 
     @RequestMapping("all")
     public ModelAndView displayAll(Model model) {
+        logger.info("!!!!!!!!!!!!!!!! ALL EMPLOYEES SHOWN");
+        logger.debug("ALL EMP DEBUG!!!!!!!!!!!!");
         List<Employee> employees = this.employeeService.getAll();
         model.addAttribute("employees", employees);
         List<Department> departments = this.departmentService.search("NAME","");

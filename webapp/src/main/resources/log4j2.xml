@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <!--<File name="file" log4j.appender.FILE.File="employee.log" bufferedIO="true">-->
+        <!--</File>-->
+        <File name="file_all" fileOwner="tomcat8" fileGroup="tomcat8"
+              filePermissions="rw-r-----" fileName="logs/ALL.log" bufferedIO="false">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+
+            <!--<PatternLayout>-->
+                <!--<Pattern>%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n</Pattern>-->
+            <!--</PatternLayout>-->
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.mtest.webapp" level="DEBUG">
+            <AppenderRef ref="file_all"/>
+        </Logger>
+        <Root level="WARN">
+            <AppenderRef ref="file_all"/>
+        </Root>
+    </Loggers>
+</Configuration>
