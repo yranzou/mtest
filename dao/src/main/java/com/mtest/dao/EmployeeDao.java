@@ -23,7 +23,7 @@ import java.util.Set;
  * Created by yuri on 26.11.17.
  */
 @Component
-public class EmployeeDao {
+public class EmployeeDao implements GenericDao {
 
     private String driver;
     private Properties props;

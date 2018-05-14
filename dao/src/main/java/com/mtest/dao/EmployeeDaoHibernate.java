@@ -143,7 +143,6 @@ public class EmployeeDaoHibernate {
         try  {
             session = sessionFactory.openSession();
             return (Employee) session.get(Employee.class, id);
-
         }
         finally {
             try {
@@ -303,8 +302,9 @@ public class EmployeeDaoHibernate {
 
     public List<Employee> getAll() {
         Session session = null;
-        connection = getConnection();
+//        connection = getConnection();
         try {
+
             session = sessionFactory.openSession();
 
             return  session.createCriteria(Employee.class).list();

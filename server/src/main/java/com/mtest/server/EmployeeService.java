@@ -15,14 +15,11 @@ import java.util.List;
  */
 @Component
 public class EmployeeService {
-//    private EmployeeDaoHibernate employeeDao;
-    private EmployeeDao employeeDao;
-
-//    private EmployeeDaoHibernate employeeDaoHibernate;
 
     @Autowired
+    private EmployeeDaoHibernate employeeDao;
+
     public EmployeeService() {
-        employeeDao = new EmployeeDao();
     }
 
     public List<Employee> getCoworkers(Department department) {
