@@ -25,8 +25,6 @@ import java.util.Properties;
 @Component
 public class EmployeeDaoHibernate {
 
-    private String driver;
-    private Properties props;
 
     private static final String SELECT_ALL = "SELECT * FROM employee";
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE id=?";
@@ -68,90 +66,17 @@ public class EmployeeDaoHibernate {
 
     private Connection connection;
 
-
-//    private Connection getConnection() {
-//        try {
-//            try {
-//                System.out.println("try load driver jdbc");
-//                Class.forName(driver);
-//                System.out.println(driver + " loaded");
-//            } catch (ClassNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//            String url = props.getProperty("database.url");
-//            String user = props.getProperty("database.user");
-//            String password = props.getProperty("database.password");
-//
-//            Connection connection = DriverManager.getConnection(url, user, password);
-//            connection.setAutoCommit(false);
-//            return connection;
-//
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-
-//    public EmployeeDao() {
-//        try {
-//            props = new Properties();
-//            props.load(this.getClass().getClassLoader().getResourceAsStream("db.properties"));
-//            driver = props.getProperty("database.driver");
-//        } catch (IOException e) {
-//
-//        }
-//
-////            try {
-////                System.out.println("try load driver jdbc");
-//////                Class.forName("com.mysql.jdbc.Driver");
-////                Class.forName(driver);
-////                System.out.println(driver + " loaded");
-////            } catch (ClassNotFoundException e) {
-////                e.printStackTrace();
-////            }
-////            String url = props.getProperty("database.url");
-////            String user = props.getProperty("database.user");
-////            String password = props.getProperty("database.password");
-////
-////            this.connection = DriverManager.getConnection(url, user, password);
-////            this.connection.setAutoCommit(false);
-////        } catch (IOException | SQLException e) {
-////            // TODO Auto-generated catch block
-////            e.printStackTrace();
-////        }
-////        JBDI MODE
-////        try {
-////
-////            connection = ConnectionProvider.getConnection();
-////            if (connection == null)
-////            {
-////                System.out.println("HUIbb");
-////            }
-////            connection.setAutoCommit(false);
-////        } catch (SQLException | NullPointerException e) {
-////            e.printStackTrace();
-////        }
-//    }
-
     @Autowired
     private SessionFactory sessionFactory;
 
-    public Employee get(int id) {
+    private Session session;
 
-        Session session = null;
-        try  {
+    public Employee get(int id) {
+        try {
             session = sessionFactory.openSession();
             return (Employee) session.get(Employee.class, id);
         }
         finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
             if (session != null) {
                 session.close();
             }
