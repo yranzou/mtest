@@ -1,10 +1,7 @@
 package com.mtest.webapp;
 
-import com.mtest.dao.EmployeeDao;
-import com.mtest.model.Department;
-import com.mtest.model.Employee;
-import com.mtest.server.DepartmentService;
-import com.mtest.server.EmployeeService;
+import com.mtest.server.common.DepartmentService;
+import com.mtest.server.common.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -14,10 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 
 /**
  *  Created by yuri on 30.11.17.

@@ -1,4 +1,4 @@
-package com.mtest.server;
+package com.mtest.server.common;
 
 import com.mtest.dao.DepartmentDao;
 import com.mtest.model.Department;

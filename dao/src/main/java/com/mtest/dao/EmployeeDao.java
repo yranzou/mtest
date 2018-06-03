@@ -1,29 +1,25 @@
 package com.mtest.dao;
 
 
+import com.mtest.dao.exceptions.DaoException;
+import com.mtest.dao.utils.ConverterDate;
 import com.mtest.model.Department;
 import com.mtest.model.Employee;
-import com.mtest.model.Phone;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
-
 import javax.sql.rowset.serial.SerialBlob;
-import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 
 /**
  * Created by yuri on 26.11.17.
  */
 @Component
-public class EmployeeDao implements GenericDao {
+public class EmployeeDao {
 
     private String driver;
     private Properties props;
@@ -65,6 +61,9 @@ public class EmployeeDao implements GenericDao {
             return query;
         }
     }
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     private Connection connection;
 
@@ -135,42 +134,59 @@ public class EmployeeDao implements GenericDao {
 //    }
 
 
-    public Employee get(int id) {
-        connection = getConnection();
-        try (PreparedStatement prepareStatement = connection.prepareStatement(SELECT_BY_ID)) {
-            prepareStatement.setInt(1, id);
-            try (ResultSet resultSet = prepareStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    Employee employee = createEmployeeFromResult(resultSet);
-//                    Set<Phone> phones = phoneDao.get(id);
-//                    if (phones != null) {
-//                        employee.setPhones(phones);
-//                    }
-                    return employee;
-                }
-            }
-            return null;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-        }
-        finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+//    public Employee get(int id) throws DaoException {
+//        connection = getConnection();
+//        try (PreparedStatement prepareStatement = connection.prepareStatement(SELECT_BY_ID)) {
+//            prepareStatement.setInt(1, id);
+//            try (ResultSet resultSet = prepareStatement.executeQuery()) {
+//                if (resultSet.next()) {
+//                    Employee employee = createEmployeeFromResult(resultSet);
+////                    Set<Phone> phones = phoneDao.get(id);
+////                    if (phones != null) {
+////                        employee.setPhones(phones);
+////                    }
+//                    return employee;
+//                }
+//            }
+//            return null;
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//            return null;
+//        }
+//        finally {
+//            try {
+//                if (connection != null) {
+//                    connection.close();
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+
+
+
+    public Employee get(int id) throws DaoException {
+        try {
+            return this.jdbcTemplate.queryForObject(SELECT_BY_ID, categoryMapper, id);
+        } catch (RuntimeException e) {
+            throw new DaoException(e);
         }
     }
+
+    private RowMapper<Employee> categoryMapper = new RowMapper<Employee>() {
+        public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return createEmployeeFromResult(rs);
+        }
+    }
+
 
     private Connection getConnection() {
         return ConnectionPool.getConnection();
     }
 
-    public Employee getDepartmentChief(int departmentId) {
+    public Employee getDepartmentChief(int departmentId) throws DaoException {
         connection = getConnection();
         try (PreparedStatement prepareStatement = this.connection.prepareStatement(SELECT_DEPARTMENT_CHIEF)) {
             prepareStatement.setInt(1, departmentId);
@@ -196,7 +212,7 @@ public class EmployeeDao implements GenericDao {
         }
     }
 
-    public void persist(Employee employee) {
+    public void persist(Employee employee) throws DaoException {
         connection = getConnection();
 
         try (PreparedStatement prepareStatement = this.connection
@@ -213,7 +229,7 @@ public class EmployeeDao implements GenericDao {
             if (employee.getBirthday() == null) {
                 prepareStatement.setNull(5, 0);
             } else {
-                prepareStatement.setDate(5, employee.getBirthday());
+                prepareStatement.setDate(5, ConverterDate.toSqlDate(employee.getBirthday()));
             }
             prepareStatement.executeUpdate();
             connection.commit();
@@ -308,7 +324,7 @@ public class EmployeeDao implements GenericDao {
         }
     }
 
-    public List<Employee> getAll() {
+    public List<Employee> getAll() throws DaoException {
         connection = getConnection();
         try (ResultSet resultSet = this.connection.createStatement()
                 .executeQuery(SELECT_ALL)) {
@@ -332,7 +348,7 @@ public class EmployeeDao implements GenericDao {
         }
     }
 
-    public List<Employee> getAllDepartmentsChiefs() {
+    public List<Employee> getAllDepartmentsChiefs() throws DaoException {
         connection = getConnection();
         try (ResultSet resultSet = this.connection.createStatement()
                 .executeQuery(SELECT_ALL_DEPARTMENTS_CHIEFS)) {
@@ -356,16 +372,16 @@ public class EmployeeDao implements GenericDao {
         }
     }
 
-    public List<Employee> getCoworkers(Department department) {
+    public List<Employee> getCoworkers(Department department) throws DaoException {
         return getEmployees(SELECT_BY_DEPARTMENT_ID, department.getId());
     }
 
-    public List<Employee> getSubordinates(Employee leader) {
+    public List<Employee> getSubordinates(Employee leader) throws DaoException {
         return getEmployees(SELECT_BY_CHIEF_ID, leader.getId());
     }
 
 
-    public List<Employee> search(String searchIn, String searchValue) {
+    public List<Employee> search(String searchIn, String searchValue) throws DaoException {
         connection = getConnection();
         searchValue = "%" + searchValue + "%";
 //        try (PreparedStatement preparedStatement = this.connection.prepareStatement(Search.valueOf(searchIn).toString())) {
@@ -397,7 +413,7 @@ public class EmployeeDao implements GenericDao {
         }
     }
 
-    private List<Employee> getEmployees(String query, int id) {
+    private List<Employee> getEmployees(String query, int id) throws DaoException {
         connection = getConnection();
         try (PreparedStatement prepareStatement = this.connection.prepareStatement(query)) {
             prepareStatement.setInt(1, id);
@@ -451,7 +467,8 @@ public class EmployeeDao implements GenericDao {
         }
     }
 
-    private Employee createEmployeeFromResult(ResultSet resultSet)
+
+    public Employee createEmployeeFromResult(ResultSet resultSet)
             throws SQLException {
         Employee employee = new Employee();
         employee.setId(resultSet.getInt("id"));
@@ -462,7 +479,12 @@ public class EmployeeDao implements GenericDao {
         employee.setChiefId(resultSet.getInt("chief_id"));
         employee.setDepartmentId(resultSet.getInt("department_id"));
         employee.setPhoto(resultSet.getBytes("photo"));
-        employee.setBirthday(resultSet.getDate("birthdate"));
+        try {
+            employee.setBirthday(ConverterDate.toUtilDate(resultSet.getDate("birthdate")));
+
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
         return employee;
     }
 }

@@ -1,6 +1,6 @@
 package com.mtest.webapp;
 
-import com.mtest.server.EmployeeService;
+import com.mtest.server.common.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;

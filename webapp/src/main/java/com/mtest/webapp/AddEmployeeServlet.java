@@ -1,7 +1,6 @@
 package com.mtest.webapp;
 
-import com.mtest.model.Employee;
-import com.mtest.server.EmployeeService;
+import com.mtest.server.common.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 /**
  *  Created by yuri on 30.11.17.

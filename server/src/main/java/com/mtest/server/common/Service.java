@@ -1,4 +1,4 @@
-package com.mtest.server;
+package com.mtest.server.common;
 
 /**
  * Created by yuri on 20.01.18.

@@ -1,8 +1,6 @@
 package com.mtest.model;
 
-import java.sql.Blob;
-import java.sql.Date;
-import java.util.Map;
+import java.util.Date;
 import java.util.Set;
 
 /**

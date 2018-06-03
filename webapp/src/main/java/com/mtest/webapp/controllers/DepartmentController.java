@@ -1,10 +1,8 @@
 package com.mtest.webapp.controllers;
 
 import com.mtest.model.Department;
-import com.mtest.model.Employee;
-import com.mtest.server.DepartmentService;
-import com.mtest.server.EmployeeService;
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import com.mtest.server.common.DepartmentService;
+import com.mtest.server.common.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("department")

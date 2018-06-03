@@ -1,7 +1,7 @@
 package com.mtest.webapp;
 
 import com.mtest.model.Employee;
-import com.mtest.server.EmployeeService;
+import com.mtest.server.common.EmployeeService;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -12,17 +12,13 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import sun.misc.IOUtils;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;

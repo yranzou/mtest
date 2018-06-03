@@ -1,6 +1,5 @@
-import com.mtest.dao.EmployeeDao;
 import com.mtest.model.Employee;
-import com.mtest.server.EmployeeService;
+import com.mtest.server.common.EmployeeService;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,17 +1,12 @@
 package com.mtest.webapp;
 
 import com.mtest.dao.LoginDao;
-import com.mtest.server.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * Created by yuri on 30.11.17.

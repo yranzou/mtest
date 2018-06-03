@@ -1,9 +1,7 @@
 package com.mtest.webapp;
 
 import com.mtest.model.Department;
-import com.mtest.model.Employee;
-import com.mtest.server.DepartmentService;
-import com.mtest.server.EmployeeService;
+import com.mtest.server.common.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 

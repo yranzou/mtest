@@ -1,6 +1,8 @@
 package com.mtest.dao;
 
 
+import com.mtest.dao.exceptions.DaoException;
+import com.mtest.dao.utils.ConverterDate;
 import com.mtest.model.Department;
 import com.mtest.model.Employee;
 import org.hibernate.Session;
@@ -113,7 +115,7 @@ public class EmployeeDaoHibernate {
         }
     }
 
-    public void persist(Employee employee) {
+    public void persist(Employee employee) throws DaoException {
         connection = getConnection();
 
         try (PreparedStatement prepareStatement = this.connection
@@ -130,7 +132,7 @@ public class EmployeeDaoHibernate {
             if (employee.getBirthday() == null) {
                 prepareStatement.setNull(5, 0);
             } else {
-                prepareStatement.setDate(5, employee.getBirthday());
+                prepareStatement.setDate(5, ConverterDate.toSqlDate(employee.getBirthday()));
             }
             prepareStatement.executeUpdate();
             connection.commit();
@@ -227,21 +229,10 @@ public class EmployeeDaoHibernate {
 
     public List<Employee> getAll() {
         Session session = null;
-//        connection = getConnection();
         try {
-
             session = sessionFactory.openSession();
-
             return  session.createCriteria(Employee.class).list();
-
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
             if (session != null) {
                 session.close();
             }

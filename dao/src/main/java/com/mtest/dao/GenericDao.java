@@ -1,4 +1,10 @@
 package com.mtest.dao;
 
-public interface GenericDao {
+import com.mtest.dao.exceptions.DaoException;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+interface GenericDao<T> {
+    T createFromResultSet(ResultSet rs) throws DaoException, SQLException;
 }

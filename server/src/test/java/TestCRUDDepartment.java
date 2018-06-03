@@ -1,6 +1,5 @@
-import com.mtest.dao.DepartmentDao;
 import com.mtest.model.Department;
-import com.mtest.server.DepartmentService;
+import com.mtest.server.common.DepartmentService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
