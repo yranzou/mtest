@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.InputStream;
 import java.sql.*;
@@ -21,12 +22,9 @@ import java.util.*;
 @Component
 public class EmployeeDao {
 
-    private String driver;
-    private Properties props;
-
     private static final String SELECT_ALL = "SELECT * FROM employee";
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE id=?";
-//    private static final String SELECT_BY_ID_II = SELECT_ALL + " WHERE id=?";
+    //    private static final String SELECT_BY_ID_II = SELECT_ALL + " WHERE id=?";
     private static final String SELECT_BY_DEPARTMENT_ID = SELECT_ALL + " WHERE department_id=?";
     private static final String SELECT_BY_CHIEF_ID = SELECT_ALL + " WHERE chief_id=?";
     private static final String DELETE_BY_ID = "DELETE FROM employee WHERE id=?";
@@ -38,34 +36,18 @@ public class EmployeeDao {
     private static final String SELECT_ALL_LEFT_JOIN_DEP = "SELECT employee.*, department.* from employee left join department on employee.department_id = department.id";
     private static final String SELECT_ALL_DEPARTMENTS_CHIEFS = "SELECT employee.*, department.* FROM department RIGHT JOIN employee ON department.chief_id = employee.id";
     private static final String SELECT_DEPARTMENT_CHIEF = "SELECT employee.* FROM employee INNER JOIN department ON employee.id = department.chief_id WHERE department.id = ?";
-
-
-    enum Search {
-        NAME(SELECT_ALL_LEFT_JOIN_DEP + " WHERE employee.name LIKE ?"),
-        SURNAME(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `surname` LIKE ?"),
-        PHONE(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `phone_private` LIKE ?"),
-        DEPARTMENT(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `department_id` IN " +
-                "(SELECT `id` FROM `department` WHERE `name` LIKE ?)"),
-        LEADER(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `chief_id` IN " +
-                "(SELECT `id` from employee WHERE `name` LIKE ?)");
-
-        private final String query;
-
-        Search(String query) {
-            this.query = query;
-        }
-
-
-        @Override
-        public String toString() {
-            return query;
-        }
-    }
-
     @Autowired
     JdbcTemplate jdbcTemplate;
-
+    private String driver;
+    private Properties props;
     private Connection connection;
+
+    
+    private RowMapper<Employee> employeeMapper = new RowMapper<Employee>() {
+        public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return createEmployeeFromResult(rs);
+        }
+    }
 
 
 //    private Connection getConnection() {
@@ -165,22 +147,29 @@ public class EmployeeDao {
 //        }
 //    }
 
-
-
     public Employee get(int id) throws DaoException {
         try {
-            return this.jdbcTemplate.queryForObject(SELECT_BY_ID, categoryMapper, id);
+            return this.jdbcTemplate.queryForObject(SELECT_BY_ID, employeeMapper, id);
         } catch (RuntimeException e) {
             throw new DaoException(e);
         }
     }
 
-    private RowMapper<Employee> categoryMapper = new RowMapper<Employee>() {
-        public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return createEmployeeFromResult(rs);
-        }
-    }
+//    public List<Employee> getAll() throws DaoException {
+//        try {
+//            return this.jdbcTemplate.query(SELECT_ALL, employeeMapper);
+//        } catch (RuntimeException e) {
+//            throw new DaoException(e);
+//        }
+//    }
 
+//    public void delete(int id) throws DaoException {
+//        try {
+//            this.jdbcTemplate.update(DELETE_BY_ID, id);
+//        } catch (RuntimeException e) {
+//            throw new DaoException(e);
+//        }
+//    }
 
     private Connection getConnection() {
         return ConnectionPool.getConnection();
@@ -200,8 +189,7 @@ public class EmployeeDao {
             // TODO Auto-generated catch block
             e.printStackTrace();
             return null;
-        }
-        finally {
+        } finally {
             try {
                 if (connection != null) {
                     connection.close();
@@ -240,8 +228,7 @@ public class EmployeeDao {
                 ex.printStackTrace();
             }
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             try {
                 connection.close();
             } catch (SQLException e) {
@@ -380,7 +367,6 @@ public class EmployeeDao {
         return getEmployees(SELECT_BY_CHIEF_ID, leader.getId());
     }
 
-
     public List<Employee> search(String searchIn, String searchValue) throws DaoException {
         connection = getConnection();
         searchValue = "%" + searchValue + "%";
@@ -467,7 +453,6 @@ public class EmployeeDao {
         }
     }
 
-
     public Employee createEmployeeFromResult(ResultSet resultSet)
             throws SQLException {
         Employee employee = new Employee();
@@ -486,6 +471,29 @@ public class EmployeeDao {
             e.printStackTrace();
         }
         return employee;
+    }
+
+
+    enum Search {
+        NAME(SELECT_ALL_LEFT_JOIN_DEP + " WHERE employee.name LIKE ?"),
+        SURNAME(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `surname` LIKE ?"),
+        PHONE(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `phone_private` LIKE ?"),
+        DEPARTMENT(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `department_id` IN " +
+                "(SELECT `id` FROM `department` WHERE `name` LIKE ?)"),
+        LEADER(SELECT_ALL_LEFT_JOIN_DEP + " WHERE `chief_id` IN " +
+                "(SELECT `id` from employee WHERE `name` LIKE ?)");
+
+        private final String query;
+
+        Search(String query) {
+            this.query = query;
+        }
+
+
+        @Override
+        public String toString() {
+            return query;
+        }
     }
 }
 
