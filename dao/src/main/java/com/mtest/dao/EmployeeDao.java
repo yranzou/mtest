@@ -37,8 +37,9 @@ public class EmployeeDao {
     private static final String SELECT_DEPARTMENT_CHIEF = "SELECT employee.* FROM employee INNER JOIN department ON employee.id = department.chief_id WHERE department.id = ?";
     @Autowired
     private  JdbcTemplate jdbcTemplate;
-    private String driver;
-    private Properties props;
+
+//    private String driver;
+//    private Properties props;
     private Connection connection;
 
     

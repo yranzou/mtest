@@ -2,6 +2,7 @@ package com.mtest.webapp;
 
 import com.mtest.model.Employee;
 import com.mtest.server.common.EmployeeService;
+import com.mtest.server.exception.ServerException;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -42,7 +43,7 @@ public class EditEmployeeServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         System.out.println("begin edit Employee");
         Employee employee = null;
@@ -94,7 +95,11 @@ public class EditEmployeeServlet extends HttpServlet {
                         break;
                     case "id":
                         id = Integer.parseInt(item.getString());
-                        employee = employeeService.get(id);
+                        try {
+                            employee = employeeService.get(id);
+                        } catch (ServerException e) {
+                            e.printStackTrace();
+                        }
                         break;
                 }
             } else {

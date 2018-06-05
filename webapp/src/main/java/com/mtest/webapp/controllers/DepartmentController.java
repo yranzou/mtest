@@ -3,6 +3,7 @@ package com.mtest.webapp.controllers;
 import com.mtest.model.Department;
 import com.mtest.server.common.DepartmentService;
 import com.mtest.server.common.EmployeeService;
+import com.mtest.server.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,13 +33,13 @@ public class DepartmentController {
     }
 
     @RequestMapping("add")
-    public ModelAndView add(Model model) {
+    public ModelAndView add(Model model) throws ServerException {
         model.addAttribute("chiefs",  employeeService.getAllDepartmentsChiefs());
         return new ModelAndView("addDepartment");
     }
 
     @RequestMapping(value="{id}", method = RequestMethod.GET)
-    public ModelAndView display(@PathVariable("id") int id, Model model) {
+    public ModelAndView display(@PathVariable("id") int id, Model model) throws ServerException {
         model.addAttribute("department", departmentService.get(id));
         model.addAttribute("departmentChief",  employeeService.getDepartmentChief(id));
         return new ModelAndView("departmentPage");
@@ -70,7 +71,7 @@ public class DepartmentController {
 
 
     @RequestMapping(value="edit/{id}", method = RequestMethod.GET)
-    public ModelAndView updatePage(@PathVariable("id") int id, Model model) {
+    public ModelAndView updatePage(@PathVariable("id") int id, Model model) throws ServerException {
         model.addAttribute("thisDepartmentChief", employeeService.getDepartmentChief(id));
         model.addAttribute("department",  departmentService.get(id));
         model.addAttribute("chiefs",  employeeService.getAllDepartmentsChiefs());

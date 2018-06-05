@@ -1,5 +1,6 @@
 import com.mtest.model.Employee;
 import com.mtest.server.common.EmployeeService;
+import com.mtest.server.exception.ServerException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class TestCRUDEmployee {
 
     @Test
     @Category(Create.class)
-    public void createEmployee() {
+    public void createEmployee() throws ServerException {
 
 
         employeeService.create(employee.getName(),employee.getSurname(),employee.getPhone());
@@ -60,7 +61,7 @@ public class TestCRUDEmployee {
 
     @Test
     @Category(Read.class)
-    public void selectBySurname() {
+    public void selectBySurname() throws ServerException {
 
 
         Employee emp3 = new Employee();
@@ -79,7 +80,7 @@ public class TestCRUDEmployee {
 
     @Test
     @Category(Read.class)
-    public void search() {
+    public void search() throws ServerException {
 
 
         Employee emp3 = new Employee();
@@ -99,7 +100,7 @@ public class TestCRUDEmployee {
 
     @Test
     @Category(Update.class)
-    public void updateBySurname() {
+    public void updateBySurname() throws ServerException {
         Employee emp4 = new Employee();
 
         employees = employeeService.getAll();
@@ -124,7 +125,7 @@ public class TestCRUDEmployee {
 
     @Test
     @Category(Destroy.class)
-    public void delete() {
+    public void delete() throws ServerException {
         int id_c = 1;
         employeeService.delete(employeeService.get(id_c));
         Assert.assertEquals("Expected Null", null, employeeService.get(id_c));
@@ -133,7 +134,7 @@ public class TestCRUDEmployee {
 
     @Test
     @Category(Destroy.class)
-    public void deleteById() {
+    public void deleteById() throws ServerException {
         Assert.assertEquals("Expected Employee.class", Employee.class, employeeService.get(40).getClass());
         employeeService.delete(40);
         Assert.assertEquals("Expected Null", null, employeeService.get(40));

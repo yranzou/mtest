@@ -2,6 +2,7 @@ package com.mtest.webapp;
 
 import com.mtest.server.common.DepartmentService;
 import com.mtest.server.common.EmployeeService;
+import com.mtest.server.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -38,7 +39,11 @@ public class DepartmentPageServlet extends HttpServlet {
 //        HttpSession session = req.getSession(true);
 //        session.setMaxInactiveInterval(50);
         req.setAttribute("department",  departmentService.get(id));
-        req.setAttribute("departmentChief",  employeeService.getDepartmentChief(id));
+        try {
+            req.setAttribute("departmentChief",  employeeService.getDepartmentChief(id));
+        } catch (ServerException e) {
+            e.printStackTrace();
+        }
         req.getRequestDispatcher("/WEB-INF/jsp/departmentPage.jsp").forward(req,resp);
     }
 }

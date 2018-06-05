@@ -2,6 +2,7 @@ package com.mtest.webapp;
 
 import com.mtest.model.Employee;
 import com.mtest.server.common.EmployeeService;
+import com.mtest.server.exception.ServerException;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -33,7 +34,12 @@ public class EmployeePageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
-        Employee employee = employeeService.get(id);
+        Employee employee = null;
+        try {
+            employee = employeeService.get(id);
+        } catch (ServerException e) {
+            e.printStackTrace();
+        }
         String image = "data:image/png;base64," + Base64.encode(employee.getPhoto());
         req.setAttribute("employee",  employee);
         req.setAttribute("image",image);

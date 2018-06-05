@@ -7,6 +7,7 @@ import com.mtest.model.PhoneType;
 import com.mtest.server.common.DepartmentService;
 import com.mtest.server.common.EmployeeService;
 import com.mtest.server.common.PhoneService;
+import com.mtest.server.exception.ServerException;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,7 +47,7 @@ public class EmployeesController {
                                 @RequestParam("phone") String phone,
                                 @RequestParam("datepicker") String birthday,
 
-                                RedirectAttributes redirectAttributes) {
+                                RedirectAttributes redirectAttributes) throws ServerException {
         Employee employee = new Employee();
 
         logger.debug("Going to add Employee " + name + " " + surname);
@@ -97,7 +98,7 @@ public class EmployeesController {
                                    @RequestParam("phoneNumber") String[] phoneNumber,
                                    @RequestParam("phoneType") String[] phoneType,
 
-                                   RedirectAttributes redirectAttributes) {
+                                   RedirectAttributes redirectAttributes) throws ServerException {
 
         Employee employee = employeeService.get(id);
         if (!photo.isEmpty()) {
@@ -143,7 +144,7 @@ public class EmployeesController {
 
     @RequestMapping(value="edit/{id}", method = RequestMethod.GET)
     public ModelAndView updatePage(@PathVariable("id") int id,
-                             Model model) {
+                             Model model) throws ServerException {
         Employee employee = employeeService.get(id);
         Set<Phone> phones = phoneService.get(id);
         model.addAttribute("employee", employee);
@@ -158,14 +159,14 @@ public class EmployeesController {
     public ModelAndView search(@RequestParam("searchIn") String searchIn,
                                @RequestParam("searchValue") String searchValue,
                                Model model
-                               ) {
+                               ) throws ServerException {
         model.addAttribute("employees",  employeeService.search(searchIn, searchValue));
         model.addAttribute("departments",  departmentService.search(searchIn, searchValue));
         return new ModelAndView("employees");
     }
 
     @RequestMapping("all")
-    public ModelAndView displayAll(Model model) {
+    public ModelAndView displayAll(Model model) throws ServerException {
         logger.info("!!!!!!!!!!!!!!!! ALL EMPLOYEES SHOWN");
         logger.debug("ALL EMP DEBUG!!!!!!!!!!!!");
         List<Employee> employees = this.employeeService.getAll();
@@ -176,7 +177,7 @@ public class EmployeesController {
     }
 
     @RequestMapping(value="{id}", method = RequestMethod.GET)
-    public ModelAndView display(@PathVariable("id") int id, Model model) {
+    public ModelAndView display(@PathVariable("id") int id, Model model) throws ServerException {
         Employee employee = employeeService.get(id);
         String image = "data:image/png;base64," + Base64.encode(employee.getPhoto());
         Set<Phone> phones = phoneService.get(id);

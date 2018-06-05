@@ -1,5 +1,6 @@
 import com.mtest.model.Employee;
 import com.mtest.server.common.EmployeeService;
+import com.mtest.server.exception.ServerException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,7 +13,7 @@ public class TestGetAllEmployees {
     private EmployeeService employeeService = new EmployeeService();
 
     @Test
-    public void getAllEmployees() {
+    public void getAllEmployees() throws ServerException {
         List<Employee> employees = employeeService.getAll();
         StringBuilder sb = new StringBuilder("<html><head><title>Employees</title></head><body><table>");
         for (Employee employee:employees

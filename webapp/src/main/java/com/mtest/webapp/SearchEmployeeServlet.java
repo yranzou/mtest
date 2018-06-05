@@ -2,6 +2,7 @@ package com.mtest.webapp;
 
 import com.mtest.server.common.DepartmentService;
 import com.mtest.server.common.EmployeeService;
+import com.mtest.server.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -36,7 +37,11 @@ public class SearchEmployeeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String searchIn = req.getParameter("searchIn");
         String searchValue = req.getParameter("searchValue");
-        req.setAttribute("employees",  employeeService.search(searchIn, searchValue));
+        try {
+            req.setAttribute("employees",  employeeService.search(searchIn, searchValue));
+        } catch (ServerException e) {
+            e.printStackTrace();
+        }
         req.setAttribute("departments",  departmentService.search(searchIn, searchValue));
         req.getRequestDispatcher("/WEB-INF/jsp/employees.jsp").forward(req,resp);
     }

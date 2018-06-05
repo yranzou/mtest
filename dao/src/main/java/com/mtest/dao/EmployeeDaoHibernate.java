@@ -73,7 +73,7 @@ public class EmployeeDaoHibernate {
 
     private Session session;
 
-    public Employee get(int id) {
+    public Employee get(int id) throws DaoException {
         try {
             session = sessionFactory.openSession();
             return (Employee) session.get(Employee.class, id);
@@ -89,7 +89,7 @@ public class EmployeeDaoHibernate {
         return ConnectionPool.getConnection();
     }
 
-    public Employee getDepartmentChief(int departmentId) {
+    public Employee getDepartmentChief(int departmentId) throws DaoException {
         connection = getConnection();
         try (PreparedStatement prepareStatement = this.connection.prepareStatement(SELECT_DEPARTMENT_CHIEF)) {
             prepareStatement.setInt(1, departmentId);
@@ -153,7 +153,7 @@ public class EmployeeDaoHibernate {
         }
     }
 
-    public void delete(int id) {
+    public void delete(int id)  {
         connection = getConnection();
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(DELETE_BY_ID)) {
@@ -227,11 +227,13 @@ public class EmployeeDaoHibernate {
         }
     }
 
-    public List<Employee> getAll() {
+    public List<Employee> getAll() throws DaoException {
         Session session = null;
         try {
             session = sessionFactory.openSession();
             return  session.createCriteria(Employee.class).list();
+        } catch (RuntimeException e) {
+            throw new DaoException(e);
         } finally {
             if (session != null) {
                 session.close();
@@ -239,7 +241,7 @@ public class EmployeeDaoHibernate {
         }
     }
 
-    public List<Employee> getAllDepartmentsChiefs() {
+    public List<Employee> getAllDepartmentsChiefs() throws DaoException {
         connection = getConnection();
         try (ResultSet resultSet = this.connection.createStatement()
                 .executeQuery(SELECT_ALL_DEPARTMENTS_CHIEFS)) {
@@ -263,16 +265,16 @@ public class EmployeeDaoHibernate {
         }
     }
 
-    public List<Employee> getCoworkers(Department department) {
+    public List<Employee> getCoworkers(Department department) throws DaoException {
         return getEmployees(SELECT_BY_DEPARTMENT_ID, department.getId());
     }
 
-    public List<Employee> getSubordinates(Employee leader) {
+    public List<Employee> getSubordinates(Employee leader) throws DaoException {
         return getEmployees(SELECT_BY_CHIEF_ID, leader.getId());
     }
 
 
-    public List<Employee> search(String searchIn, String searchValue) {
+    public List<Employee> search(String searchIn, String searchValue) throws DaoException {
         connection = getConnection();
         searchValue = "%" + searchValue + "%";
 //        try (PreparedStatement preparedStatement = this.connection.prepareStatement(Search.valueOf(searchIn).toString())) {
@@ -304,7 +306,7 @@ public class EmployeeDaoHibernate {
         }
     }
 
-    private List<Employee> getEmployees(String query, int id) {
+    private List<Employee> getEmployees(String query, int id) throws DaoException {
         connection = getConnection();
         try (PreparedStatement prepareStatement = this.connection.prepareStatement(query)) {
             prepareStatement.setInt(1, id);

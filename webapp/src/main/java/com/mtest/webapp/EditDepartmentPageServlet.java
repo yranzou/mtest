@@ -2,6 +2,7 @@ package com.mtest.webapp;
 
 import com.mtest.server.common.DepartmentService;
 import com.mtest.server.common.EmployeeService;
+import com.mtest.server.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -36,9 +37,17 @@ public class EditDepartmentPageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         int id = Integer.parseInt(req.getParameter("id"));
-        req.setAttribute("thisDepartmentChief", employeeService.getDepartmentChief(id));
+        try {
+            req.setAttribute("thisDepartmentChief", employeeService.getDepartmentChief(id));
+        } catch (ServerException e) {
+            e.printStackTrace();
+        }
         req.setAttribute("department",  departmentService.get(id));
-        req.setAttribute("chiefs",  employeeService.getAllDepartmentsChiefs());
+        try {
+            req.setAttribute("chiefs",  employeeService.getAllDepartmentsChiefs());
+        } catch (ServerException e) {
+            e.printStackTrace();
+        }
         req.getRequestDispatcher("/WEB-INF/jsp/editDepartment.jsp").forward(req,resp);
     }
 }

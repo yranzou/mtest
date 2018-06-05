@@ -1,6 +1,7 @@
 package com.mtest.webapp;
 
 import com.mtest.server.common.EmployeeService;
+import com.mtest.server.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -36,7 +37,11 @@ public class AddEmployeeServlet extends HttpServlet {
         String surName = req.getParameter("surname");
         String phone = req.getParameter("phone");
         InputStream inputStream = null; // input stream of the upload file
-        employeeService.create(name, surName, phone);
+        try {
+            employeeService.create(name, surName, phone);
+        } catch (ServerException e) {
+            e.printStackTrace();
+        }
 //        resp.sendRedirect("/displayEmployees");
         resp.sendRedirect(resp.encodeRedirectURL("displayEmployees"));
     }
