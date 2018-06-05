@@ -24,7 +24,6 @@ public class EmployeeDao {
 
     private static final String SELECT_ALL = "SELECT * FROM employee";
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE id=?";
-    //    private static final String SELECT_BY_ID_II = SELECT_ALL + " WHERE id=?";
     private static final String SELECT_BY_DEPARTMENT_ID = SELECT_ALL + " WHERE department_id=?";
     private static final String SELECT_BY_CHIEF_ID = SELECT_ALL + " WHERE chief_id=?";
     private static final String DELETE_BY_ID = "DELETE FROM employee WHERE id=?";
@@ -37,17 +36,18 @@ public class EmployeeDao {
     private static final String SELECT_ALL_DEPARTMENTS_CHIEFS = "SELECT employee.*, department.* FROM department RIGHT JOIN employee ON department.chief_id = employee.id";
     private static final String SELECT_DEPARTMENT_CHIEF = "SELECT employee.* FROM employee INNER JOIN department ON employee.id = department.chief_id WHERE department.id = ?";
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private  JdbcTemplate jdbcTemplate;
     private String driver;
     private Properties props;
     private Connection connection;
 
     
     private RowMapper<Employee> employeeMapper = new RowMapper<Employee>() {
+        @Override
         public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
             return createEmployeeFromResult(rs);
         }
-    }
+    };
 
 
 //    private Connection getConnection() {
