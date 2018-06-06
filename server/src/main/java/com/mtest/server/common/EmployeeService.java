@@ -19,7 +19,7 @@ import java.util.List;
 public class EmployeeService {
 
     @Autowired
-    private EmployeeDaoHibernate employeeDao;
+    private EmployeeDao employeeDao;
 
     public EmployeeService() {
     }

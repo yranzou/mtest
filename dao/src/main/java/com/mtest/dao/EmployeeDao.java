@@ -35,8 +35,8 @@ public class EmployeeDao {
     private static final String SELECT_ALL_LEFT_JOIN_DEP = "SELECT employee.*, department.* from employee left join department on employee.department_id = department.id";
     private static final String SELECT_ALL_DEPARTMENTS_CHIEFS = "SELECT employee.*, department.* FROM department RIGHT JOIN employee ON department.chief_id = employee.id";
     private static final String SELECT_DEPARTMENT_CHIEF = "SELECT employee.* FROM employee INNER JOIN department ON employee.id = department.chief_id WHERE department.id = ?";
-    @Autowired
-    private  JdbcTemplate jdbcTemplate;
+//    @Autowired
+//    private  JdbcTemplate jdbcTemplate;
 
 //    private String driver;
 //    private Properties props;
@@ -117,44 +117,44 @@ public class EmployeeDao {
 //    }
 
 
-//    public Employee get(int id) throws DaoException {
-//        connection = getConnection();
-//        try (PreparedStatement prepareStatement = connection.prepareStatement(SELECT_BY_ID)) {
-//            prepareStatement.setInt(1, id);
-//            try (ResultSet resultSet = prepareStatement.executeQuery()) {
-//                if (resultSet.next()) {
-//                    Employee employee = createEmployeeFromResult(resultSet);
-////                    Set<Phone> phones = phoneDao.get(id);
-////                    if (phones != null) {
-////                        employee.setPhones(phones);
-////                    }
-//                    return employee;
-//                }
-//            }
-//            return null;
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//            return null;
-//        }
-//        finally {
-//            try {
-//                if (connection != null) {
-//                    connection.close();
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
     public Employee get(int id) throws DaoException {
-        try {
-            return this.jdbcTemplate.queryForObject(SELECT_BY_ID, employeeMapper, id);
-        } catch (RuntimeException e) {
-            throw new DaoException(e);
+        connection = getConnection();
+        try (PreparedStatement prepareStatement = connection.prepareStatement(SELECT_BY_ID)) {
+            prepareStatement.setInt(1, id);
+            try (ResultSet resultSet = prepareStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    Employee employee = createEmployeeFromResult(resultSet);
+//                    Set<Phone> phones = phoneDao.get(id);
+//                    if (phones != null) {
+//                        employee.setPhones(phones);
+//                    }
+                    return employee;
+                }
+            }
+            return null;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+        finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
+
+//    public Employee get(int id) throws DaoException {
+//        try {
+//            return this.jdbcTemplate.queryForObject(SELECT_BY_ID, employeeMapper, id);
+//        } catch (RuntimeException e) {
+//            throw new DaoException(e);
+//        }
+//    }
 
 //    public List<Employee> getAll() throws DaoException {
 //        try {
