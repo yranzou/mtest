@@ -1,4 +1,5 @@
 import com.mtest.dao.EmployeeDao;
+import com.mtest.dao.exceptions.DaoException;
 import com.mtest.model.Employee;
 import org.junit.Assert;
 import org.junit.Before;
@@ -38,7 +39,7 @@ public class TestCRUDEmployee {
 
     @Test
     @Category(Create.class)
-    public void createEmployee() {
+    public void createEmployee() throws DaoException {
 
 
         employeeDao.persist(employee);
@@ -60,7 +61,7 @@ public class TestCRUDEmployee {
 
     @Test
     @Category(Read.class)
-    public void selectBySurname() {
+    public void selectBySurname() throws DaoException {
 
 
         Employee emp3 = new Employee();
@@ -79,7 +80,7 @@ public class TestCRUDEmployee {
 
     @Test
     @Category(Read.class)
-    public void searchByName() {
+    public void searchByName() throws DaoException {
 
 
         Employee emp3 = new Employee();
@@ -98,7 +99,7 @@ public class TestCRUDEmployee {
 
     @Test
     @Category(Update.class)
-    public void updateBySurname() {
+    public void updateBySurname() throws DaoException {
         Employee emp4 = new Employee();
 
         employees = employeeDao.getAll();
@@ -123,7 +124,7 @@ public class TestCRUDEmployee {
 
     @Test
     @Category(Destroy.class)
-    public void delete() {
+    public void delete() throws DaoException {
         int id_c = 1;
         employeeDao.delete(employeeDao.get(id_c));
         Assert.assertEquals("Expected Null", null, employeeDao.get(id_c));
@@ -132,7 +133,7 @@ public class TestCRUDEmployee {
 
     @Test
     @Category(Destroy.class)
-    public void deleteById() {
+    public void deleteById() throws DaoException {
         Assert.assertEquals("Expected Employee.class", Employee.class, employeeDao.get(40).getClass());
         employeeDao.delete(40);
         Assert.assertEquals("Expected Null", null, employeeDao.get(40));

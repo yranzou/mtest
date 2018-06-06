@@ -1,4 +1,5 @@
 import com.mtest.dao.EmployeeDao;
+import com.mtest.dao.exceptions.DaoException;
 import com.mtest.model.Employee;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,7 +13,7 @@ public class TestSelectEmployeeById {
     private EmployeeDao employeeDao = new EmployeeDao();
 
     @Test
-    public void selectById() {
+    public void selectById() throws DaoException {
         Assert.assertEquals(employeeDao.get(1).getName(),"TINA");
     }
 

@@ -1,4 +1,5 @@
 import com.mtest.dao.EmployeeDao;
+import com.mtest.dao.exceptions.DaoException;
 import com.mtest.model.Employee;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,7 +13,7 @@ public class TestGetAllEmployees {
     private EmployeeDao employeeDao = new EmployeeDao();
 
     @Test
-    public void getAllEmployees() {
+    public void getAllEmployees() throws DaoException {
         List<Employee> employees = employeeDao.getAll();
         StringBuilder sb = new StringBuilder("<html><head><title>Employees</title></head><body><table>");
         for (Employee employee:employees
