@@ -121,10 +121,20 @@ public class EmployeeService {
         employeeDao.update(employee);
     }
 
-    public void delete(int id) {employeeDao.delete(id);}
+    public void delete(int id) {
+        try {
+            employeeDao.delete(id);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void delete(Employee employee) {
-        employeeDao.delete(employee);
+        try {
+            employeeDao.delete(employee.getId());
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
     }
 
 }

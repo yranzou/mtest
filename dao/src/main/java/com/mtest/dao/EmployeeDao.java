@@ -35,21 +35,19 @@ public class EmployeeDao {
     private static final String SELECT_ALL_LEFT_JOIN_DEP = "SELECT employee.*, department.* from employee left join department on employee.department_id = department.id";
     private static final String SELECT_ALL_DEPARTMENTS_CHIEFS = "SELECT employee.*, department.* FROM department RIGHT JOIN employee ON department.chief_id = employee.id";
     private static final String SELECT_DEPARTMENT_CHIEF = "SELECT employee.* FROM employee INNER JOIN department ON employee.id = department.chief_id WHERE department.id = ?";
-//    @Autowired
-//    private  JdbcTemplate jdbcTemplate;
+    @Autowired
+    private  JdbcTemplate jdbcTemplate;
 
 //    private String driver;
 //    private Properties props;
     private Connection connection;
 
-    
     private RowMapper<Employee> employeeMapper = new RowMapper<Employee>() {
         @Override
         public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {
             return createEmployeeFromResult(rs);
         }
     };
-
 
 //    private Connection getConnection() {
 //        try {
@@ -117,87 +115,95 @@ public class EmployeeDao {
 //    }
 
 
+//    public Employee get(int id) throws DaoException {
+//        connection = getConnection();
+//        try (PreparedStatement prepareStatement = connection.prepareStatement(SELECT_BY_ID)) {
+//            prepareStatement.setInt(1, id);
+//            try (ResultSet resultSet = prepareStatement.executeQuery()) {
+//                if (resultSet.next()) {
+//                    Employee employee = createEmployeeFromResult(resultSet);
+////                    Set<Phone> phones = phoneDao.get(id);
+////                    if (phones != null) {
+////                        employee.setPhones(phones);
+////                    }
+//                    return employee;
+//                }
+//            }
+//            return null;
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//            return null;
+//        }
+//        finally {
+//            try {
+//                if (connection != null) {
+//                    connection.close();
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+
     public Employee get(int id) throws DaoException {
-        connection = getConnection();
-        try (PreparedStatement prepareStatement = connection.prepareStatement(SELECT_BY_ID)) {
-            prepareStatement.setInt(1, id);
-            try (ResultSet resultSet = prepareStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    Employee employee = createEmployeeFromResult(resultSet);
-//                    Set<Phone> phones = phoneDao.get(id);
-//                    if (phones != null) {
-//                        employee.setPhones(phones);
-//                    }
-                    return employee;
-                }
-            }
-            return null;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-        }
-        finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        try {
+            return this.jdbcTemplate.queryForObject(SELECT_BY_ID, employeeMapper, id);
+        } catch (RuntimeException e) {
+            throw new DaoException(e);
         }
     }
 
-//    public Employee get(int id) throws DaoException {
-//        try {
-//            return this.jdbcTemplate.queryForObject(SELECT_BY_ID, employeeMapper, id);
-//        } catch (RuntimeException e) {
-//            throw new DaoException(e);
-//        }
-//    }
+    public List<Employee> getAll() throws DaoException {
+        try {
+            return this.jdbcTemplate.query(SELECT_ALL, employeeMapper);
+        } catch (RuntimeException e) {
+            throw new DaoException(e);
+        }
+    }
 
-//    public List<Employee> getAll() throws DaoException {
-//        try {
-//            return this.jdbcTemplate.query(SELECT_ALL, employeeMapper);
-//        } catch (RuntimeException e) {
-//            throw new DaoException(e);
-//        }
-//    }
-
-//    public void delete(int id) throws DaoException {
-//        try {
-//            this.jdbcTemplate.update(DELETE_BY_ID, id);
-//        } catch (RuntimeException e) {
-//            throw new DaoException(e);
-//        }
-//    }
+    public void delete(int id) throws DaoException {
+        try {
+            this.jdbcTemplate.update(DELETE_BY_ID, id);
+        } catch (RuntimeException e) {
+            throw new DaoException(e);
+        }
+    }
 
     private Connection getConnection() {
         return ConnectionPool.getConnection();
     }
 
+//    public Employee getDepartmentChief(int departmentId) throws DaoException {
+//        connection = getConnection();
+//        try (PreparedStatement prepareStatement = this.connection.prepareStatement(SELECT_DEPARTMENT_CHIEF)) {
+//            prepareStatement.setInt(1, departmentId);
+//            try (ResultSet resultSet = prepareStatement.executeQuery()) {
+//                if (resultSet.next()) {
+//                    return createEmployeeFromResult(resultSet);
+//                }
+//            }
+//            return null;
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//            return null;
+//        } finally {
+//            try {
+//                if (connection != null) {
+//                    connection.close();
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+
     public Employee getDepartmentChief(int departmentId) throws DaoException {
-        connection = getConnection();
-        try (PreparedStatement prepareStatement = this.connection.prepareStatement(SELECT_DEPARTMENT_CHIEF)) {
-            prepareStatement.setInt(1, departmentId);
-            try (ResultSet resultSet = prepareStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return createEmployeeFromResult(resultSet);
-                }
-            }
-            return null;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        try {
+            return this.jdbcTemplate.queryForObject(SELECT_DEPARTMENT_CHIEF, employeeMapper, departmentId);
+        } catch (RuntimeException e) {
+            throw new DaoException(e);
         }
     }
 
@@ -238,33 +244,33 @@ public class EmployeeDao {
         }
     }
 
-    public void delete(int id) {
-        connection = getConnection();
-        try (PreparedStatement prepareStatement = this.connection
-                .prepareStatement(DELETE_BY_ID)) {
-            prepareStatement.setInt(1, id);
-            prepareStatement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            try {
-                connection.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    public void delete(int id) {
+//        connection = getConnection();
+//        try (PreparedStatement prepareStatement = this.connection
+//                .prepareStatement(DELETE_BY_ID)) {
+//            prepareStatement.setInt(1, id);
+//            prepareStatement.executeUpdate();
+//            connection.commit();
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//            try {
+//                connection.rollback();
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+//        } finally {
+//            try {
+//                if (connection != null) {
+//                    connection.close();
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
-    public synchronized void delete(Employee employee) {
+    public synchronized void delete(Employee employee) throws DaoException {
         delete(employee.getId());
     }
 
@@ -312,29 +318,29 @@ public class EmployeeDao {
         }
     }
 
-    public List<Employee> getAll() throws DaoException {
-        connection = getConnection();
-        try (ResultSet resultSet = this.connection.createStatement()
-                .executeQuery(SELECT_ALL)) {
-            List<Employee> employees = new ArrayList<>();
-            while (resultSet.next()) {
-                employees.add(createEmployeeFromResult(resultSet));
-            }
-            return employees;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    public List<Employee> getAll() throws DaoException {
+//        connection = getConnection();
+//        try (ResultSet resultSet = this.connection.createStatement()
+//                .executeQuery(SELECT_ALL)) {
+//            List<Employee> employees = new ArrayList<>();
+//            while (resultSet.next()) {
+//                employees.add(createEmployeeFromResult(resultSet));
+//            }
+//            return employees;
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//            return null;
+//        } finally {
+//            try {
+//                if (connection != null) {
+//                    connection.close();
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     public List<Employee> getAllDepartmentsChiefs() throws DaoException {
         connection = getConnection();
