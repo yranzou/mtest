@@ -8,6 +8,8 @@ import com.mtest.model.Employee;
 import com.mtest.server.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.InputStream;
 import java.util.List;
@@ -15,7 +17,7 @@ import java.util.List;
 /**
  * Created by yuri on 20.01.18.
  */
-@Component
+@Service
 public class EmployeeService {
 
     @Autowired
@@ -91,6 +93,7 @@ public class EmployeeService {
 
 
 
+    @Transactional("txManagerDatasource")
     public void create(Employee employee) throws ServerException {
         try {
             employeeDao.persist(employee);
@@ -99,36 +102,41 @@ public class EmployeeService {
         }
     }
 
-    public void create(String name, String surname, String phone) throws ServerException {
-//        System.out.println(next);
-//        String[] args = next.split("\\s+");
-        Employee employee = new Employee();
-//
-//        System.out.println(args[0] + " " + args.length);
-//        System.out.println(args[0] + " " + args[1] + " " + args[2]);
-//        employee.setName(args[0]);
-//        employee.setSurname(args[1]);
-//        employee.setPhone(args[2]);
-        employee.setName(name);
-        employee.setSurname(surname);
-        employee.setPhone(phone);
+//    @Transactional("txManagerDatasource")
+//    public void create(String name, String surname, String phone) throws ServerException {
+////        System.out.println(next);
+////        String[] args = next.split("\\s+");
+//        Employee employee = new Employee();
+////
+////        System.out.println(args[0] + " " + args.length);
+////        System.out.println(args[0] + " " + args[1] + " " + args[2]);
+////        employee.setName(args[0]);
+////        employee.setSurname(args[1]);
+////        employee.setPhone(args[2]);
+//        employee.setName(name);
+//        employee.setSurname(surname);
+//        employee.setPhone(phone);
+//        create(employee);
+//    }
 
-
-        create(employee);
-    }
-
-    public void update(Employee employee) {
-        employeeDao.update(employee);
-    }
-
-    public void delete(int id) {
+    @Transactional("txManagerDatasource")
+    public void update(Employee employee) throws ServerException {
         try {
-            employeeDao.delete(id);
+            employeeDao.update(employee);
         } catch (DaoException e) {
             e.printStackTrace();
         }
     }
 
+//    public void delete(int id) {
+//        try {
+//            employeeDao.delete(id);
+//        } catch (DaoException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    @Transactional("txManagerDatasource")
     public void delete(Employee employee) {
         try {
             employeeDao.delete(employee.getId());

@@ -1,19 +1,28 @@
 package com.mtest.model;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
 /**
  *  Created by yuri on 26.11.17.
  */
-public class Employee {
+
+@Entity
+@Table(name = "employee")
+public class Employee extends AbstractModel {
 
 
 
-    private int id;
+//    private int id;
+    @Basic
+    @Column(name = "name")
     private String name;
     private String surname;
     private String phone;
+
+    @ManyToOne
+    @Column(name = "chief_id")
     private int chiefId;
     private int departmentId;
     private byte[] photo;
@@ -45,13 +54,13 @@ public class Employee {
         this.photo = photo;
     }
 
-    public int getId() {
-        return id;
-    }
+//    public int getId() {
+//        return id;
+//    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public String getName() {
         return name;
@@ -93,24 +102,24 @@ public class Employee {
         this.departmentId = departmentId;
     }
 
-//    @Override
-//    public String toString() {
-//        StringBuilder builder = new StringBuilder();
-//        builder.append("Employee [id=");
-//        builder.append(id);
-//        builder.append(", name=");
-//        builder.append(name);
-//        builder.append(", surname=");
-//        builder.append(surname);
-//        builder.append(", phone=");
-//        builder.append(phone);
-//        builder.append(", chief_id=");
-//        builder.append(chiefId);
-//        builder.append(", department_id=");
-//        builder.append(departmentId);
-//        builder.append("]");
-//        return builder.toString();
-//    }
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Employee [id=");
+        builder.append(super.getId());
+        builder.append(", name=");
+        builder.append(name);
+        builder.append(", surname=");
+        builder.append(surname);
+        builder.append(", phone=");
+        builder.append(phone);
+        builder.append(", chief_id=");
+        builder.append(chiefId);
+        builder.append(", department_id=");
+        builder.append(departmentId);
+        builder.append("]");
+        return builder.toString();
+    }
 
 }
 

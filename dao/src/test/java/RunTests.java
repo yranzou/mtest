@@ -14,10 +14,10 @@ import org.junit.runners.Suite;
         TestCRUDEmployee.Read.class,
         TestCRUDEmployee.Update.class,
         TestCRUDEmployee.Destroy.class,
-        TestCRUDDepartment.Create.class,
-        TestCRUDDepartment.Read.class,
-        TestCRUDDepartment.Update.class,
-        TestCRUDDepartment.Destroy.class,
+//        TestCRUDDepartment.Create.class,
+//        TestCRUDDepartment.Read.class,
+//        TestCRUDDepartment.Update.class,
+//        TestCRUDDepartment.Destroy.class,
 
 })
 @Suite.SuiteClasses({
@@ -27,8 +27,5 @@ public class RunTests {
     @Before
     public void init() {
         System.out.println("Before tests");
-
-
     }
-
 }

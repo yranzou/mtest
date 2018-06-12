@@ -143,7 +143,11 @@ public class EditEmployeeServlet extends HttpServlet {
         employee.setSurname(surName);
         employee.setPhone(phone);
 
-        employeeService.update(employee);
+        try {
+            employeeService.update(employee);
+        } catch (ServerException e) {
+            e.printStackTrace();
+        }
 //        resp.sendRedirect("/displayEmployees");
         resp.sendRedirect(resp.encodeRedirectURL("displayEmployees"));
     }

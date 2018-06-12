@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.InputStream;
@@ -19,7 +20,7 @@ import java.util.*;
 /**
  * Created by yuri on 26.11.17.
  */
-@Component
+@Repository
 public class EmployeeDao {
 
     private static final String SELECT_ALL = "SELECT * FROM employee";
@@ -48,6 +49,7 @@ public class EmployeeDao {
             return createEmployeeFromResult(rs);
         }
     };
+    private Employee employee;
 
 //    private Connection getConnection() {
 //        try {
@@ -208,41 +210,70 @@ public class EmployeeDao {
     }
 
     public void persist(Employee employee) throws DaoException {
-        connection = getConnection();
-
-        try (PreparedStatement prepareStatement = this.connection
-                .prepareStatement(INSERT)) {
-            connection.setAutoCommit(false);
-            prepareStatement.setString(1, employee.getName());
-            prepareStatement.setString(2, employee.getSurname());
-            prepareStatement.setString(3, employee.getPhone());
-            if (employee.getPhoto() == null) {
-                prepareStatement.setNull(4, 0);
-            } else {
-                prepareStatement.setBlob(4, new SerialBlob(employee.getPhoto()));
-            }
-            if (employee.getBirthday() == null) {
-                prepareStatement.setNull(5, 0);
-            } else {
-                prepareStatement.setDate(5, ConverterDate.toSqlDate(employee.getBirthday()));
-            }
-            prepareStatement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            e.printStackTrace();
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        try {
+            this.jdbcTemplate.update(INSERT,
+                    employee.getName(),
+                    employee.getSurname(),
+                    employee.getPhone(),
+                    employee.getPhoto(),
+                    ConverterDate.toSqlDate(employee.getBirthday()));
+        } catch (RuntimeException e) {
+            throw new DaoException(e);
         }
     }
+
+    public void update(Employee employee) throws DaoException {
+        try {
+            this.jdbcTemplate.update(UPDATE,
+                    employee.getName(),
+                    employee.getSurname(),
+                    employee.getPhone(),
+                    employee.getDepartmentId()==0?null:employee.getDepartmentId(),
+                    employee.getChiefId()==0?null:employee.getChiefId(),
+                    employee.getPhoto(),
+                    employee.getId());
+        } catch (RuntimeException e) {
+            throw new DaoException(e);
+        }
+    }
+
+//    public void persist(Employee employee) throws DaoException {
+//        this.employee = employee;
+//        connection = getConnection();
+//
+//        try (PreparedStatement prepareStatement = this.connection
+//                .prepareStatement(INSERT)) {
+//            connection.setAutoCommit(false);
+//            prepareStatement.setString(1, employee.getName());
+//            prepareStatement.setString(2, employee.getSurname());
+//            prepareStatement.setString(3, employee.getPhone());
+//            if (employee.getPhoto() == null) {
+//                prepareStatement.setNull(4, 0);
+//            } else {
+//                prepareStatement.setBlob(4, new SerialBlob(employee.getPhoto()));
+//            }
+//            if (employee.getBirthday() == null) {
+//                prepareStatement.setNull(5, 0);
+//            } else {
+//                prepareStatement.setDate(5, ConverterDate.toSqlDate(employee.getBirthday()));
+//            }
+//            prepareStatement.executeUpdate();
+//            connection.commit();
+//        } catch (SQLException e) {
+//            try {
+//                connection.rollback();
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                connection.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
 //    public void delete(int id) {
 //        connection = getConnection();
@@ -270,53 +301,53 @@ public class EmployeeDao {
 //        }
 //    }
 
-    public synchronized void delete(Employee employee) throws DaoException {
+    public void delete(Employee employee) throws DaoException {
         delete(employee.getId());
     }
 
-    public synchronized void update(Employee employee) {
-        connection = getConnection();
-        try (PreparedStatement prepareStatement = this.connection
-                .prepareStatement(UPDATE)) {
-            connection.setAutoCommit(false);
-            prepareStatement.setString(1, employee.getName());
-            prepareStatement.setString(2, employee.getSurname());
-            prepareStatement.setString(3, employee.getPhone());
-            if (employee.getDepartmentId() == 0) {
-                prepareStatement.setNull(4, employee.getDepartmentId());
-            } else {
-                prepareStatement.setInt(4, employee.getDepartmentId());
-            }
-            if (employee.getChiefId() == 0) {
-                prepareStatement.setNull(5, employee.getChiefId());
-            } else {
-                prepareStatement.setInt(5, employee.getChiefId());
-            }
-            if (employee.getPhoto() == null) {
-                prepareStatement.setNull(6, 0);
-            } else {
-                prepareStatement.setBlob(6, new SerialBlob(employee.getPhoto()));
-            }
-            prepareStatement.setInt(7, employee.getId());
-            prepareStatement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            e.printStackTrace();
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    public void update(Employee employee) {
+//        connection = getConnection();
+//        try (PreparedStatement prepareStatement = this.connection
+//                .prepareStatement(UPDATE)) {
+//            connection.setAutoCommit(false);
+//            prepareStatement.setString(1, employee.getName());
+//            prepareStatement.setString(2, employee.getSurname());
+//            prepareStatement.setString(3, employee.getPhone());
+//            if (employee.getDepartmentId() == 0) {
+//                prepareStatement.setNull(4, employee.getDepartmentId());
+//            } else {
+//                prepareStatement.setInt(4, employee.getDepartmentId());
+//            }
+//            if (employee.getChiefId() == 0) {
+//                prepareStatement.setNull(5, employee.getChiefId());
+//            } else {
+//                prepareStatement.setInt(5, employee.getChiefId());
+//            }
+//            if (employee.getPhoto() == null) {
+//                prepareStatement.setNull(6, 0);
+//            } else {
+//                prepareStatement.setBlob(6, new SerialBlob(employee.getPhoto()));
+//            }
+//            prepareStatement.setInt(7, employee.getId());
+//            prepareStatement.executeUpdate();
+//            connection.commit();
+//        } catch (SQLException e) {
+//            try {
+//                connection.rollback();
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (connection != null) {
+//                    connection.close();
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
 //    public List<Employee> getAll() throws DaoException {
 //        connection = getConnection();
@@ -340,7 +371,7 @@ public class EmployeeDao {
 //                e.printStackTrace();
 //            }
 //        }
-//    }
+//    }wwwwww
 
     public List<Employee> getAllDepartmentsChiefs() throws DaoException {
         connection = getConnection();

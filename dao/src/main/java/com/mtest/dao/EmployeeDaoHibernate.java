@@ -8,6 +8,7 @@ import com.mtest.model.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -71,17 +72,29 @@ public class EmployeeDaoHibernate {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Autowired
+    private HibernateTemplate hibernateTemplate;
+
     private Session session;
+
+//    public Employee get(int id) throws DaoException {
+//        try {
+//            session = sessionFactory.openSession();
+//            return (Employee) session.get(Employee.class, id);
+//        } catch (RuntimeException e) {
+//            throw new DaoException(e);
+//        } finally {
+//            if (session != null) {
+//                session.close();
+//            }
+//        }
+//    }
 
     public Employee get(int id) throws DaoException {
         try {
-            session = sessionFactory.openSession();
-            return (Employee) session.get(Employee.class, id);
-        }
-        finally {
-            if (session != null) {
-                session.close();
-            }
+            return this.hibernateTemplate.get(Employee.class, id);
+        } catch (RuntimeException e) {
+            throw new DaoException(e);
         }
     }
 
@@ -231,7 +244,7 @@ public class EmployeeDaoHibernate {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            return  session.createCriteria(Employee.class).list();
+            return session.createCriteria(Employee.class).list();
         } catch (RuntimeException e) {
             throw new DaoException(e);
         } finally {

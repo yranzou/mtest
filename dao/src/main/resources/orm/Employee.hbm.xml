@@ -11,6 +11,6 @@
         </id>
 
         <property name = "name" column = "name" type = "string"/>
-
+        <many-to-one name="departmentId" column="department_id" lazy="false"/>
     </class>
 </hibernate-mapping>

@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * Created by yuri on 04.01.18.
@@ -13,10 +14,10 @@ import org.junit.runners.Suite;
         TestCRUDEmployee.Read.class,
         TestCRUDEmployee.Update.class,
         TestCRUDEmployee.Destroy.class,
-        TestCRUDDepartment.Create.class,
-        TestCRUDDepartment.Read.class,
-        TestCRUDDepartment.Update.class,
-        TestCRUDDepartment.Destroy.class,
+//        TestCRUDDepartment.Create.class,
+//        TestCRUDDepartment.Read.class,
+//        TestCRUDDepartment.Update.class,
+//        TestCRUDDepartment.Destroy.class,
 
 })
 @Suite.SuiteClasses({

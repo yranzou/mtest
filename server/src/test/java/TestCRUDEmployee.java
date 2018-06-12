@@ -1,3 +1,5 @@
+import com.mtest.dao.exceptions.DaoException;
+import com.mtest.dao.utils.ConverterDate;
 import com.mtest.model.Employee;
 import com.mtest.server.common.EmployeeService;
 import com.mtest.server.exception.ServerException;
@@ -5,18 +7,26 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
  *  Created by yuri on 04.01.18.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = "classpath:service-context.xml")
 public class TestCRUDEmployee {
     interface Create { /* category marker */ }
     interface Read { /* category marker */ }
     interface Update { /* category marker */ }
     interface Destroy { /* category marker */ }
 
+    @Autowired
     private EmployeeService employeeService;
     private int testId;
     private Employee employee;
@@ -26,11 +36,16 @@ public class TestCRUDEmployee {
     @Before
     public void init()
     {
-        employeeService = new EmployeeService();
+//        employeeService = new EmployeeService();
         employee = new Employee();
         employee.setName("Motoko");
         employee.setSurname("Kusanagi");
         employee.setPhone("9163337733");
+        try {
+            employee.setBirthday(ConverterDate.toUtilDate("2000-01-01"));
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
         emp2= new Employee();
 
     }
@@ -38,21 +53,17 @@ public class TestCRUDEmployee {
     }
 
     @Test
+    @Transactional("txManagerDatasource")
     @Category(Create.class)
     public void createEmployee() throws ServerException {
-
-
-        employeeService.create(employee.getName(),employee.getSurname(),employee.getPhone());
-
+        employeeService.create(employee);
         employees = employeeService.getAll();
         for (Employee emp:employees
                 ) {
             System.out.println(emp.getSurname());
             if (emp.getSurname().equals("Kusanagi"))
                 emp2 = emp;
-
         }
-
         Assert.assertEquals("Expected Motoko", "Motoko", emp2.getName());
         Assert.assertEquals("Expected Kusanagi", "Kusanagi", emp2.getSurname());
 
@@ -85,8 +96,8 @@ public class TestCRUDEmployee {
 
         Employee emp3 = new Employee();
         List<Employee> employees;
-//        employees = employeeService.search("na");
-        employees = new EmployeeService().search("NAME","%ina%");
+        employees = employeeService.search("NAME","%ina%");
+//        employees = new EmployeeService().search("NAME","%ina%");
         for (Employee emp:employees
                 ) {
             System.out.println(emp.getSurname() + " --- " + emp.getName());
@@ -99,10 +110,10 @@ public class TestCRUDEmployee {
     }
 
     @Test
+    @Transactional("txManagerDatasource")
     @Category(Update.class)
     public void updateBySurname() throws ServerException {
         Employee emp4 = new Employee();
-
         employees = employeeService.getAll();
         for (Employee emp:employees
                 ) {
@@ -123,22 +134,14 @@ public class TestCRUDEmployee {
         Assert.assertEquals("Expected Man", "Man", employee.getSurname());
     }
 
-    @Test
+    @Test(expected = ServerException.class)
+    @Transactional("txManagerDatasource")
     @Category(Destroy.class)
     public void delete() throws ServerException {
-        int id_c = 1;
-        employeeService.delete(employeeService.get(id_c));
+        int id_c = 50;
+        Employee employee = employeeService.get(id_c);
+        employeeService.delete(employee);
         Assert.assertEquals("Expected Null", null, employeeService.get(id_c));
     }
-
-
-    @Test
-    @Category(Destroy.class)
-    public void deleteById() throws ServerException {
-        Assert.assertEquals("Expected Employee.class", Employee.class, employeeService.get(40).getClass());
-        employeeService.delete(40);
-        Assert.assertEquals("Expected Null", null, employeeService.get(40));
-    }
-
 
 }

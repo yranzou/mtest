@@ -11,6 +11,13 @@
 
     <artifactId>model</artifactId>
     <version>1.0.1-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>1.0.0.Final</version>
+        </dependency>
+    </dependencies>
     <name>Basic classes</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
