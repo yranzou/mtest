@@ -1,5 +1,6 @@
 package com.mtest.webapp;
 
+import com.mtest.model.Employee;
 import com.mtest.server.common.EmployeeService;
 import com.mtest.server.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import java.io.InputStream;
 public class AddEmployeeServlet extends HttpServlet {
     private final long serialVersionID = 1L;
     @Autowired
+    private Employee employee;
+    @Autowired
     private EmployeeService employeeService;// = new EmployeeService();
     @Autowired
     private ApplicationContext applicationContext;
@@ -37,8 +40,11 @@ public class AddEmployeeServlet extends HttpServlet {
         String surName = req.getParameter("surname");
         String phone = req.getParameter("phone");
         InputStream inputStream = null; // input stream of the upload file
+        employee.setName(name);
+        employee.setSurname(surName);
+        employee.setPhone(phone);
         try {
-            employeeService.create(name, surName, phone);
+            employeeService.create(employee);
         } catch (ServerException e) {
             e.printStackTrace();
         }

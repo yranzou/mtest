@@ -166,7 +166,7 @@ public class EmployeeDaoHibernate {
         }
     }
 
-    public void delete(int id)  {
+    public void delete(int id) throws DaoException {
         connection = getConnection();
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(DELETE_BY_ID)) {
@@ -192,11 +192,11 @@ public class EmployeeDaoHibernate {
         }
     }
 
-    public synchronized void delete(Employee employee) {
+    public synchronized void delete(Employee employee) throws DaoException {
         delete(employee.getId());
     }
 
-    public synchronized void update(Employee employee) {
+    public synchronized void update(Employee employee) throws DaoException {
         connection = getConnection();
         try (PreparedStatement prepareStatement = this.connection
                 .prepareStatement(UPDATE)) {

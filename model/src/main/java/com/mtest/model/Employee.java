@@ -18,12 +18,15 @@ public class Employee extends AbstractModel {
     @Basic
     @Column(name = "name")
     private String name;
+    @Column(name = "surname")
     private String surname;
     private String phone;
 
     @ManyToOne
     @Column(name = "chief_id")
     private int chiefId;
+    @ManyToOne
+    @Column(name = "department_id")
     private int departmentId;
     private byte[] photo;
     private Date birthday;
