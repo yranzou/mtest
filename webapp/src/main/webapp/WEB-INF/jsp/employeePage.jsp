@@ -18,8 +18,8 @@
 
     <h1>User: ${employee.surname} ${employee.name}</h1>
     <br/> Birthday: ${employee.birthday}
-    <br/> Chief id: ${employee.chiefId}
-    <p class="title">Department: ${employee.departmentId}</p>
+    <br/> Chief: ${employee.chief.name} ${employee.chief.surname}
+    <p class="title">Department: ${employee.department.name}</p>
     <p></p>
     <div style="margin: 24px 0;">
         <a href="#"><i class="fa fa-dribbble"></i></a>
@@ -27,10 +27,13 @@
         <a href="#"><i class="fa fa-linkedin"></i></a>
         <a href="#"><i class="fa fa-facebook"></i></a>
     </div>
-    <p>Phone: ${employee.phone}</p>
+    <p>
+        Phone:
+        <%--${employee.phone}--%>
+    </p>
     <br/>
     <p>Contact phones:</p>
-<c:forEach var="phone" items="${phones}" varStatus="status">
+<c:forEach var="phone" items="${employee.phones}" varStatus="status">
     ${phone.number} _____ ${phone.type}
 </c:forEach>
 </div>

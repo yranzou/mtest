@@ -42,11 +42,14 @@
         <property name="annotatedClasses">
             <list>
                 <value>com.mtest.model.Employee</value>
+                <value>com.mtest.model.Department</value>
+                <value>com.mtest.model.Phone</value>
             </list>
         </property>
         <property name="hibernateProperties">
             <value>
                 hibernate.dialect=org.hibernate.dialect.MySQLDialect
+                hibernate.show_sql=true
             </value>
         </property>
     </bean>

@@ -214,7 +214,7 @@ public class EmployeeDao {
             this.jdbcTemplate.update(INSERT,
                     employee.getName(),
                     employee.getSurname(),
-                    employee.getPhone(),
+//                    employee.getPhone(),
                     employee.getPhoto(),
                     ConverterDate.toSqlDate(employee.getBirthday()));
         } catch (RuntimeException e) {
@@ -227,7 +227,7 @@ public class EmployeeDao {
             this.jdbcTemplate.update(UPDATE,
                     employee.getName(),
                     employee.getSurname(),
-                    employee.getPhone(),
+//                    employee.getPhone(),
                     employee.getDepartmentId()==0?null:employee.getDepartmentId(),
                     employee.getChiefId()==0?null:employee.getChiefId(),
                     employee.getPhoto(),
@@ -497,7 +497,7 @@ public class EmployeeDao {
         employee.setId(resultSet.getInt("id"));
         employee.setName(resultSet.getString("name"));
         employee.setSurname(resultSet.getString("surname"));
-        employee.setPhone(resultSet.getString("phone_private"));
+//        employee.setPhone(resultSet.getString("phone_private"));
 //        employee.setPhone(resultSet.getString("phone"));
         employee.setChiefId(resultSet.getInt("chief_id"));
         employee.setDepartmentId(resultSet.getInt("department_id"));

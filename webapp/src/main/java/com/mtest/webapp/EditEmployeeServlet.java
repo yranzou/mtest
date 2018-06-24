@@ -141,7 +141,7 @@ public class EditEmployeeServlet extends HttpServlet {
         }
         employee.setName(name);
         employee.setSurname(surName);
-        employee.setPhone(phone);
+//        employee.setPhone(phone);
 
         try {
             employeeService.update(employee);

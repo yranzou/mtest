@@ -42,7 +42,7 @@ public class AddEmployeeServlet extends HttpServlet {
         InputStream inputStream = null; // input stream of the upload file
         employee.setName(name);
         employee.setSurname(surName);
-        employee.setPhone(phone);
+//        employee.setPhone(phone);
         try {
             employeeService.create(employee);
         } catch (ServerException e) {

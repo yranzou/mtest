@@ -1,11 +1,28 @@
 package com.mtest.model;
 
+import javax.persistence.*;
+import java.util.Set;
+
 /**
  * Created by yuri on 04.01.18.
  */
+@Entity
+@Table(name = "department")
 public class Department {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Basic
+    @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy="department")
+    private Set<Employee> employees;
+
+    //    @ManyToOne(targetEntity = Employee.class)
+//    @JoinColumn(name = "chief_id")
+    @Transient
     private int chiefId;
 
     public int getId() {
@@ -30,6 +47,14 @@ public class Department {
 
     public void setChiefId(int chiefId) {
         this.chiefId = chiefId;
+    }
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
     }
 
     @Override

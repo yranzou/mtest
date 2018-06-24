@@ -49,7 +49,8 @@
 <form action="<c:url value="/employee/update"/>" id="updateEmployeeForm" method="post" enctype="multipart/form-data">
     Name: <input type="text" id="name" name="name" value="${employee.name}"/><br/>
     Surname: <input type="text" id="surname" name="surname" value="${employee.surname}"/><br/>
-    Phone: <input type="text" id="phone" name="phone" value="${employee.phone}"/><br/>
+    Phone:
+    <%--<input type="text" id="phone" name="phone" value="${employee.phone}"/><br/>--%>
     <%--Chief: <input type="text" id="chiefId" name="chiefId" value="${employee.chiefId}"/>--%>
     <%--Chief: <select name="chiefId" form="updateEmployeeForm">--%>
     <%--<c:forEach var="chief" items="${employees}" varStatus="status">--%>

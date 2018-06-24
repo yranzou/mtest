@@ -61,7 +61,7 @@ public class EmployeesController {
 
         employee.setName(name);
         employee.setSurname(surname);
-        employee.setPhone(phone);
+//        employee.setPhone(phone);
 
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
 
@@ -146,9 +146,9 @@ public class EmployeesController {
     public ModelAndView updatePage(@PathVariable("id") int id,
                              Model model) throws ServerException {
         Employee employee = employeeService.get(id);
-        Set<Phone> phones = phoneService.get(id);
+//        Set<Phone> phones = phoneService.get(id);
         model.addAttribute("employee", employee);
-        model.addAttribute("phones", phones);
+//        model.addAttribute("phones", phones);
 //        model.addAttribute(employee.getSurname());
 //        model.addAttribute(employee.getPhone());
 //        model.addAttribute(id);
@@ -179,10 +179,15 @@ public class EmployeesController {
     @RequestMapping(value="{id}", method = RequestMethod.GET)
     public ModelAndView display(@PathVariable("id") int id, Model model) throws ServerException {
         Employee employee = employeeService.get(id);
-        String image = "data:image/png;base64," + Base64.encode(employee.getPhoto());
-        Set<Phone> phones = phoneService.get(id);
-        employee.setPhones(phones);
-        model.addAttribute("phones", phones);
+        String image = null;
+        try {
+            if (employee.getPhoto() != null)
+            {
+                image = "data:image/png;base64," + Base64.encode(employee.getPhoto());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         model.addAttribute("employee", employee);
         model.addAttribute("image", image);
         return new ModelAndView("employeePage");

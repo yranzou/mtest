@@ -54,7 +54,7 @@ public class TestCRUDEmployee {
         employee = new Employee();
         employee.setName(testName);
         employee.setSurname(testSurname);
-        employee.setPhone(testPhone);
+//        employee.setPhone(testPhone);
         try {
             employee.setBirthday(ConverterDate.toUtilDate("2000-01-01"));
         } catch (DaoException e) {
@@ -135,7 +135,7 @@ public class TestCRUDEmployee {
         System.out.println("before update: " + emp2);
         emp2.setName("Mega");
         emp2.setSurname("Man");
-        emp2.setPhone("7000000000");
+//        emp2.setPhone("7000000000");
         System.out.println("class  changed: " + emp2);
         employeeDao.update(emp2);
         employee = employeeDao.get(testId);

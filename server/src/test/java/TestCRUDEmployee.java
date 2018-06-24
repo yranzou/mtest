@@ -40,7 +40,7 @@ public class TestCRUDEmployee {
         employee = new Employee();
         employee.setName("Motoko");
         employee.setSurname("Kusanagi");
-        employee.setPhone("9163337733");
+//        employee.setPhone("9163337733");
         try {
             employee.setBirthday(ConverterDate.toUtilDate("2000-01-01"));
         } catch (DaoException e) {
@@ -126,7 +126,7 @@ public class TestCRUDEmployee {
         System.out.println("before update: " + emp4);
         emp4.setName("Mega");
         emp4.setSurname("Man");
-        emp4.setPhone("7000000000");
+//        emp4.setPhone("7000000000");
         System.out.println("class changed: " + emp4);
         employeeService.update(emp4);
         employee = employeeService.get(testId);

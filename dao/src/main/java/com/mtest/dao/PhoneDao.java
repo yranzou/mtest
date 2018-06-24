@@ -1,12 +1,17 @@
 package com.mtest.dao;
 
 
+import com.mtest.dao.exceptions.DaoException;
 import com.mtest.model.Department;
 import com.mtest.model.Employee;
 import com.mtest.model.Phone;
 import com.mtest.model.PhoneType;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
@@ -21,7 +26,7 @@ import java.util.*;
 /**
  * Created by yuri on 26.11.17.
  */
-@Component
+@Repository
 public class PhoneDao {
 
     private String driver;
@@ -39,16 +44,24 @@ public class PhoneDao {
         return ConnectionPool.getConnection();
     }
 
-    public PhoneDao() {
-        try {
-            props = new Properties();
-            props.load(this.getClass().getClassLoader().getResourceAsStream("db.properties"));
-            driver = props.getProperty("database.driver");
-        } catch (IOException e) {
+//    public PhoneDao() {
+//        try {
+//            props = new Properties();
+//            props.load(this.getClass().getClassLoader().getResourceAsStream("db.properties"));
+//            driver = props.getProperty("database.driver");
+//        } catch (IOException e) {
+//
+//        }
+//
+//    }
 
-        }
+    @Autowired
+    private SessionFactory sessionFactory;
 
-    }
+    @Autowired
+    private HibernateTemplate hibernateTemplate;
+
+
 
     public void persist(Set<Phone> phones, int employeeId) {
         connection = getConnection();
@@ -111,33 +124,60 @@ public class PhoneDao {
         }
     }
 
-    public Set<Phone> get(int id) {
-        connection = getConnection();
-        try (PreparedStatement prepareStatement = connection.prepareStatement(SELECT_BY_ID)) {
-            prepareStatement.setInt(1, id);
-             try (ResultSet resultSet = prepareStatement.executeQuery()) {
-
-                 Set<Phone> phones = new TreeSet<>();
-                 while (resultSet.next()) {
-                     phones.add(createPhoneFromResult(resultSet));
-                 }
-                 return phones;
-             }
-
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+    public Phone get(int id) throws DaoException {
+        try {
+            return this.hibernateTemplate.get(Phone.class, id);
+        } catch (RuntimeException e) {
+            throw new DaoException(e);
         }
     }
+
+//    public Set<Phone> get(int id) {
+//        connection = getConnection();
+//        try (PreparedStatement prepareStatement = connection.prepareStatement(SELECT_BY_ID)) {
+//            prepareStatement.setInt(1, id);
+//             try (ResultSet resultSet = prepareStatement.executeQuery()) {
+//
+//                 Set<Phone> phones = new TreeSet<>();
+//                 while (resultSet.next()) {
+//                     phones.add(createPhoneFromResult(resultSet));
+//                 }
+//                 return phones;
+//             }
+//
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//            return null;
+//        } finally {
+//            try {
+//                if (connection != null) {
+//                    connection.close();
+//                }
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+
+//    public Set<Phone> get(int id) throws DaoException {
+//        Session session = null;
+//        try {
+//            session = sessionFactory.getCurrentSession();
+//            Set<Phone> phones = new HashSet<Phone>(session.createCriteria(Phone.class).list());
+//            for (Phone phone: phones
+//                 ) {
+//                System.out.println(phone);
+//            }
+//            return phones;
+//        } catch (RuntimeException e) {
+//            throw new DaoException(e);
+//        } finally {
+//            if (session != null) {
+//                session.close();
+//            }
+//        }
+//    }
 
     private Phone createPhoneFromResult(ResultSet resultSet)
             throws SQLException {

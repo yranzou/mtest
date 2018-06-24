@@ -32,7 +32,9 @@
                             ${employee.surname}
                     </a>
                 </div>
-                <div class="divTableCell">${employee.phone}</div>
+                <div class="divTableCell">
+                        <%--${employee.phone}--%>
+                </div>
                 <div class="divTableCell">
                     <a href="<c:url value="/department/${departments[status.index].id}" />">
                             ${departments[status.index].name}

@@ -136,7 +136,7 @@ public class EmployeeDaoHibernate {
             connection.setAutoCommit(false);
             prepareStatement.setString(1, employee.getName());
             prepareStatement.setString(2, employee.getSurname());
-            prepareStatement.setString(3, employee.getPhone());
+//            prepareStatement.setString(3, employee.getPhone());
             if (employee.getPhoto() == null) {
                 prepareStatement.setNull(4, 0);
             } else {
@@ -203,7 +203,7 @@ public class EmployeeDaoHibernate {
             connection.setAutoCommit(false);
             prepareStatement.setString(1, employee.getName());
             prepareStatement.setString(2, employee.getSurname());
-            prepareStatement.setString(3, employee.getPhone());
+//            prepareStatement.setString(3, employee.getPhone());
             if (employee.getDepartmentId() == 0) {
                 prepareStatement.setNull(4, employee.getDepartmentId());
             } else {
@@ -379,7 +379,7 @@ public class EmployeeDaoHibernate {
         employee.setId(resultSet.getInt("id"));
         employee.setName(resultSet.getString("name"));
         employee.setSurname(resultSet.getString("surname"));
-        employee.setPhone(resultSet.getString("phone_private"));
+//        employee.setPhone(resultSet.getString("phone_private"));
 //        employee.setPhone(resultSet.getString("phone"));
         employee.setChiefId(resultSet.getInt("chief_id"));
         employee.setDepartmentId(resultSet.getInt("department_id"));

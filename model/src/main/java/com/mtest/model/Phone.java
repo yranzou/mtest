@@ -1,12 +1,29 @@
 package com.mtest.model;
 
+import javax.persistence.*;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
+@Entity
+@Table(name = "phone")
 public class Phone implements Comparable<Phone>{
 //    private Map<Integer,PhoneType> phones;
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+
+    @Column(name = "number")
     private String number;
+
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private PhoneType type;
+
+//    @OneToMany(targetEntity = Employee.class)
+//    private Set<Employee> employees;
 
     public String getNumber() {
         return number;
@@ -23,6 +40,22 @@ public class Phone implements Comparable<Phone>{
     public void setType(PhoneType type) {
         this.type = type;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+//    public Set<Employee> getEmployees() {
+//        return employees;
+//    }
+//
+//    public void setEmployees(Set<Employee> employees) {
+//        this.employees = employees;
+//    }
 
     @Override
     public boolean equals(Object o) {
