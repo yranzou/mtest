@@ -25,6 +25,10 @@ public class Department {
     @Transient
     private int chiefId;
 
+    @ManyToOne(cascade={CascadeType.ALL})
+    @JoinColumn(name="chief_id")
+    private Employee chief;
+
     public int getId() {
         return id;
     }
@@ -55,6 +59,14 @@ public class Department {
 
     public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
+    }
+
+    public Employee getChief() {
+        return chief;
+    }
+
+    public void setChief(Employee chief) {
+        this.chief = chief;
     }
 
     @Override

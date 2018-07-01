@@ -4,9 +4,10 @@
 <head>
     <title>Employee page</title>
     <link href="<c:url value="/css/employeePage.css"/>" rel="stylesheet" type="text/css">
+    <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 </head>
 <body>
-<jsp:include page="/WEB-INF/jsp/searchEmployee.jsp"/>
+<jsp:include page="/WEB-INF/jsp/top.jsp"/>
 <br/>
 
 <h2 style="text-align:center">Edit department form</h2>
@@ -35,6 +36,6 @@
     <%--</a>&nbsp;--%>
     <%--<a href="<c:url value="/addDepartment" />">Add</a>--%>
 </h3>
-
+<jsp:include page="/WEB-INF/jsp/bottom.jsp"/>
 </body>
 </html>

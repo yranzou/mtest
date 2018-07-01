@@ -128,13 +128,6 @@ public class EmployeeService {
         }
     }
 
-//    public void delete(int id) {
-//        try {
-//            employeeDao.delete(id);
-//        } catch (DaoException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     @Transactional("txManagerDatasource")
     public void delete(Employee employee) {
@@ -142,6 +135,15 @@ public class EmployeeService {
             employeeDao.delete(employee.getId());
         } catch (DaoException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Transactional("txManagerDatasource")
+    public void delete(int id) throws ServerException {
+        try {
+            employeeDao.delete(id);
+        } catch (DaoException e) {
+            throw new ServerException(e);
         }
     }
 

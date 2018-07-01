@@ -1,8 +1,12 @@
 package com.mtest.dao;
 
+import com.mtest.dao.exceptions.DaoException;
 import com.mtest.model.Department;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.sql.*;
@@ -15,7 +19,7 @@ import java.util.Properties;
 /**
  *  Created by yuri on 04.01.18.
  */
-@Component
+@Repository
 public class DepartmentDao {
 
     private String driver;
@@ -36,6 +40,11 @@ public class DepartmentDao {
 
     private static final String SELECT_ALL_LEFT_JOIN_DEP = "SELECT department.* from employee left join department on employee.department_id = department.id";
 
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    private HibernateTemplate hibernateTemplate;
 
 
     enum Search {
@@ -108,29 +117,12 @@ public class DepartmentDao {
 //        }
     }
 
-    public Department get(int id) {
-        connection = getConnection();
-        try (PreparedStatement prepareStatement = this.connection.prepareStatement(SELECT_BY_ID))
-        {
-            prepareStatement.setInt(1, id);
-            try (ResultSet resultSet = prepareStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return createDepartmentFromResult(resultSet);
-                }
-            }
-            return null;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+    public Department get(int id) throws DaoException {
+        try {
+            System.out.println(":::::::::::::::::::::::::::DEP " + id);
+            return this.hibernateTemplate.get(Department.class, id);
+        } catch (RuntimeException e) {
+            throw new DaoException(e);
         }
     }
 

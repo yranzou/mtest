@@ -4,11 +4,58 @@
 <head>
     <title>Edit employee</title>
     <link href="<c:url value="/css/employees.css"/>" rel="stylesheet" type="text/css">
-    <jsp:include page="header.jsp"/>
+    <jsp:include page="headerEmp.jsp"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="<c:url value="/js/jquery/jquery.validate.js"/>"></script>
-    <script src="<c:url value="/js/jquery/chiefAutocomplete.js"/>"></script>
+    <%--<script src="<c:url value="/js/jquery/chiefAutocomplete.js"/>"></script>--%>
     <script src="<c:url value="/js/jquery/editPhones.js"/>"></script>
+
+
+
+    <script>
+    $( function() {
+
+    var projects = [
+    <c:forEach var="chief" items="${employees}" varStatus="status">
+    {
+    value: "${chief.id}",
+    label: "${chief.surname} ${chief.name}"
+    },
+    </c:forEach>
+    {
+    value: "0",
+    label: "Empty"
+    }
+    ];
+
+    $("#chief").autocomplete({
+    minLength: 0,
+    source: projects,
+    focus: function(event, ui) {
+    $("#project").val(ui.item.label);
+    return false;
+    },
+    select: function(event, ui) {
+    $("#chief").val(ui.item.label);
+    $("#chiefId").val(ui.item.value);
+    <%--$("#project-description").html(ui.item.desc);--%>
+    return false;
+    }
+    })
+    .autocomplete("instance")._renderItem = function(ul, item) {
+    return $("<li>")
+    .append("<a>" + item.label + "<br>" + "</a>")
+    <%--item.desc + --%>
+
+    .appendTo(ul);
+    };
+
+    });
+    $( function() {
+    $( document ).tooltip();
+    });
+
+    </script>
     <script>
         $(function() {
             $("#update").click(function(event){
@@ -42,14 +89,14 @@
         }
     </style>
 
+    <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
 </head>
 <body>
-
+<jsp:include page="/WEB-INF/jsp/top.jsp"/>
 <form action="<c:url value="/employee/update"/>" id="updateEmployeeForm" method="post" enctype="multipart/form-data">
     Name: <input type="text" id="name" name="name" value="${employee.name}"/><br/>
     Surname: <input type="text" id="surname" name="surname" value="${employee.surname}"/><br/>
-    Phone:
     <%--<input type="text" id="phone" name="phone" value="${employee.phone}"/><br/>--%>
     <%--Chief: <input type="text" id="chiefId" name="chiefId" value="${employee.chiefId}"/>--%>
     <%--Chief: <select name="chiefId" form="updateEmployeeForm">--%>
@@ -74,7 +121,7 @@
     <%--<input type="hidden" id="phones[1].type" name="phones[1].type" value="WORK">--%>
     <%--<input type="hidden" id="phones[2].type" name="phones[2].type" value="HOME">--%>
 
-    <%--<div id="project-label">--%>
+    <div id="project-label">
     <%--Chief id:</div>--%>
 
     Chief: <input id="chief" name="chief" title="Start to enter name/surname to select chief.">
@@ -83,7 +130,6 @@
     Upload photo: <input type="file" id="photo" name="photo"/>
 
 
-    Phones:
     <br/>
     <br/>
 
@@ -98,7 +144,7 @@
             <input type="hidden" id="phoneNumber" name="phoneNumber" value="null" />
             <input type="hidden" id="phoneType" name="phoneType" value="HOME"/>
 
-            <c:forEach var="phone" items="${phones}" varStatus="status">
+            <c:forEach var="phone" items="${employee.phones}" varStatus="status">
                 <div class="divTableRow">
                     <div class="divTableCell">
                             ${phone.number}
@@ -149,29 +195,30 @@
     <input type="submit" name="update" id="update" value="Save changes"/>
 </form>
 
-<form class="cmxform" id="commentForm" method="get" action="">
-    <fieldset>
-        <legend>Please provide your name, email address (won't be published) and a comment</legend>
-        <p>
-            <label for="cname">Name (required, at least 2 characters)</label>
-            <input id="cname" name="name" length="10" type="text" required>
-        </p>
-        <p>
-            <label for="cemail">E-Mail (required)</label>
-            <input id="cemail" type="email" name="email" required>
-        </p>
-        <p>
-            <label for="curl">URL (optional)</label>
-            <input id="curl" type="url" name="url">
-        </p>
-        <p>
-            <label for="ccomment">Your comment (required)</label>
-            <textarea id="ccomment" name="comment" required></textarea>
-        </p>
-        <p>
-            <input class="submit" type="submit" value="Submit">
-        </p>
-    </fieldset>
-</form>
+<%--<form class="cmxform" id="commentForm" method="get" action="">--%>
+    <%--<fieldset>--%>
+        <%--<legend>Please provide your name, email address (won't be published) and a comment</legend>--%>
+        <%--<p>--%>
+            <%--<label for="cname">Name (required, at least 2 characters)</label>--%>
+            <%--<input id="cname" name="name" length="10" type="text" required>--%>
+        <%--</p>--%>
+        <%--<p>--%>
+            <%--<label for="cemail">E-Mail (required)</label>--%>
+            <%--<input id="cemail" type="email" name="email" required>--%>
+        <%--</p>--%>
+        <%--<p>--%>
+            <%--<label for="curl">URL (optional)</label>--%>
+            <%--<input id="curl" type="url" name="url">--%>
+        <%--</p>--%>
+        <%--<p>--%>
+            <%--<label for="ccomment">Your comment (required)</label>--%>
+            <%--<textarea id="ccomment" name="comment" required></textarea>--%>
+        <%--</p>--%>
+        <%--<p>--%>
+            <%--<input class="submit" type="submit" value="Submit">--%>
+        <%--</p>--%>
+    <%--</fieldset>--%>
+<%--</form>--%>
+<jsp:include page="/WEB-INF/jsp/bottom.jsp"/>
 </body>
 </html>

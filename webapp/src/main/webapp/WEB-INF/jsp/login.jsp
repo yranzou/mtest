@@ -68,7 +68,6 @@
     </style>
 </head>
 <body>
-
 ${failMessage}
 <h2>Login Form</h2>
 

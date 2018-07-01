@@ -2,6 +2,7 @@ package com.mtest.webapp;
 
 import com.mtest.model.Department;
 import com.mtest.server.common.DepartmentService;
+import com.mtest.server.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -33,7 +34,12 @@ public class UpdateDepartmentServlet extends HttpServlet {
         String name = req.getParameter("name");
         int chiefId = Integer.parseInt(req.getParameter("chiefId"));
         int id = Integer.parseInt(req.getParameter("id"));
-        Department department = departmentService.get(id);
+        Department department = null;
+        try {
+            department = departmentService.get(id);
+        } catch (ServerException e) {
+            e.printStackTrace();
+        }
         department.setName(name);
         department.setChiefId(chiefId);
         departmentService.update(department);

@@ -42,7 +42,11 @@ public class EditDepartmentPageServlet extends HttpServlet {
         } catch (ServerException e) {
             e.printStackTrace();
         }
-        req.setAttribute("department",  departmentService.get(id));
+        try {
+            req.setAttribute("department",  departmentService.get(id));
+        } catch (ServerException e) {
+            e.printStackTrace();
+        }
         try {
             req.setAttribute("chiefs",  employeeService.getAllDepartmentsChiefs());
         } catch (ServerException e) {

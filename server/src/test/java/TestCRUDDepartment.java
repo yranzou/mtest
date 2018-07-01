@@ -1,5 +1,6 @@
 import com.mtest.model.Department;
 import com.mtest.server.common.DepartmentService;
+import com.mtest.server.exception.ServerException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -74,7 +75,7 @@ public class TestCRUDDepartment {
 
     @Test
     @Category(Update.class)
-    public void updateByName() {
+    public void updateByName() throws ServerException {
         Department dep4 = new Department();
         departments = departmentService.getAll();
         for (Department dep:departments
@@ -95,14 +96,14 @@ public class TestCRUDDepartment {
 
     @Test
     @Category(Destroy.class)
-    public void delete() {
+    public void delete() throws ServerException {
         departmentService.delete(departmentService.get(1));
         Assert.assertEquals("Expected Null", null, departmentService.get(1));
     }
 
     @Test
     @Category(Destroy.class)
-    public void deleteById() {
+    public void deleteById() throws ServerException {
         departmentService.delete(9);
 //        List<Employee> employees = departmentDao =.getAll();
 //        for (Employee emp:employees

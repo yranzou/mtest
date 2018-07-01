@@ -1,0 +1,33 @@
+.divTableX{
+    display: table;
+    width: 100%;
+}
+.divTableRowX,.divTableRowAddX {
+    display: table-row;
+}
+/*.divTableRowBlank {*/
+/*display: table-row;*/
+/*height: 3px;*/
+/*}*/
+.divTableHeadingX {
+    /*background-color: #EEE;*/
+    display: table-header-group;
+}
+.divTableCellX, .divTableHeadX {
+    /*border: 1px solid #999999;*/
+    display: table-cell;
+    padding: 3px 10px;
+}
+.divTableHeadingX {
+    /*background-color: #EEE;*/
+    display: table-header-group;
+    /*font-weight: bold;*/
+}
+.divTableFootX {
+    /*background-color: #EEE;*/
+    display: table-footer-group;
+    /*font-weight: bold;*/
+}
+.divTableBodyX {
+    display: table-row-group;
+}

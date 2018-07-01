@@ -1,4 +1,5 @@
 import com.mtest.dao.DepartmentDao;
+import com.mtest.dao.exceptions.DaoException;
 import com.mtest.model.Department;
 import com.mtest.model.Employee;
 import org.junit.Assert;
@@ -89,7 +90,7 @@ public class TestCRUDDepartment {
 
     @Test
     @Category(TestCRUDDepartment.Update.class)
-    public void updateByName() {
+    public void updateByName() throws DaoException {
         Department dep4 = new Department();
         departments = departmentDao.getAll();
         for (Department dep:departments
@@ -110,14 +111,14 @@ public class TestCRUDDepartment {
 
     @Test
     @Category(TestCRUDDepartment.Destroy.class)
-    public void delete() {
+    public void delete() throws DaoException {
         departmentDao.delete(departmentDao.get(1));
         Assert.assertEquals("Expected Null", null, departmentDao.get(1));
     }
 
     @Test
     @Category(TestCRUDDepartment.Destroy.class)
-    public void deleteById() {
+    public void deleteById() throws DaoException {
         departmentDao.delete(9);
 //        List<Employee> employees = departmentDao =.getAll();
 //        for (Employee emp:employees

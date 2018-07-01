@@ -41,7 +41,7 @@ public class DepartmentController {
     @RequestMapping(value="{id}", method = RequestMethod.GET)
     public ModelAndView display(@PathVariable("id") int id, Model model) throws ServerException {
         model.addAttribute("department", departmentService.get(id));
-        model.addAttribute("departmentChief",  employeeService.getDepartmentChief(id));
+//        model.addAttribute("departmentChief",  employeeService.getDepartmentChief(id));
         return new ModelAndView("departmentPage");
     }
 
@@ -60,7 +60,7 @@ public class DepartmentController {
     public String update(@RequestParam("id") int id,
                          @RequestParam("name") String name,
                          @RequestParam("chiefId") int chiefId,
-                         Model model) {
+                         Model model) throws ServerException {
 
         Department department = departmentService.get(id);
         department.setName(name);

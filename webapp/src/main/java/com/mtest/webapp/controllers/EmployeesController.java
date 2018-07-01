@@ -7,6 +7,7 @@ import com.mtest.model.PhoneType;
 import com.mtest.server.common.DepartmentService;
 import com.mtest.server.common.EmployeeService;
 import com.mtest.server.common.PhoneService;
+import com.mtest.server.common.Resizer;
 import com.mtest.server.exception.ServerException;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import org.apache.logging.log4j.LogManager;
@@ -53,7 +54,8 @@ public class EmployeesController {
         logger.debug("Going to add Employee " + name + " " + surname);
         if (!photo.isEmpty()) {
             try {
-                employee.setPhoto(photo.getBytes());
+
+                employee.setPhoto(Resizer.resizeImage(photo.getBytes()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -61,10 +63,8 @@ public class EmployeesController {
 
         employee.setName(name);
         employee.setSurname(surname);
-//        employee.setPhone(phone);
 
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
-
         java.sql.Date sqlDate = null;
         Date date = null;
         try {
@@ -73,8 +73,6 @@ public class EmployeesController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-//        System.out.println(date);
-
         employee.setBirthday(sqlDate);
 
         employeeService.create(employee);
@@ -90,25 +88,22 @@ public class EmployeesController {
 
     @PostMapping("update")
     public String update(@RequestParam("photo") MultipartFile photo,
-                                   @RequestParam("id") int id,
-                                   @RequestParam("name") String name,
-                                   @RequestParam("surname") String surname,
-//                                   @RequestParam("phone") String phone,
-                                   @RequestParam("chiefId") int chiefId,
-                                   @RequestParam("phoneNumber") String[] phoneNumber,
-                                   @RequestParam("phoneType") String[] phoneType,
+                         @RequestParam("id") int id,
+                         @RequestParam("name") String name,
+                         @RequestParam("surname") String surname,
+                         @RequestParam("chiefId") int chiefId,
+                         @RequestParam("datepicker") String birthday,
+                         @RequestParam("departmentId") int departmentId,
+                         @RequestParam("phoneNumber") String[] phoneNumber,
+                         @RequestParam("phoneType") String[] phoneType,
 
-                                   RedirectAttributes redirectAttributes) throws ServerException {
+                         RedirectAttributes redirectAttributes) throws ServerException {
 
         Employee employee = employeeService.get(id);
         if (!photo.isEmpty()) {
-//            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-//            return "redirect:/employee/all";
-
             try {
-                employee.setPhoto(photo.getBytes());
-//            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
-//            Files.write(path, bytes);
+
+                employee.setPhoto(Resizer.resizeImage(photo.getBytes()));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -116,11 +111,26 @@ public class EmployeesController {
 
         employee.setName(name);
         employee.setSurname(surname);
-//        employee.setPhone(phone);
-        employee.setChiefId(chiefId);
-        phoneService.delete(id);
-        if (phoneNumber.length!=1)
-        {
+
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+        java.sql.Date sqlDate = null;
+        Date date = null;
+        try {
+            date = format.parse(birthday);
+            sqlDate = new java.sql.Date(date.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        employee.setBirthday(sqlDate);
+
+
+        employee.setDepartment(departmentService.get(departmentId));
+        employee.setName(name);
+        employee.setSurname(surname);
+//        employee.setChiefId(chiefId);
+        employee.setChief(employeeService.get(chiefId));
+//        phoneService.delete(id);
+        if (phoneNumber.length != 1) {
             Set<Phone> phones = new TreeSet<>();
             for (int i = 1; i < phoneNumber.length; i++) {
                 Phone phone = new Phone();
@@ -130,8 +140,8 @@ public class EmployeesController {
             }
 
             phoneService.create(phones, id);
-        } else
-        {
+            employee.setPhones(phones);
+        } else {
 
         }
 
@@ -140,14 +150,15 @@ public class EmployeesController {
     }
 
 
-
-
-    @RequestMapping(value="edit/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
     public ModelAndView updatePage(@PathVariable("id") int id,
-                             Model model) throws ServerException {
+                                   Model model) throws ServerException {
         Employee employee = employeeService.get(id);
 //        Set<Phone> phones = phoneService.get(id);
+        List<Employee> employees = employeeService.getAll();
         model.addAttribute("employee", employee);
+        model.addAttribute("employees", employees);
+
 //        model.addAttribute("phones", phones);
 //        model.addAttribute(employee.getSurname());
 //        model.addAttribute(employee.getPhone());
@@ -155,13 +166,41 @@ public class EmployeesController {
         return new ModelAndView("editEmployee");
     }
 
+    @RequestMapping(value = "editNew/{id}", method = RequestMethod.GET)
+    public ModelAndView updatePageNew(@PathVariable("id") int id,
+                                      Model model) throws ServerException {
+        Employee employee = employeeService.get(id);
+        String image = null;
+        try {
+            if (employee.getPhoto() != null) {
+                image = "data:image/png;base64," + Base64.encode(employee.getPhoto());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat dateOnly = new SimpleDateFormat("MM/dd/yyyy");
+        String birthDate = dateOnly.format(employee.getBirthday());
+        model.addAttribute("departments", departmentService.getAll());
+        model.addAttribute("image", image);
+        model.addAttribute("birthDate", birthDate);
+        model.addAttribute("employee", employee);
+        model.addAttribute("employees", employeeService.getAll());
+        return new ModelAndView("editEmployeeNew");
+    }
+
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") int id) throws ServerException {
+        employeeService.delete(id);
+        return "redirect:/employee/all";
+    }
+
     @RequestMapping("search")
     public ModelAndView search(@RequestParam("searchIn") String searchIn,
                                @RequestParam("searchValue") String searchValue,
                                Model model
-                               ) throws ServerException {
-        model.addAttribute("employees",  employeeService.search(searchIn, searchValue));
-        model.addAttribute("departments",  departmentService.search(searchIn, searchValue));
+    ) throws ServerException {
+        model.addAttribute("employees", employeeService.search(searchIn, searchValue));
+        model.addAttribute("departments", departmentService.search(searchIn, searchValue));
         return new ModelAndView("employees");
     }
 
@@ -171,25 +210,28 @@ public class EmployeesController {
         logger.debug("ALL EMP DEBUG!!!!!!!!!!!!");
         List<Employee> employees = this.employeeService.getAll();
         model.addAttribute("employees", employees);
-        List<Department> departments = this.departmentService.search("NAME","");
+        List<Department> departments = this.departmentService.search("NAME", "");
         model.addAttribute("departments", departments);
         return new ModelAndView("employees");
     }
 
-    @RequestMapping(value="{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public ModelAndView display(@PathVariable("id") int id, Model model) throws ServerException {
         Employee employee = employeeService.get(id);
         String image = null;
         try {
-            if (employee.getPhoto() != null)
-            {
+            if (employee.getPhoto() != null) {
                 image = "data:image/png;base64," + Base64.encode(employee.getPhoto());
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        SimpleDateFormat dateOnly = new SimpleDateFormat("MM/dd/yyyy");
+
+        String birthDate = dateOnly.format(employee.getBirthday());
         model.addAttribute("employee", employee);
         model.addAttribute("image", image);
+        model.addAttribute("birthDate", birthDate);
         return new ModelAndView("employeePage");
     }
 }

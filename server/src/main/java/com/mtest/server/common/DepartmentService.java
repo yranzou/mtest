@@ -1,7 +1,9 @@
 package com.mtest.server.common;
 
 import com.mtest.dao.DepartmentDao;
+import com.mtest.dao.exceptions.DaoException;
 import com.mtest.model.Department;
+import com.mtest.server.exception.ServerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,12 +14,8 @@ import java.util.List;
  */
 @Component
 public class DepartmentService{
-    private DepartmentDao departmentDao;
-
     @Autowired
-    public DepartmentService() {
-        departmentDao = new DepartmentDao();
-    }
+    private DepartmentDao departmentDao;
 
     public void create(Department department) {
         departmentDao.persist(department);
@@ -37,7 +35,13 @@ public class DepartmentService{
         return departmentDao.search(searchIn, searchValue);
     }
 
-    public Department get(int id) {return departmentDao.get(id);}
+    public Department get(int id) throws ServerException {
+        try {
+            return departmentDao.get(id);
+        } catch (DaoException e) {
+            throw new ServerException(e);
+        }
+    }
 
     public void update(Department department) {
         departmentDao.update(department);

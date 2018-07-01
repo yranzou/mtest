@@ -38,7 +38,11 @@ public class DepartmentPageServlet extends HttpServlet {
         int id = Integer.parseInt(req.getParameter("id"));
 //        HttpSession session = req.getSession(true);
 //        session.setMaxInactiveInterval(50);
-        req.setAttribute("department",  departmentService.get(id));
+        try {
+            req.setAttribute("department",  departmentService.get(id));
+        } catch (ServerException e) {
+            e.printStackTrace();
+        }
         try {
             req.setAttribute("departmentChief",  employeeService.getDepartmentChief(id));
         } catch (ServerException e) {

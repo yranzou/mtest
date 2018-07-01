@@ -25,11 +25,6 @@ public class Employee {
     @Column(name = "surname")
     private String surname;
 
-//    private String phone;
-
-//    @ManyToOne(targetEntity = Employee.class)
-//    @JoinColumn(name = "chief_id")
-
     @Transient
     private int chiefId;
 
@@ -37,7 +32,7 @@ public class Employee {
     @JoinColumn(name="chief_id")
     private Employee chief;
 
-    @OneToMany(mappedBy="chief")
+    @OneToMany(mappedBy="chief", fetch = FetchType.EAGER)
     private Set<Employee> subordinates = new HashSet<Employee>();
 
     //    @ManyToOne(targetEntity = Department.class)
@@ -55,13 +50,6 @@ public class Employee {
 
     @Column(name = "birthdate")
     private Date birthday;
-
-//    @OneToMany(targetEntity = Phone.class, fetch = FetchType.EAGER)
-//    @OneToMany(
-//        cascade = CascadeType.ALL,
-//
-////            fetch = FetchType.EAGER
-//    )
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "employee_phone",

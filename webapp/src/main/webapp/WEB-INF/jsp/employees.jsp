@@ -2,13 +2,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <jsp:include page="/WEB-INF/jsp/header.jsp"/>
+    <jsp:include page="/WEB-INF/jsp/headerEmp.jsp"/>
 
     <title>Display Employees</title>
     <link href="<c:url value="/css/employees.css"/>" rel="stylesheet" type="text/css">
+    <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 </head>
 <body>
-<jsp:include page="/WEB-INF/jsp/searchEmployee.jsp"/>
+<jsp:include page="/WEB-INF/jsp/top.jsp"/>
 
 <div class="divTable">
     <div class="divTableBody">
@@ -46,5 +47,6 @@
 </div>
 
 <a href="<c:url value="/employee/add" />">Add employee</a>
+<jsp:include page="/WEB-INF/jsp/bottom.jsp"/>
 </body>
 </html>
