@@ -204,6 +204,20 @@ public class EmployeesController {
         return new ModelAndView("employees");
     }
 
+    @RequestMapping(value = "search2", headers = "Accept=application/json")
+    @ResponseBody
+    public List<Employee> search(@RequestParam("q") String query) throws ServerException {
+        List<Employee> employees = employeeService.getAll();
+        for (Iterator<Employee> iterator = employees.iterator(); iterator.hasNext();) {
+            Employee employee = iterator.next();
+            if (!employee.getName().toLowerCase().contains(query.toLowerCase()))
+            {
+                iterator.remove();
+            }
+        }
+        return employees;
+    }
+
     @RequestMapping("all")
     public ModelAndView displayAll(Model model) throws ServerException {
         logger.info("!!!!!!!!!!!!!!!! ALL EMPLOYEES SHOWN");

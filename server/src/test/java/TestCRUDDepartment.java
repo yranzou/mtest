@@ -1,3 +1,4 @@
+import com.mtest.dao.exceptions.DaoException;
 import com.mtest.model.Department;
 import com.mtest.server.common.DepartmentService;
 import com.mtest.server.exception.ServerException;
@@ -39,7 +40,7 @@ public class TestCRUDDepartment {
 
     @Test
     @Category(Create.class)
-    public void createDepartment() {
+    public void createDepartment() throws ServerException {
 
         departmentService.create(department);
         departments = departmentService.getAll();
@@ -58,7 +59,7 @@ public class TestCRUDDepartment {
 
     @Test
     @Category(Read.class)
-    public void selectByName() {
+    public void selectByName() throws ServerException {
 
         Department dep3 = new Department();
         List<Department> departments;

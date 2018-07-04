@@ -24,7 +24,7 @@
     <welcome-file-list>
 
         <!--<welcome-file>employees.jsp</welcome-file>-->
-        <welcome-file>searchEmployees</welcome-file>
+        <welcome-file>employees</welcome-file>
 
         <!--<welcome-file>/employees.jsp</welcome-file>-->
         <!--<welcome-file>/displayEmployees</welcome-file>-->

@@ -27,8 +27,12 @@ public class DepartmentService{
         departmentDao.persist(department);
     }
 
-    public List<Department> getAll() {
-        return departmentDao.getAll();
+    public List<Department> getAll() throws ServerException {
+        try {
+            return departmentDao.getAll();
+        } catch (DaoException e) {
+            throw new ServerException(e);
+        }
     }
 
     public List<Department> search (String searchIn, String searchValue) {

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("department")
 public class DepartmentController {
@@ -76,5 +78,12 @@ public class DepartmentController {
         model.addAttribute("department",  departmentService.get(id));
         model.addAttribute("chiefs",  employeeService.getAllDepartmentsChiefs());
         return new ModelAndView("editDepartment");
+    }
+
+    @RequestMapping("all")
+    public ModelAndView displayAll(Model model) throws ServerException {
+        List<Department> departments = this.departmentService.getAll();
+        model.addAttribute("departments", departments);
+        return new ModelAndView("departments");
     }
 }

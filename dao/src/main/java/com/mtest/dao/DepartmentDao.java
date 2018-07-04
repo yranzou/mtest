@@ -2,6 +2,7 @@ package com.mtest.dao;
 
 import com.mtest.dao.exceptions.DaoException;
 import com.mtest.model.Department;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateTemplate;
@@ -227,26 +228,16 @@ public class DepartmentDao {
         }
     }
 
-    public List<Department> getAll() {
-        connection = getConnection();
-        try (ResultSet resultSet = this.connection.createStatement()
-                .executeQuery(SELECT_ALL)) {
-            List<Department> departments = new ArrayList<>();
-            while (resultSet.next()) {
-                departments.add(createDepartmentFromResult(resultSet));
-            }
-            return departments;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
+    public List<Department> getAll() throws DaoException {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            return session.createCriteria(Department.class).list();
+        } catch (RuntimeException e) {
+            throw new DaoException(e);
         } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (session != null) {
+                session.close();
             }
         }
     }

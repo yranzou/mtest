@@ -39,7 +39,7 @@ public class TestCRUDDepartment {
 
     @Test
     @Category(TestCRUDDepartment.Create.class)
-    public void createDepartment() {
+    public void createDepartment() throws DaoException {
 
         departmentDao.persist(department);
         departments = departmentDao.getAll();
@@ -58,7 +58,7 @@ public class TestCRUDDepartment {
 
     @Test
     @Category(TestCRUDDepartment.Read.class)
-    public void selectByName() {
+    public void selectByName() throws DaoException {
 
         Department dep3 = new Department();
         List<Department> departments;
