@@ -24,22 +24,21 @@
     <welcome-file-list>
 
         <!--<welcome-file>employees.jsp</welcome-file>-->
-        <welcome-file>employees</welcome-file>
 
         <!--<welcome-file>/employees.jsp</welcome-file>-->
         <!--<welcome-file>/displayEmployees</welcome-file>-->
-        <!--<welcome-file>employees</welcome-file>-->
+        <welcome-file>employees</welcome-file>
         <!--<welcome-file>/employees</welcome-file>-->
 
     </welcome-file-list>
     <session-config>
         <session-timeout>10</session-timeout>
     </session-config>
-    <!--<servlet>-->
-        <!--<servlet-name>EmployeeServlet</servlet-name>-->
+    <servlet>
+        <servlet-name>EmployeeServlet</servlet-name>
         <!--<servlet-class>com.mtest.webapp.DisplayEmployeeServlet</servlet-class>-->
-        <!--&lt;!&ndash;<jsp-file>/WEB-INF/jsp/employees.jsp</jsp-file>&ndash;&gt;-->
-    <!--</servlet>-->
+        <jsp-file>/WEB-INF/jsp/employees.jsp</jsp-file>
+    </servlet>
     <!--<servlet>-->
         <!--<servlet-name>AddEmployeeServlet</servlet-name>-->
         <!--<servlet-class>com.mtest.webapp.AddEmployeeServlet</servlet-class>-->
@@ -113,10 +112,11 @@
     <!-- Note: All <servlet> elements MUST be grouped together and
           placed IN FRONT of the <servlet-mapping> elements -->
 
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>EmployeeServlet</servlet-name>-->
+    <servlet-mapping>
+        <servlet-name>EmployeeServlet</servlet-name>
         <!--<url-pattern>/displayEmployees</url-pattern>-->
-    <!--</servlet-mapping>-->
+        <url-pattern>/employees</url-pattern>
+    </servlet-mapping>
     <!--<servlet-mapping>-->
         <!--<servlet-name>AddEmployeeServlet</servlet-name>-->
         <!--<url-pattern>/doAddEmployee</url-pattern>-->

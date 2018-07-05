@@ -1,13 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<html>--%>
-<%--<head>--%>
-<%--<title>Search Employee</title>--%>
-<%--</head>--%>
-<%--<body>--%>
-<%--<c:if test = "${empty name}">--%>
-
-<%--</c:if>--%>
 
 <c:choose>
     <c:when test="${empty name}">

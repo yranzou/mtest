@@ -12,6 +12,29 @@
         $( "#menu" ).menu();
     } );
 </script>
+
+<script>
+    $(function() {
+        $( "#tags" ).autocomplete({
+            source: function( request, response ) {
+                jQuery.ajax({
+                    url: '<c:url value="/employee/search2"/>',
+                    data: {
+                     q: request.term
+    },
+    success: function( data ) {
+                        response( $.map(data, function (v) {
+                            return {label: v.name, value: v.id};
+    }));
+    }
+
+                });
+            }
+        });
+        }
+    );
+</script>
+
 <style>
     .ui-menu { width: 150px; }
 </style>

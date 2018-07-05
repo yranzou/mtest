@@ -38,7 +38,6 @@
     </div>
 </div>
 
-<a href="<c:url value="/employee/add" />">Add employee</a>
 <jsp:include page="/WEB-INF/jsp/bottom.jsp"/>
 </body>
 </html>
