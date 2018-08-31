@@ -1,5 +1,8 @@
 package com.mtest.model;
 
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
@@ -30,10 +33,11 @@ public class Employee {
 
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="chief_id")
+    @JsonBackReference
     private Employee chief;
 
     @OneToMany(mappedBy="chief", fetch = FetchType.EAGER)
-    private Set<Employee> subordinates = new HashSet<Employee>();
+    private Set<Employee> subordinates = new HashSet<>();
 
     //    @ManyToOne(targetEntity = Department.class)
 //    @JoinColumn(name = "department_id")
@@ -42,10 +46,12 @@ public class Employee {
 
     @ManyToOne(cascade={CascadeType.ALL})
     @JoinColumn(name="department_id")
+    @JsonBackReference
     private Department department;
 
     @Lob
     @Column(name = "photo")
+    @JsonIgnore
     private byte[] photo;
 
     @Column(name = "birthdate")
@@ -56,6 +62,7 @@ public class Employee {
         joinColumns = { @JoinColumn(name = "employee_id") },
         inverseJoinColumns = { @JoinColumn(name = "phone_id") })
     @ElementCollection(targetClass=Phone.class)
+    @JsonManagedReference
     private Set<Phone> phones = new HashSet<>(0);
 
     public Date getBirthday() {

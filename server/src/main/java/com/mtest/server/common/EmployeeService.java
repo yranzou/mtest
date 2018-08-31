@@ -26,22 +26,6 @@ public class EmployeeService {
     public EmployeeService() {
     }
 
-    public List<Employee> getCoworkers(Department department) throws ServerException {
-        try {
-            return employeeDao.getCoworkers(department);
-        } catch (DaoException e) {
-            throw new ServerException(e);
-        }
-    }
-
-    public List<Employee> getSubordinates(Employee leader) throws ServerException {
-        try {
-            return employeeDao.getSubordinates(leader);
-        } catch (DaoException e) {
-            throw new ServerException(e);
-        }
-    }
-
     public List<Employee> getAll() throws ServerException {
         try {
             return employeeDao.getAll();
@@ -75,10 +59,6 @@ public class EmployeeService {
     }
 
 
-//    public List<Employee> search (String str) {
-//        return employeeDao.search(str);
-//    }
-
     public List<Employee> search (String searchIn, String searchValue) throws ServerException {
         try {
             return employeeDao.search(searchIn, searchValue);
@@ -86,12 +66,6 @@ public class EmployeeService {
             throw new ServerException(e);
         }
     }
-
-    public void savePhoto(Employee employee, InputStream inputStream) {
-        employeeDao.savePhoto(employee, inputStream);
-    }
-
-
 
     @Transactional("txManagerDatasource")
     public void create(Employee employee) throws ServerException {

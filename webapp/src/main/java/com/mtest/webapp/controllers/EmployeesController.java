@@ -150,7 +150,7 @@ public class EmployeesController {
     }
 
 
-    @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "editOld/{id}", method = RequestMethod.GET)
     public ModelAndView updatePage(@PathVariable("id") int id,
                                    Model model) throws ServerException {
         Employee employee = employeeService.get(id);
@@ -166,7 +166,7 @@ public class EmployeesController {
         return new ModelAndView("editEmployee");
     }
 
-    @RequestMapping(value = "editNew/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
     public ModelAndView updatePageNew(@PathVariable("id") int id,
                                       Model model) throws ServerException {
         Employee employee = employeeService.get(id);

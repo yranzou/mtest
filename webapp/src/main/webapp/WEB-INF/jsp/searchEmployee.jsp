@@ -38,6 +38,26 @@
     </div>
 </div>
 <br/>
+
+<div style="overflow: hidden;">
+    <div style="width: 1000%;">
+
+        <form action="<c:url value="/employee/search2"/>" method="post" id="searchAutocompleteForm">
+            <div style="float: left;">
+                Search autocomplete in: <select name="searchIn" form="searchAutocompleteForm">
+                <option value="NAME">name</option>
+            </select>
+            </div>
+            <div style="float: left;">
+                <input type="text" id="tags" name="searchValue"/>
+            </div>
+            <div class="widget" style="float: left;"><input type="submit" value="Find!">
+            </div>
+        </form>
+    </div>
+</div>
+
+<br/>
 <div class="divTableX">
     <div class="divTableBodyX">
         <div class="divTableRowX">
