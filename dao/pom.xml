@@ -12,13 +12,6 @@
     <artifactId>dao</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <name>JDBC Dao example</name>
-
-    <!--<properties>-->
-        <!--<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
-    <!--</properties>-->
-    <!--<properties>-->
-        <!--<springframework.version>4.3.11</springframework.version>-->
-    <!--</properties>-->
     <properties>
         <springVersion>4.3.14.RELEASE</springVersion>
     </properties>
@@ -65,7 +58,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>5.0.6.RELEASE</version>
-            <!--<scope>test</scope>-->
         </dependency>
     </dependencies>
     <build>
